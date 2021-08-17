@@ -41,15 +41,10 @@ namespace CentralizedClimateControl
         /// <param name="thing">Thing that triggered the Draw Call</param>
         protected override void TakePrintFrom(Thing thing)
         {
-            var building = thing as Building;
-            if (building == null)
-            {
-                return;
-            }
-
-            var compAirFlow = building.GetComps<CompAirFlow>()
-                .FirstOrDefault(x => x.FlowType == FlowType || x.FlowType == AirFlowType.Any);
-            compAirFlow?.PrintForGrid(this, FlowType);
+            (thing as Building)
+                ?.GetComps<CompAirFlow>()
+                .FirstOrDefault(x => FlowType.Matchs(x.FlowType))
+                ?.PrintForGrid(this, FlowType);
         }
     }
 }

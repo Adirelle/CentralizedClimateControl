@@ -73,17 +73,12 @@ namespace CentralizedClimateControl
                 var building = parent as Building;
 
                 var compAirFlow = building?.GetComps<CompAirFlow>().FirstOrDefault();
-                if (compAirFlow == null)
+                if (compAirFlow == null || !compAirFlow.FlowType.Matchs(FlowType))
                 {
                     return;
                 }
 
-                if (compAirFlow.FlowType != FlowType && compAirFlow.FlowType != AirFlowType.Any)
-                {
-                    return;
-                }
-
-                subGraphic = compAirFlow.FlowType == AirFlowType.Any ? _anyGraphic : _flowGraphic;
+                subGraphic = compAirFlow.FlowType.IsAny() ? _anyGraphic : _flowGraphic;
 
                 Printer_Plane.PrintPlane(layer, vector, Vector2.one, LinkedDrawMatFrom(parent, item));
             }

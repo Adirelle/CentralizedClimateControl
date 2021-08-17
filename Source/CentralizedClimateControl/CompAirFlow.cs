@@ -7,9 +7,6 @@ namespace CentralizedClimateControl
         public const string NotConnectedKey = "CentralizedClimateControl.AirFlowNetDisconnected";
         public const string ConnectedKey = "CentralizedClimateControl.AirFlowNetConnected";
         public const string AirTypeKey = "CentralizedClimateControl.AirType";
-        public const string HotAirKey = "CentralizedClimateControl.HotAir";
-        public const string ColdAirKey = "CentralizedClimateControl.ColdAir";
-        public const string FrozenAirKey = "CentralizedClimateControl.FrozenAir";
         public const string TotalNetworkAirKey = "CentralizedClimateControl.TotalNetworkAir";
 
         public AirFlowType FlowType => Props.flowType;
@@ -93,23 +90,7 @@ namespace CentralizedClimateControl
         /// <param name="type">AirFlow Type</param>
         public void PrintForGrid(SectionLayer layer, AirFlowType type)
         {
-            switch (type)
-            {
-                case AirFlowType.Hot:
-                    GraphicsLoader.GraphicHotPipeOverlay.Print(layer, parent, 0);
-                    break;
-
-                case AirFlowType.Cold:
-                    GraphicsLoader.GraphicColdPipeOverlay.Print(layer, parent, 0);
-                    break;
-
-                case AirFlowType.Frozen:
-                    GraphicsLoader.GraphicFrozenPipeOverlay.Print(layer, parent, 0);
-                    break;
-
-                case AirFlowType.Any:
-                    break;
-            }
+            type.GraphicOverlay()?.Print(layer, parent, 0);
         }
 
         /// <summary>
@@ -119,27 +100,7 @@ namespace CentralizedClimateControl
         /// <returns>Translated String</returns>
         protected string GetAirTypeString(AirFlowType type)
         {
-            var res = "";
-            switch (type)
-            {
-                case AirFlowType.Cold:
-                    res += AirTypeKey.Translate(ColdAirKey.Translate());
-                    break;
-
-                case AirFlowType.Hot:
-                    res += AirTypeKey.Translate(HotAirKey.Translate());
-                    break;
-
-                case AirFlowType.Frozen:
-                    res += AirTypeKey.Translate(FrozenAirKey.Translate());
-                    break;
-
-                default:
-                    res += AirTypeKey.Translate("Unknown");
-                    break;
-            }
-
-            return res;
+            return AirTypeKey.Translate(type.ToKey().Translate());
         }
     }
 }

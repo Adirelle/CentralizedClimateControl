@@ -45,9 +45,7 @@ namespace CentralizedClimateControl
 
             var surroundCells = GenAdj.CellsAdjacent8Way(center, rot, def.Size).ToList();
 
-            var typeColor = type == AirFlowType.Hot ? Color.red : type == AirFlowType.Cold ? Color.blue : Color.cyan;
-
-            GenDraw.DrawFieldEdges(surroundCells, typeColor);
+            GenDraw.DrawFieldEdges(surroundCells, type.Color());
 
             var roomGroup = surroundCells[0].GetRoomOrAdjacent(map);
             if (roomGroup == null)
@@ -57,7 +55,7 @@ namespace CentralizedClimateControl
 
             if (!roomGroup.UsesOutdoorTemperature)
             {
-                GenDraw.DrawFieldEdges(roomGroup.Cells.ToList(), typeColor);
+                GenDraw.DrawFieldEdges(roomGroup.Cells.ToList(), type.Color());
             }
         }
 
