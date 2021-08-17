@@ -1,4 +1,4 @@
-﻿namespace CentralizedClimateControl
+namespace CentralizedClimateControl
 {
     public enum AirTypePriority
     {

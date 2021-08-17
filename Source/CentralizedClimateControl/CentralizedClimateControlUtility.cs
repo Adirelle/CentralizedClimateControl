@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -58,14 +58,12 @@ namespace CentralizedClimateControl
                     break;
             }
 
-            return new Command_Action
-            {
+            return new Command_Action {
                 defaultLabel = label,
                 defaultDesc = "CentralizedClimateControl.Command.SwitchPipe.Desc".Translate(),
                 hotKey = KeyBindingDefOf.Misc4,
                 icon = icon,
-                action = delegate
-                {
+                action = delegate {
                     switch (currentPriority)
                     {
                         case AirTypePriority.Auto:

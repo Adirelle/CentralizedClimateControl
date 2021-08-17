@@ -1,4 +1,4 @@
-﻿using HugsLib;
+using HugsLib;
 
 namespace CentralizedClimateControl
 {

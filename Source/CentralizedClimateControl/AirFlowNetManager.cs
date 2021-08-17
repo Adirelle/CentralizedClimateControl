@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -263,7 +263,7 @@ namespace CentralizedClimateControl
 
             CachedNets = _backupNets;
 
-//             TODO: Not Optimized
+            //             TODO: Not Optimized
             map.mapDrawer.WholeMapChanged(MapMeshFlag.Buildings);
             map.mapDrawer.WholeMapChanged(MapMeshFlag.Things);
 
@@ -400,8 +400,7 @@ namespace CentralizedClimateControl
             {
                 compAirFlow.GridID = _masterId;
 
-                var network = new AirFlowNet
-                {
+                var network = new AirFlowNet {
                     GridID = compAirFlow.GridID,
                     FlowType = flowType
                 };
