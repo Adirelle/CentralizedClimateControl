@@ -6,9 +6,6 @@ namespace CentralizedClimateControl
 {
     public class Building_IntakeFan : Building_AirFlowControl
     {
-        private const float EfficiencyLossPerWindCubeBlocked = 0.0076923077f;
-        private readonly int _windCellsBlocked = 0;
-
         public CompAirFlowProducer CompAirProducer;
 
         /// <summary>
@@ -62,14 +59,8 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            //var intake = sumTemp / list.Count;
-            //CompAirProducer.IntakeTemperature = intake;
             CompAirProducer.IntakeTemperature = sumTemp / list.Count;
-
-            //var flow = CompAirProducer.Props.baseAirFlow - _windCellsBlocked * EfficiencyLossPerWindCubeBlocked;
-            //CompAirProducer.CurrentAirFlow = flow;
-            CompAirProducer.CurrentAirFlow = CompAirProducer.Props.baseAirFlow -
-                                             (_windCellsBlocked * EfficiencyLossPerWindCubeBlocked);
+            CompAirProducer.CurrentAirFlow = CompAirProducer.Props.baseAirFlow;
         }
     }
 }

@@ -23,9 +23,7 @@ namespace CentralizedClimateControl
         public bool IsBrokenDown;
         public bool IsHeating;
 
-        public bool IsOperatingAtHighPower;
         public bool IsPoweredOff;
-        public bool IsStable;
         public float TargetTemperature = 21.0f;
 
         public float ThermalCapacity => Props.thermalCapacity;
@@ -118,7 +116,6 @@ namespace CentralizedClimateControl
             TargetTemperature = 21.0f;
             ConvertedTemperature = 0.0f;
             IntakeTemperature = 0.0f;
-            IsOperatingAtHighPower = false;
             IsBlocked = false;
             IsBrokenDown = false;
             IsPoweredOff = false;
@@ -169,11 +166,9 @@ namespace CentralizedClimateControl
             if (Mathf.Abs(targetDelta - currentDelta) < 1.0f)
             {
                 DeltaTemperature += targetDelta - currentDelta;
-                IsStable = true;
                 return;
             }
 
-            IsStable = false;
             DeltaTemperature += compTempControl.Props.energyPerSecond
                                 * AirFlowNet.ThermalEfficiency
                                 * ((targetDelta - currentDelta) / DeltaSmooth);

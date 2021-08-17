@@ -14,9 +14,9 @@ namespace CentralizedClimateControl
 
         public AirFlowType FlowType => Props.flowType;
 
-        public int GridID { get; set; } = -2;
+        public int GridID = -2;
 
-        public AirFlowNet AirFlowNet { get; set; }
+        public AirFlowNet AirFlowNet;
 
         public CompProperties_AirFlow Props => (CompProperties_AirFlow) props;
 

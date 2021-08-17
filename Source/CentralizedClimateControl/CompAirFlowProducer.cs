@@ -16,8 +16,6 @@ namespace CentralizedClimateControl
         public bool IsBlocked = false;
         public bool IsBrokenDown = false;
 
-        [Unsaved] public bool IsOperatingAtHighPower;
-
         public bool IsPoweredOff = false;
 
         public float AirFlowOutput
@@ -124,7 +122,6 @@ namespace CentralizedClimateControl
         {
             CurrentAirFlow = 0.0f;
             IntakeTemperature = 0.0f;
-            IsOperatingAtHighPower = false;
             base.ResetFlowVariables();
         }
     }

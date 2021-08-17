@@ -11,6 +11,5 @@ namespace CentralizedClimateControl
         public AirFlowType flowType;
 
         public float thermalCapacity;
-        public bool transmitsAir;
     }
 }
