@@ -20,9 +20,19 @@ namespace CentralizedClimateControl
         public override AcceptanceReport AllowsPlacing(BuildableDef def, IntVec3 loc, Rot4 rot, Map map,
             Thing thingToIgnore = null, Thing thing = null)
         {
-            return loc.GetThingList(map).OfType<Building_AirFlowControl>().Any()
-                ? AcceptanceReport.WasRejected
-                : AcceptanceReport.WasAccepted;
+            var airFlowNuilding = loc.GetFirstThing<Building_AirFlowControl>(map);
+            if (airFlowNuilding != null)
+            {
+                return "cannot build under climate control building";
+            }
+
+            var flowType = def.frameDef.GetCompProperties<CompProperties_AirFlow>()?.flowType ?? AirFlowType.Any;
+            if (loc.GetThingList(map).OfType<Building_AirPipe>().Where(pipe => pipe.CompAirFlowPipe.FlowType.Matchs(flowType)).Any())
+            {
+                return "there is a pipe of this type already";
+            }
+
+            return true;
         }
     }
 }
