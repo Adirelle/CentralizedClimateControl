@@ -1,50 +1,16 @@
-using System.Linq;
-using RimWorld;
 using Verse;
 
 namespace CentralizedClimateControl
 {
-    internal class SectionLayer_HotAirPipe : SectionLayer_Things
+    internal class SectionLayer_HotAirPipe : SectionLayer_AirPipe
     {
-        public AirFlowType FlowType;
-
         /// <summary>
         ///     Red Pipe Overlay Section Layer
         /// </summary>
         /// <param name="section">Section of the Map</param>
-        public SectionLayer_HotAirPipe(Section section) : base(section)
+        public SectionLayer_HotAirPipe(Section section) : base(AirFlowType.Hot, section)
         {
-            FlowType = AirFlowType.Hot;
-            requireAddToMapMesh = false;
-            relevantChangeTypes = (MapMeshFlag) 4;
-        }
 
-        /// <summary>
-        ///     Function which Checks if we need to Draw the Layer or not. If we do, we call the Base DrawLayer();
-        ///     We Check if the Pipe is a Red Pipe and thus start a DrawLayer request.
-        /// </summary>
-        public override void DrawLayer()
-        {
-            var designatorBuild = Find.DesignatorManager.SelectedDesignator as Designator_Build;
-
-            var thingDef = designatorBuild?.PlacingDef as ThingDef;
-
-            if (thingDef?.comps.OfType<CompProperties_AirFlow>().FirstOrDefault(x => x.flowType == FlowType) != null)
-            {
-                base.DrawLayer();
-            }
-        }
-
-        /// <summary>
-        ///     Called when a Draw is initiated from DrawLayer.
-        /// </summary>
-        /// <param name="thing">Thing that triggered the Draw Call</param>
-        protected override void TakePrintFrom(Thing thing)
-        {
-            (thing as Building)
-                ?.GetComps<CompAirFlow>()
-                .FirstOrDefault(x => FlowType.Matchs(x.FlowType))
-                ?.PrintForGrid(this, FlowType);
         }
     }
 }
