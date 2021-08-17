@@ -49,8 +49,6 @@ namespace CentralizedClimateControl
         /// <returns>Should Link with Same Color Pipe or not</returns>
         public override bool ShouldLinkWith(IntVec3 intVec, Thing parent)
         {
-            //var building = parent as Building;
-            //if (building == null)
             if (parent as Building == null)
             {
                 return false;
@@ -68,8 +66,6 @@ namespace CentralizedClimateControl
         /// <param name="extraRotation"></param>
         public override void Print(SectionLayer layer, Thing parent, float extraRotation)
         {
-            //var iterator = parent.OccupiedRect().GetIterator();
-            //while (!iterator.Done())
             foreach (var item in parent.OccupiedRect())
             {
                 var vector = item.ToVector3ShiftedWithAltitude(AltitudeLayer.MapDataOverlay);

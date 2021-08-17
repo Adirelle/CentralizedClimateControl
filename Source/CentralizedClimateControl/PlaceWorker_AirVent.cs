@@ -22,8 +22,6 @@ namespace CentralizedClimateControl
 
             var map = Find.CurrentMap;
 
-            //var list = center.GetThingList(map);
-            //foreach (var thingType in list)
             foreach (var thingType in center.GetThingList(map))
             {
                 if (!(thingType is Building_AirVent))
@@ -77,9 +75,6 @@ namespace CentralizedClimateControl
         public override AcceptanceReport AllowsPlacing(BuildableDef def, IntVec3 center, Rot4 rot, Map map,
             Thing thingToIgnore = null, Thing thing = null)
         {
-            //var vec = center + IntVec3.North.RotatedBy(rot);
-
-            //if (vec.Impassable(map))
             if ((center + IntVec3.North.RotatedBy(rot)).Impassable(map))
             {
                 return "CentralizedClimateControl.Consumer.AirVentPlaceError".Translate();

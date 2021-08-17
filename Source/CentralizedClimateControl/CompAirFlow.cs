@@ -58,10 +58,6 @@ namespace CentralizedClimateControl
         /// <returns></returns>
         public virtual bool IsOperating()
         {
-            // No need for a local variable if it is returned right away. --Brain
-            //bool isConnected = AirFlowNet != null;
-            //return isConnected;
-
             return AirFlowNet != null;
         }
 

@@ -66,8 +66,6 @@ namespace CentralizedClimateControl
         /// <param name="extraRotation"></param>
         public override void Print(SectionLayer layer, Thing parent, float extraRotation)
         {
-            //var material = LinkedDrawMatFrom(parent, parent.Position);
-            //Printer_Plane.PrintPlane(layer, parent.TrueCenter(), Vector2.one, material, 0f);
             Printer_Plane.PrintPlane(
                 layer,
                 parent.TrueCenter(),
@@ -78,24 +76,21 @@ namespace CentralizedClimateControl
             {
                 var intVec = parent.Position + GenAdj.CardinalDirections[i];
 
-                if (!intVec.InBounds(parent.Map) ||
+                if (
+                    !intVec.InBounds(parent.Map) ||
                     !CentralizedClimateControlUtility.GetNetManager(parent.Map).ZoneAt(intVec, FlowType) ||
-                    intVec.GetTerrain(parent.Map).layerable)
+                    intVec.GetTerrain(parent.Map).layerable
+                )
                 {
                     continue;
                 }
 
-                //var thingList = intVec.GetThingList(parent.Map);
-
                 Predicate<Thing> predicate = CheckPipe;
-                //if (thingList.Any(predicate))
                 if (intVec.GetThingList(parent.Map).Any(predicate))
                 {
                     continue;
                 }
 
-                //var material2 = LinkedDrawMatFrom(parent, intVec);
-                //Printer_Plane.PrintPlane(layer, intVec.ToVector3ShiftedWithAltitude(parent.def.Altitude), Vector2.one, material2, 0f);
                 Printer_Plane.PrintPlane(
                     layer,
                     intVec.ToVector3ShiftedWithAltitude(parent.def.Altitude),

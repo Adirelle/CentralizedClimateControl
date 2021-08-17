@@ -62,8 +62,6 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            //var insideTemp = intVec.GetTemperature(Map);
-            //var tempDiff = outsideTemp - insideTemp;
             var outsideTemp = CompAirFlowConsumer.ConvertedTemperature;
             var tempDiff = outsideTemp - intVec.GetTemperature(Map);
             var magnitudeChange = Mathf.Abs(tempDiff);
@@ -96,8 +94,6 @@ namespace CentralizedClimateControl
             var energyLimit = smoothMagnitude * efficiencyImpact * 4.16666651f * 12f * signChanger;
             var tempChange = GenTemperature.ControlTemperatureTempChange(intVec, Map, energyLimit, outsideTemp);
 
-            //var flag = !Mathf.Approximately(tempChange, 0f);
-            //if (flag)
             if (!Mathf.Approximately(tempChange, 0f))
             {
                 intVec.GetRoomOrAdjacent(Map).Temperature += tempChange;

@@ -98,18 +98,10 @@ namespace CentralizedClimateControl
                 return DisconnectedKey.Translate() + "\n" + base.CompInspectStringExtra();
             }
 
-            //var convertedTemp = ConvertedTemperature.ToStringTemperature("F0");
-            //var str = IntakeTempKey.Translate(convertedTemp);
             var str = IntakeTempKey.Translate(ConvertedTemperature.ToStringTemperature("F0") + "\n");
 
-            //var flowPercent = Mathf.FloorToInt(AirFlowNet.FlowEfficiency * 100) + "%";
-            //str += "\n";
-            //str += FlowEfficiencyKey.Translate(flowPercent);
             str += FlowEfficiencyKey.Translate(Mathf.FloorToInt(AirFlowNet.FlowEfficiency * 100) + "%" + "\n");
 
-            //var thermalPercent = Mathf.FloorToInt(AirFlowNet.ThermalEfficiency * 100) + "%";
-            //str += "\n";
-            //str += ThermalEfficiencyKey.Translate(thermalPercent);
             str += ThermalEfficiencyKey.Translate(Mathf.FloorToInt(AirFlowNet.ThermalEfficiency * 100) + "%" + "\n");
 
             return str + base.CompInspectStringExtra();
@@ -138,10 +130,6 @@ namespace CentralizedClimateControl
         {
             if (_alertChange)
             {
-                //var manager = CentralizedClimateControlUtility.GetNetManager(parent.Map);
-                //manager.IsDirty = true;
-
-                // Direct access is given, so we should use it  --Brain
                 CentralizedClimateControlUtility.GetNetManager(parent.Map).IsDirty = true;
                 _alertChange = false;
             }

@@ -26,8 +26,6 @@ namespace CentralizedClimateControl
 
             var map = Find.CurrentMap;
 
-            //var list = center.GetThingList(map);
-            //foreach (var thingType in list)
             foreach (var thingType in center.GetThingList(map))
             {
                 if (!(thingType is Building_AirVent))
@@ -45,9 +43,6 @@ namespace CentralizedClimateControl
                 break;
             }
 
-
-            //var size = def.size;
-            //var surroundCells = GenAdj.CellsAdjacent8Way(center, rot, size).ToList();
             var surroundCells = GenAdj.CellsAdjacent8Way(center, rot, def.Size).ToList();
 
             var typeColor = type == AirFlowType.Hot ? Color.red : type == AirFlowType.Cold ? Color.blue : Color.cyan;
@@ -81,12 +76,6 @@ namespace CentralizedClimateControl
         public override AcceptanceReport AllowsPlacing(BuildableDef def, IntVec3 center, Rot4 rot, Map map,
             Thing thingToIgnore = null, Thing thing = null)
         {
-            //var size = def.Size;
-
-            //var list = GenAdj.CellsAdjacent8Way(center, rot, size);
-            //var list = GenAdj.CellsAdjacent8Way(center, rot, def.Size);
-
-            //if (list.Any(intVec => intVec.Impassable(map)))
             if (GenAdj.CellsAdjacent8Way(center, rot, def.Size).Any(intVec => intVec.Impassable(map)))
             {
                 return "CentralizedClimateControl.Consumer.SurroundAirVentPlaceError".Translate();

@@ -23,17 +23,12 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            //var size = def.size;
-
             var list = new List<IntVec3>();
 
             var iterator = new IntVec3(center.x, center.y, center.z);
 
-            //for (int dx = 0; dx < size.x; dx++)
             for (var dx = 0; dx < def.size.x; dx++)
             {
-                //IntVec3 intVec = iterator + IntVec3.South.RotatedBy(rot);
-                //list.Add(intVec);
                 list.Add(iterator + IntVec3.South.RotatedBy(rot));
 
                 iterator += IntVec3.East.RotatedBy(rot);
@@ -58,9 +53,6 @@ namespace CentralizedClimateControl
         public override AcceptanceReport AllowsPlacing(BuildableDef def, IntVec3 center, Rot4 rot, Map map,
             Thing thingToIgnore = null, Thing thing = null)
         {
-            //var thingList = center.GetThingList(map);
-
-            //if (thingList.OfType<Building_AirPipe>().Any())
             if (center.GetThingList(map).OfType<Building_AirPipe>().Any())
             {
                 return AcceptanceReport.WasRejected;
@@ -71,16 +63,10 @@ namespace CentralizedClimateControl
                 return AcceptanceReport.WasRejected;
             }
 
-            //var size = def.Size;
-
             var iterator = new IntVec3(center.x, center.y, center.z);
 
-            //for (var dx = 0; dx < size.x; dx++)
             for (var dx = 0; dx < def.Size.x; dx++)
             {
-                //var intVec = iterator + IntVec3.South.RotatedBy(rot);
-
-                //if (intVec.Impassable(map))
                 if ((iterator + IntVec3.South.RotatedBy(rot)).Impassable(map))
                 {
                     return "CentralizedClimateControl.Consumer.AirThermalPlaceError".Translate();

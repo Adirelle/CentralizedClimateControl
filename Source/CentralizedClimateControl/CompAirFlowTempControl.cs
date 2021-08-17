@@ -100,9 +100,6 @@ namespace CentralizedClimateControl
 
             if (IsOperating())
             {
-                //var intake = IntakeTemperature.ToStringTemperature("F0");
-                //var converted = ConvertedTemperature.ToStringTemperature("F0");
-                //str += TemperatureArrowKey.Translate(intake, converted);
                 str += TemperatureArrowKey.Translate(
                     IntakeTemperature.ToStringTemperature("F0"),
                     ConvertedTemperature.ToStringTemperature("F0")
@@ -177,11 +174,6 @@ namespace CentralizedClimateControl
             }
 
             IsStable = false;
-            //var deltaDelta = targetDelta - currentDelta;
-
-            //var deltaSmoothened = deltaDelta / DeltaSmooth;
-            //var deltaSmoothened = (targetDelta - currentDelta) / DeltaSmooth;
-            //DeltaTemperature += (compTempControl.Props.energyPerSecond * AirFlowNet.ThermalEfficiency) * deltaSmoothened;
             DeltaTemperature += compTempControl.Props.energyPerSecond
                                 * AirFlowNet.ThermalEfficiency
                                 * ((targetDelta - currentDelta) / DeltaSmooth);

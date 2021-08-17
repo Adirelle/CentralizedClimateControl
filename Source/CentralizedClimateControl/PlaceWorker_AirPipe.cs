@@ -20,8 +20,6 @@ namespace CentralizedClimateControl
         public override AcceptanceReport AllowsPlacing(BuildableDef def, IntVec3 loc, Rot4 rot, Map map,
             Thing thingToIgnore = null, Thing thing = null)
         {
-            //var thingList = loc.GetThingList(map);
-            //return thingList.OfType<Building_AirFlowControl>().Any() ? AcceptanceReport.WasRejected : AcceptanceReport.WasAccepted;
             return loc.GetThingList(map).OfType<Building_AirFlowControl>().Any()
                 ? AcceptanceReport.WasRejected
                 : AcceptanceReport.WasAccepted;
