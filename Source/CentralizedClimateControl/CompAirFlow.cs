@@ -90,7 +90,7 @@ namespace CentralizedClimateControl
         /// <param name="type">AirFlow Type</param>
         public void PrintForGrid(SectionLayer layer, AirFlowType type)
         {
-            type.GraphicOverlay()?.Print(layer, parent, 0);
+            GraphicsLoader.GetPipeOverlay(type)?.Print(layer, parent, 0);
         }
 
         /// <summary>

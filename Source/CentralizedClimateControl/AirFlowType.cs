@@ -12,36 +12,22 @@ namespace CentralizedClimateControl
 
     public static class AirFlowTypeExtensions
     {
-        private const string HotAirKey = "CentralizedClimateControl.HotAir";
-        private const string ColdAirKey = "CentralizedClimateControl.ColdAir";
-        private const string FrozenAirKey = "CentralizedClimateControl.FrozenAir";
-
         public static bool IsAny(this AirFlowType type)
         {
             return type == AirFlowType.Any;
         }
 
-        public static bool Matchs(this AirFlowType type, AirFlowType other)
+        public static bool Matchs(this AirFlowType a, AirFlowType b)
         {
-            return type == other || other.IsAny();
-        }
-
-        public static GraphicPipe_Overlay GraphicOverlay(this AirFlowType type)
-        {
-            return type switch {
-                AirFlowType.Hot => GraphicsLoader.GraphicHotPipeOverlay,
-                AirFlowType.Cold => GraphicsLoader.GraphicColdPipeOverlay,
-                AirFlowType.Frozen => GraphicsLoader.GraphicFrozenPipeOverlay,
-                _ => null
-            };
+            return a == b || a == AirFlowType.Any || b == AirFlowType.Any;
         }
 
         public static string ToKey(this AirFlowType type)
         {
             return type switch {
-                AirFlowType.Cold => ColdAirKey,
-                AirFlowType.Hot => HotAirKey,
-                AirFlowType.Frozen => FrozenAirKey,
+                AirFlowType.Cold => "CentralizedClimateControl.ColdAir",
+                AirFlowType.Hot => "CentralizedClimateControl.HotAir",
+                AirFlowType.Frozen => "CentralizedClimateControl.FrozenAir",
                 _ => "Unknown"
             };
         }

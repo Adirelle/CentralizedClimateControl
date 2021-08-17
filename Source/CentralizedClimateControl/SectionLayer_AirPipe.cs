@@ -4,7 +4,7 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    internal class SectionLayer_AirPipe : SectionLayer_Things
+    internal abstract class SectionLayer_AirPipe : SectionLayer_Things
     {
         public readonly AirFlowType FlowType;
 
@@ -12,7 +12,7 @@ namespace CentralizedClimateControl
         ///     Blue Pipe Overlay Section Layer
         /// </summary>
         /// <param name="section">Section of the Map</param>
-        public SectionLayer_AirPipe(AirFlowType flowType, Section section) : base(section)
+        protected SectionLayer_AirPipe(AirFlowType flowType, Section section) : base(section)
         {
             FlowType = flowType;
             requireAddToMapMesh = false;
@@ -40,11 +40,10 @@ namespace CentralizedClimateControl
         /// <param name="thing">Thing that triggered the Draw Call</param>
         protected override void TakePrintFrom(Thing thing)
         {
-            (thing as Building)
+            (thing as ThingWithComps)
                 ?.GetComps<CompAirFlow>()
-                .FirstOrDefault(x => FlowType.Matchs(x.FlowType))
+                .FirstOrDefault(x => FlowType == x.FlowType)
                 ?.PrintForGrid(this, FlowType);
         }
-
     }
 }

@@ -1,4 +1,3 @@
-using System.Linq;
 using Verse;
 
 namespace CentralizedClimateControl
@@ -20,19 +19,22 @@ namespace CentralizedClimateControl
         public override AcceptanceReport AllowsPlacing(BuildableDef def, IntVec3 loc, Rot4 rot, Map map,
             Thing thingToIgnore = null, Thing thing = null)
         {
-            var airFlowNuilding = loc.GetFirstThing<Building_AirFlowControl>(map);
-            if (airFlowNuilding != null)
+            var airFlowType = (def as ThingDef)?.GetCompProperties<CompProperties_AirFlow>().flowType ?? AirFlowType.Any;
+
+            foreach (var t in loc.GetThingList(map))
             {
-                return "cannot build under climate control building";
+                if (t is Building_AirFlowControl)
+                {
+                    return new AcceptanceReport("there is a climate control building there");
+                }
+
+                if (t is Building_AirPipe pipe && pipe.FlowType == airFlowType)
+                {
+                    return new AcceptanceReport("there is already a pipe of the same color there");
+                }
             }
 
-            var flowType = def.frameDef.GetCompProperties<CompProperties_AirFlow>()?.flowType ?? AirFlowType.Any;
-            if (loc.GetThingList(map).OfType<Building_AirPipe>().Where(pipe => pipe.CompAirFlowPipe.FlowType.Matchs(flowType)).Any())
-            {
-                return "there is a pipe of this type already";
-            }
-
-            return true;
+            return AcceptanceReport.WasAccepted;
         }
     }
 }

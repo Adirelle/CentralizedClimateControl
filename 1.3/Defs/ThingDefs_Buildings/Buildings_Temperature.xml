@@ -65,7 +65,7 @@
     <defName>redAirPipe</defName>
     <label>Red air pipe</label>
     <description>Red pipes for carrying air.</description>
-    <thingClass>CentralizedClimateControl.Building_HotAirPipe</thingClass>
+    <thingClass>CentralizedClimateControl.Building_AirPipe</thingClass>
     <uiIconPath>UI/RedAirPipe</uiIconPath>
     <costList>
       <Steel>1</Steel>
@@ -91,6 +91,7 @@
       <li Class="CentralizedClimateControl.CompProperties_AirFlow">
         <compClass>CentralizedClimateControl.CompAirFlowPipe</compClass>
         <flowType>Hot</flowType>
+        <hiddenPipe>false</hiddenPipe>
       </li>
     </comps>
   </ThingDef>
@@ -98,7 +99,7 @@
     <defName>redAirPipeHidden</defName>
     <label>Red covered air pipe</label>
     <description>Red pipes for carrying air under floors.</description>
-    <thingClass>CentralizedClimateControl.Building_HotAirPipe</thingClass>
+    <thingClass>CentralizedClimateControl.Building_AirPipe</thingClass>
     <uiIconPath>UI/RedAirPipeHidden</uiIconPath>
     <costList>
       <Steel>5</Steel>
@@ -124,6 +125,7 @@
       <li Class="CentralizedClimateControl.CompProperties_AirFlow">
         <compClass>CentralizedClimateControl.CompAirFlowPipe</compClass>
         <flowType>Hot</flowType>
+        <hiddenPipe>true</hiddenPipe>
       </li>
     </comps>
   </ThingDef>
@@ -131,7 +133,7 @@
     <defName>blueAirPipe</defName>
     <label>Blue air pipe</label>
     <description>Blue pipes for carrying air.</description>
-    <thingClass>CentralizedClimateControl.Building_ColdAirPipe</thingClass>
+    <thingClass>CentralizedClimateControl.Building_AirPipe</thingClass>
     <uiIconPath>UI/BlueAirPipe</uiIconPath>
     <costList>
       <Steel>1</Steel>
@@ -157,6 +159,7 @@
       <li Class="CentralizedClimateControl.CompProperties_AirFlow">
         <compClass>CentralizedClimateControl.CompAirFlowPipe</compClass>
         <flowType>Cold</flowType>
+        <hiddenPipe>false</hiddenPipe>
       </li>
     </comps>
   </ThingDef>
@@ -164,7 +167,7 @@
     <defName>blueAirPipeHidden</defName>
     <label>Blue covered air pipe</label>
     <description>Blue pipes for carrying air under floors.</description>
-    <thingClass>CentralizedClimateControl.Building_ColdAirPipe</thingClass>
+    <thingClass>CentralizedClimateControl.Building_AirPipe</thingClass>
     <uiIconPath>UI/BlueAirPipeHidden</uiIconPath>
     <costList>
       <Steel>5</Steel>
@@ -190,6 +193,7 @@
       <li Class="CentralizedClimateControl.CompProperties_AirFlow">
         <compClass>CentralizedClimateControl.CompAirFlowPipe</compClass>
         <flowType>Cold</flowType>
+        <hiddenPipe>true</hiddenPipe>
       </li>
     </comps>
   </ThingDef>
@@ -197,7 +201,7 @@
     <defName>cyanAirPipe</defName>
     <label>Cyan air pipe</label>
     <description>Cyan pipes for carrying air.</description>
-    <thingClass>CentralizedClimateControl.Building_FrozenAirPipe</thingClass>
+    <thingClass>CentralizedClimateControl.Building_AirPipe</thingClass>
     <uiIconPath>UI/CyanAirPipe</uiIconPath>
     <costList>
       <Steel>1</Steel>
@@ -223,6 +227,7 @@
       <li Class="CentralizedClimateControl.CompProperties_AirFlow">
         <compClass>CentralizedClimateControl.CompAirFlowPipe</compClass>
         <flowType>Frozen</flowType>
+        <hiddenPipe>false</hiddenPipe>
       </li>
     </comps>
   </ThingDef>
@@ -230,7 +235,7 @@
     <defName>cyanAirPipeHidden</defName>
     <label>Cyan covered air pipe</label>
     <description>Cyan pipes for carrying air under floors.</description>
-    <thingClass>CentralizedClimateControl.Building_FrozenAirPipe</thingClass>
+    <thingClass>CentralizedClimateControl.Building_AirPipe</thingClass>
     <uiIconPath>UI/CyanAirPipeHidden</uiIconPath>
     <costList>
       <Steel>5</Steel>
@@ -256,6 +261,7 @@
       <li Class="CentralizedClimateControl.CompProperties_AirFlow">
         <compClass>CentralizedClimateControl.CompAirFlowPipe</compClass>
         <flowType>Frozen</flowType>
+        <hiddenPipe>true</hiddenPipe>
       </li>
     </comps>
   </ThingDef>
