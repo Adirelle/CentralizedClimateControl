@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: build
+    name: build-debug
     runs-on: windows-latest
 
     steps:
@@ -36,7 +36,7 @@ jobs:
       id: version
 
     - name: Update version information
-      run: sed -i -e 's/2.0.0.0/${{ steps.version.outputs.version }}/' About\Manifest.xml About\ModSync.xml
+      run: sed -i -e 's/2.0.0.0/${{ steps.version.outputs.version }}/' About/Manifest.xml About/ModSync.xml
       shell: bash
 
     - name: Create the package
