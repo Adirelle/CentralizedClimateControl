@@ -1,63 +1,81 @@
-name: build-debug
+name: build
 
 on:
   push:
-  pull_request:
-    branches: [ main ]
-    paths:
-    - '**.cs'
-    - '**.csproj'
+    branches:
+      - 2.*
+    tags:
+      - 2.*
+
+env:
+  MOD_NAME: CentralizedClimateControl
+  DOTNET_VERSION: '5.0.x'
+  DOTNET_DIR: Source/CentralizedClimateControl
+  DOTNET_CONFIG: Debug
 
 jobs:
   build:
-    name: build-debug
+    name: build
     runs-on: windows-latest
-
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '5.0.x'
-
+        dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Install dependencies
+      working-directory: ${{ env.DOTNET_DIR }}
       run: dotnet restore
-      working-directory: Source/CentralizedClimateControl
-
-    - name: Build
-      run: dotnet build --configuration Debug --no-restore
-      working-directory: Source/CentralizedClimateControl
-
-    - name: Version
+    - name: Build the assembly
+      working-directory: ${{ env.DOTNET_DIR }}
+      run: dotnet build --configuration ${{ env.DOTNET_CONFIG }} --no-restore
+    - name: Extract the version string
+      id: version
+      shell: bash
       run: |
         VERSION="$(git describe --always)"
         echo "::set-output name=version::${VERSION%-g*}"
-      id: version
+    - name: Create the distribution
       shell: bash
+      run: |
+        mkdir -p "dist/$MOD_NAME"
+        cp -av *.md 1.3 About Languages Textures "dist/$MOD_NAME/"
+        sed -i -e 's/2.0.0.0/${{ steps.version.outputs.version }}/' "dist/$MOD_NAME/About/*.xml"
+        rm -rfv "dist/$MOD_NAME/Textures/Things/Updates"
+    - name: Upload the distribution
+      uses: actions/upload-artifact@v2
+      with:
+        name: distribution
+        path: dist/
 
-    - name: Update version information
-      run: sed -i -e 's/2.0.0.0/${{ steps.version.outputs.version }}/' About/Manifest.xml About/ModSync.xml
-      shell: bash
-
+  release:
+    name: release
+    needs: build
+    runs-on: windows-latest
+    steps:
+    - name: Download the distribution
+      uses: actions/download-artifact@v2
     - name: Create the package
       uses: thedoctor0/zip-release@master
       with:
-        type: 'zip'
-        filename: 'CentralizedClimateControl.zip'
-        exclusions: '*.git* /Source/*'
-
+        type: zip
+        directory: dist/
+        path: ${{ env.MOD_NAME }}/
+        filename: ${{ env.MOD_NAME }}.zip
     - name: Create the release
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ steps.version.outputs.version }}
-        tag: ${{ steps.version.outputs.version }}
+        name: ${{ needs.build.outputs.version }}
+        tag: ${{ needs.build.outputs.version }}
+        commit: ${{ github.sha }}
         draft: false
-        prerelease: true
-        bodyFile: About/Changelog.txt
-        artifacts: "CentralizedClimateControl.zip"
+        prerelease: ${{ ! startsWith(github.ref, 'refs/tags/') }}
+        bodyFile: dist/${{ env.MOD_NAME }}/About/Changelog.txt
+        artifacts: dist//${{ env.MOD_NAME }}.zip
         artifactContentType: application/zip
         token: ${{ github.token }}
         allowUpdates: true
