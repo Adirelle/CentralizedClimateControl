@@ -32,8 +32,11 @@ jobs:
       working-directory: Source/CentralizedClimateControl
 
     - name: Version
-      run: echo "::set-output name=version::$(git describe)"
+      run: |
+        VERSION="$(git describe --always)"
+        echo "::set-output name=version::${VERSION%-g*}"
       id: version
+      shell: bash
 
     - name: Update version information
       run: sed -i -e 's/2.0.0.0/${{ steps.version.outputs.version }}/' About/Manifest.xml About/ModSync.xml
