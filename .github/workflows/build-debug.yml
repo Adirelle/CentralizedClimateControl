@@ -53,8 +53,9 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         name: ${{ steps.version.outputs.version }}
-        draft: true
-        prerelease: false
+        tag: ${{ steps.version.outputs.version }}
+        draft: false
+        prerelease: true
         bodyFile: About/Changelog.txt
         artifacts: "CentralizedClimateControl.zip"
         artifactContentType: application/zip
