@@ -8,7 +8,7 @@ namespace CentralizedClimateControl
         ///     Cyan Pipe Overlay Section Layer
         /// </summary>
         /// <param name="section">Section of the Map</param>
-        public SectionLayer_FrozenPipe(Section section) : base(base.FlowType.Frozen, section)
+        public SectionLayer_FrozenPipe(Section section) : base(FlowType.Frozen, section)
         {
         }
     }

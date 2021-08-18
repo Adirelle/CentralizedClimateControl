@@ -22,7 +22,7 @@ namespace CentralizedClimateControl
 
         public override string ToString()
         {
-            return $"{Throughput} cc/s, {Temperature}°";
+            return $"{Throughput} cc/s at {Temperature}°c";
         }
 
         public static readonly AirFlow Zero = new();
@@ -46,16 +46,6 @@ namespace CentralizedClimateControl
         public static AirFlow operator /(AirFlow a, float x)
         {
             return new AirFlow(a.Throughput / x, a.Temperature);
-        }
-
-        public static bool operator >=(AirFlow a, AirFlow b)
-        {
-            return a.Throughput >= b.Throughput;
-        }
-
-        public static bool operator <=(AirFlow a, AirFlow b)
-        {
-            return a.Throughput <= b.Throughput;
         }
 
         public static AirFlow Collect(IEnumerable<AirFlow> flows)

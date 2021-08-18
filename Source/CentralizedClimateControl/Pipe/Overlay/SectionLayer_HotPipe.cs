@@ -8,7 +8,7 @@ namespace CentralizedClimateControl
         ///     Red Pipe Overlay Section Layer
         /// </summary>
         /// <param name="section">Section of the Map</param>
-        public SectionLayer_HotPipe(Section section) : base(base.FlowType.Hot, section)
+        public SectionLayer_HotPipe(Section section) : base(FlowType.Hot, section)
         {
 
         }

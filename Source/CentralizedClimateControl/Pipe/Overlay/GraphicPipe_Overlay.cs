@@ -9,7 +9,7 @@ namespace CentralizedClimateControl
         private readonly Graphic baseGraphic;
         private readonly Graphic anyGraphic;
 
-        public GraphicPipe_Overlay(Graphic subGraphic, Graphic anyGraphic, FlowType type) : base(subGraphic, type)
+        public GraphicPipe_Overlay(Graphic subGraphic, Graphic anyGraphic, FlowType flowType) : base(subGraphic, flowType)
         {
             baseGraphic = subGraphic;
             this.anyGraphic = anyGraphic;
@@ -17,7 +17,8 @@ namespace CentralizedClimateControl
 
         protected override Material LinkedDrawMatFrom(Thing parent, IntVec3 cell)
         {
-            var type = TryGetFlowType(cell, parent.Map) ?? FlowType.Any;
+            var manager = CentralizedClimateControlUtility.GetNetManager(parent.Map);
+            var type = manager.GetFirstPartAt(cell, FlowType)?.FlowType ?? FlowType.None;
             subGraphic = (type == FlowType.Any) ? anyGraphic : baseGraphic;
             return base.LinkedDrawMatFrom(parent, cell);
         }

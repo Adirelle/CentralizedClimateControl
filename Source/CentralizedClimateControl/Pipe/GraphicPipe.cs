@@ -14,14 +14,10 @@ namespace CentralizedClimateControl
             FlowType = flowType;
         }
 
-        protected FlowType? TryGetFlowType(IntVec3 vec, Map map)
-        {
-            return vec.GetFirstThingWithComp<CompNetworkPart>(map)?.GetComp<CompNetworkPart>().FlowType;
-        }
-
         public override bool ShouldLinkWith(IntVec3 vec, Thing parent)
         {
-            return vec.InBounds(parent.Map) && (TryGetFlowType(vec, parent.Map)?.Accept(FlowType) ?? false);
+            var manager = CentralizedClimateControlUtility.GetNetManager(parent.Map);
+            return vec.InBounds(parent.Map) && manager.GetFirstPartAt(vec, FlowType) != null;
         }
     }
 }

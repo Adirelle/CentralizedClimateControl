@@ -8,7 +8,7 @@ namespace CentralizedClimateControl
         ///     Blue Pipe Overlay Section Layer
         /// </summary>
         /// <param name="section">Section of the Map</param>
-        public SectionLayer_ColdPipe(Section section) : base(base.FlowType.Cold, section)
+        public SectionLayer_ColdPipe(Section section) : base(FlowType.Cold, section)
         {
         }
     }

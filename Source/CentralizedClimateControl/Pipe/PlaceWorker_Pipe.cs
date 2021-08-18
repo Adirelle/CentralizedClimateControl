@@ -15,9 +15,8 @@ namespace CentralizedClimateControl
             }
             var pipeType = pipeProps.flowType;
 
-            return loc.GetThingList(map)
-                .Select(thing => thing.TryGetComp<CompNetworkPart>())
-                .All(part => part == null || !part.FlowType.Accept(pipeType));
+            var manager = CentralizedClimateControlUtility.GetNetManager(map);
+            return !manager.GetAllPartsAt(loc, pipeType).Any();
         }
     }
 }
