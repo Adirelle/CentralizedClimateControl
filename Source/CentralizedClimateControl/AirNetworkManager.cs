@@ -6,18 +6,19 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    public class AirFlowNetManager : MapComponent
+    public class AirNetworkManager : MapComponent
     {
+        private const int typeCount = (int)FlowType.Max;
+
         private const int RebuildValue = -2;
 
-        private readonly List<AirFlowNet> _backupNets = new List<AirFlowNet>();
-        private readonly int _pipeCount;
+        private readonly List<AirNetwork> _backupNets = new List<AirNetwork>();
         private int _masterId;
-        public List<CompAirFlowConsumer> CachedConsumers = new List<CompAirFlowConsumer>();
-        public List<AirFlowNet> CachedNets = new List<AirFlowNet>();
+        public List<CompVent> CachedConsumers = new List<CompVent>();
+        public List<AirNetwork> CachedNets = new List<AirNetwork>();
         public List<CompAirFlow> CachedPipes = new List<CompAirFlow>();
-        public List<CompAirFlowProducer> CachedProducers = new List<CompAirFlowProducer>();
-        public List<CompAirFlowTempControl> CachedTempControls = new List<CompAirFlowTempControl>();
+        public List<CompIntake> CachedProducers = new List<CompIntake>();
+        public List<CompTempControl> CachedTempControls = new List<CompTempControl>();
         public bool[] DirtyPipeFlag;
         public bool IsDirty;
 
@@ -29,14 +30,11 @@ namespace CentralizedClimateControl
         ///     - Mark Dirty for 1st reconstruction
         /// </summary>
         /// <param name="map">RimWorld Map Object</param>
-        public AirFlowNetManager(Map map) : base(map)
+        public AirNetworkManager(Map map) : base(map)
         {
-            var length = Enum.GetValues(typeof(AirFlowType)).Length;
-            PipeGrid = new int[length, map.AllCells.Count()];
+            PipeGrid = new int[typeCount, map.AllCells.Count()];
 
-            _pipeCount = length;
-
-            DirtyPipeFlag = new bool[length];
+            DirtyPipeFlag = new bool[typeCount];
             for (var i = 0; i < DirtyPipeFlag.Length; i++)
             {
                 DirtyPipeFlag[i] = true;
@@ -84,7 +82,7 @@ namespace CentralizedClimateControl
         ///     Register a Climate Control Device
         /// </summary>
         /// <param name="device">Climate Control Component</param>
-        public void RegisterTempControl(CompAirFlowTempControl device)
+        public void RegisterTempControl(CompTempControl device)
         {
             if (!CachedTempControls.Contains(device))
             {
@@ -99,7 +97,7 @@ namespace CentralizedClimateControl
         ///     Deregister a Climate Control Object from the Manager
         /// </summary>
         /// <param name="device">Climate Control Component</param>
-        public void DeregisterTempControl(CompAirFlowTempControl device)
+        public void DeregisterTempControl(CompTempControl device)
         {
             if (CachedTempControls.Contains(device))
             {
@@ -114,7 +112,7 @@ namespace CentralizedClimateControl
         ///     Register a Air Flow Producer
         /// </summary>
         /// <param name="pipe">Producer's Air Flow Component</param>
-        public void RegisterProducer(CompAirFlowProducer pipe)
+        public void RegisterProducer(CompIntake pipe)
         {
             if (!CachedProducers.Contains(pipe))
             {
@@ -129,7 +127,7 @@ namespace CentralizedClimateControl
         ///     Deregister a Producer from the Network Manager
         /// </summary>
         /// <param name="pipe">Producer's Component</param>
-        public void DeregisterProducer(CompAirFlowProducer pipe)
+        public void DeregisterProducer(CompIntake pipe)
         {
             if (CachedProducers.Contains(pipe))
             {
@@ -144,7 +142,7 @@ namespace CentralizedClimateControl
         ///     Register an Air Flow Consumer to the Network Manager
         /// </summary>
         /// <param name="device">Consumer's Air Flow Component</param>
-        public void RegisterConsumer(CompAirFlowConsumer device)
+        public void RegisterConsumer(CompVent device)
         {
             if (!CachedConsumers.Contains(device))
             {
@@ -159,7 +157,7 @@ namespace CentralizedClimateControl
         ///     Deregister a Consumer from the Network Manager
         /// </summary>
         /// <param name="device">Consumer's Air Flow Component</param>
-        public void DeregisterConsumer(CompAirFlowConsumer device)
+        public void DeregisterConsumer(CompVent device)
         {
             if (CachedConsumers.Contains(device))
             {
@@ -176,7 +174,7 @@ namespace CentralizedClimateControl
         /// <param name="pos">Position of the cell</param>
         /// <param name="flowType">Airflow type</param>
         /// <returns>Boolean result if pipe exists at cell or not</returns>
-        public bool ZoneAt(IntVec3 pos, AirFlowType flowType)
+        public bool ZoneAt(IntVec3 pos, FlowType flowType)
         {
             return PipeGrid[(int) flowType, map.cellIndices.CellToIndex(pos)] != RebuildValue;
         }
@@ -188,7 +186,7 @@ namespace CentralizedClimateControl
         /// <param name="flowType">Airflow type</param>
         /// <param name="id">GridID to check for</param>
         /// <returns>Boolean result if perfect pipe exists at cell or not</returns>
-        public bool PerfectMatch(IntVec3 pos, AirFlowType flowType, int id)
+        public bool PerfectMatch(IntVec3 pos, FlowType flowType, int id)
         {
             return PipeGrid[(int) flowType, map.cellIndices.CellToIndex(pos)] == id;
         }
@@ -215,9 +213,9 @@ namespace CentralizedClimateControl
 
             _backupNets.Clear();
 
-            for (var i = 0; i < _pipeCount; i++)
+            for (var i = 0; i < typeCount; i++)
             {
-                if ((AirFlowType) i == AirFlowType.Any)
+                if ((FlowType) i == FlowType.Any)
                 {
                     continue;
                 }
@@ -259,7 +257,7 @@ namespace CentralizedClimateControl
         /// <param name="gridId">Grid ID of the current Network</param>
         /// <param name="flowIndex">Type of Air Flow</param>
         /// <param name="network">The Air Flow Network Object</param>
-        private void ParseParentCell(CompAirFlow compAirFlow, int gridId, int flowIndex, AirFlowNet network)
+        private void ParseParentCell(CompAirFlow compAirFlow, int gridId, int flowIndex, AirNetwork network)
         {
             foreach (var current in compAirFlow.parent.OccupiedRect().EdgeCells)
             {
@@ -276,7 +274,7 @@ namespace CentralizedClimateControl
         /// <param name="gridId">Grid ID of the current Network</param>
         /// <param name="flowIndex">Type of Air Flow</param>
         /// <param name="network">The Air Flow Network Object</param>
-        public void ScanCell(IntVec3 pos, int gridId, int flowIndex, AirFlowNet network)
+        public void ScanCell(IntVec3 pos, int gridId, int flowIndex, AirNetwork network)
         {
             for (var i = 0; i < 4; i++)
             {
@@ -286,8 +284,8 @@ namespace CentralizedClimateControl
                 {
                     foreach (var buildingAirComp in current.GetComps<CompAirFlow>()
                         .Where(item =>
-                            item.FlowType == (AirFlowType) flowIndex ||
-                            item.FlowType == AirFlowType.Any && item.GridID == RebuildValue))
+                            item.FlowType == (FlowType) flowIndex ||
+                            item.FlowType == FlowType.Any && item.GridID == RebuildValue))
                     {
                         if (!ValidateBuildingPriority(buildingAirComp, network))
                         {
@@ -328,9 +326,9 @@ namespace CentralizedClimateControl
         /// <param name="flowIndex">Type of Pipe (Red, Blue, Cyan)</param>
         private void RebuildPipeGrid(int flowIndex)
         {
-            var flowType = (AirFlowType) flowIndex;
+            var flowType = (FlowType) flowIndex;
 
-            var runtimeNets = new List<AirFlowNet>();
+            var runtimeNets = new List<AirNetwork>();
 
             for (var i = 0; i < PipeGrid.GetLength(1); i++)
             {
@@ -352,7 +350,7 @@ namespace CentralizedClimateControl
             {
                 compAirFlow.GridID = _masterId;
 
-                var network = new AirFlowNet {
+                var network = new AirNetwork {
                     GridID = compAirFlow.GridID,
                     FlowType = flowType
                 };
@@ -367,7 +365,7 @@ namespace CentralizedClimateControl
                 foreach (var current in compAirFlow.parent.Position.GetThingList(map).OfType<Building>())
                 {
                     foreach (var buildingAirComp in current.GetComps<CompAirFlow>()
-                        .Where(item => item.FlowType == AirFlowType.Any && item.GridID == RebuildValue))
+                        .Where(item => item.FlowType == FlowType.Any && item.GridID == RebuildValue))
                     {
                         if (!ValidateBuildingPriority(buildingAirComp, network))
                         {
@@ -418,7 +416,7 @@ namespace CentralizedClimateControl
         /// </summary>
         /// <param name="compAirFlow">Building Component</param>
         /// <param name="network">Current Network</param>
-        private static void ValidateBuilding(CompAirFlow compAirFlow, AirFlowNet network)
+        private static void ValidateBuilding(CompAirFlow compAirFlow, AirNetwork network)
         {
             ValidateAsProducer(compAirFlow, network);
             ValidateAsTempControl(compAirFlow, network);
@@ -430,9 +428,9 @@ namespace CentralizedClimateControl
         /// </summary>
         /// <param name="compAirFlow">Building Component</param>
         /// <param name="network">Current Network</param>
-        private static void ValidateAsConsumer(CompAirFlow compAirFlow, AirFlowNet network)
+        private static void ValidateAsConsumer(CompAirFlow compAirFlow, AirNetwork network)
         {
-            if (!(compAirFlow is CompAirFlowConsumer consumer))
+            if (!(compAirFlow is CompVent consumer))
             {
                 return;
             }
@@ -454,21 +452,21 @@ namespace CentralizedClimateControl
         /// <param name="compAirFlow">Building Component</param>
         /// <param name="network">Current Network</param>
         /// <returns>Result if we can add the Building to existing Network</returns>
-        private static bool ValidateBuildingPriority(CompAirFlow compAirFlow, AirFlowNet network)
+        private static bool ValidateBuildingPriority(CompAirFlow compAirFlow, AirNetwork network)
         {
             if (compAirFlow == null)
             {
                 return false;
             }
 
-            if (!(compAirFlow is CompAirFlowConsumer consumer))
+            if (!(compAirFlow is CompVent consumer))
             {
                 return true;
             }
 
             var priority = consumer.AirTypePriority;
 
-            if (priority == AirTypePriority.Auto)
+            if (priority == TypePriority.Auto)
             {
                 return true;
             }
@@ -481,9 +479,9 @@ namespace CentralizedClimateControl
         /// </summary>
         /// <param name="compAirFlow">Building Component</param>
         /// <param name="network">Current Network</param>
-        private static void ValidateAsProducer(CompAirFlow compAirFlow, AirFlowNet network)
+        private static void ValidateAsProducer(CompAirFlow compAirFlow, AirNetwork network)
         {
-            if (!(compAirFlow is CompAirFlowProducer producer))
+            if (!(compAirFlow is CompIntake producer))
             {
                 return;
             }
@@ -501,9 +499,9 @@ namespace CentralizedClimateControl
         /// </summary>
         /// <param name="compAirFlow">Building Component</param>
         /// <param name="network">Current Network</param>
-        private static void ValidateAsTempControl(CompAirFlow compAirFlow, AirFlowNet network)
+        private static void ValidateAsTempControl(CompAirFlow compAirFlow, AirNetwork network)
         {
-            if (!(compAirFlow is CompAirFlowTempControl tempControl))
+            if (!(compAirFlow is CompTempControl tempControl))
             {
                 return;
             }

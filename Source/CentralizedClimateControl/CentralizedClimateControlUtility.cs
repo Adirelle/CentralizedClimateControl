@@ -1,6 +1,8 @@
 using RimWorld;
 using UnityEngine;
 using Verse;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace CentralizedClimateControl
 {
@@ -11,9 +13,9 @@ namespace CentralizedClimateControl
         /// </summary>
         /// <param name="map">RimWorld Map</param>
         /// <returns>AirFlow Net Manager</returns>
-        public static AirFlowNetManager GetNetManager(Map map)
+        public static AirNetworkManager GetNetManager(Map map)
         {
-            return map.GetComponent<AirFlowNetManager>();
+            return map.GetComponent<AirNetworkManager>();
         }
 
         /// <summary>
@@ -21,7 +23,7 @@ namespace CentralizedClimateControl
         /// </summary>
         /// <param name="compAirFlowConsumer">Component Asking for Gizmo</param>
         /// <returns>Action Button Gizmo</returns>
-        public static Command_Action GetPipeSwitchToggle(CompAirFlowConsumer compAirFlowConsumer)
+        public static Command_Action GetPipeSwitchToggle(CompVent compAirFlowConsumer)
         {
             var currentPriority = compAirFlowConsumer.AirTypePriority;
 
@@ -32,6 +34,16 @@ namespace CentralizedClimateControl
                 icon = ContentFinder<Texture2D>.Get(currentPriority.CommandIconName()),
                 action = delegate { compAirFlowConsumer.SetPriority(currentPriority.Next()); }
             };
+        }
+
+        public static IEnumerable<CompPipe> ListCellPipes(Map map, IntVec3 location, FlowType type = FlowType.Any)
+        {
+            return location
+                .GetThingList(map)
+                .OfType<ThingWithComps>()
+                .SelectMany(thing => thing.AllComps)
+                .OfType<CompPipe>()
+                .Where(pipe => pipe.FlowType == type);
         }
     }
 }

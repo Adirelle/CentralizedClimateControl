@@ -5,7 +5,7 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    public class CompAirFlowTempControl : CompAirFlow
+    public class CompTempControl : CompAirFlow
     {
         public const string TemperatureArrowKey = "CentralizedClimateControl.Producer.TemperatureArrow";
         public const string TargetTemperatureKey = "CentralizedClimateControl.Producer.TargetTemperature";
@@ -129,7 +129,7 @@ namespace CentralizedClimateControl
         ///     Temperature.
         /// </summary>
         /// <param name="compTempControl">Current Temperature Control Component of the Building</param>
-        public void TickRare(CompTempControl compTempControl)
+        public void TickRare(RimWorld.CompTempControl compTempControl)
         {
             IntakeTemperature = AirFlowNet.AverageIntakeTemperature;
             TargetTemperature = compTempControl.targetTemperature;
@@ -156,7 +156,7 @@ namespace CentralizedClimateControl
         ///     Calculate the Temperature Delta for the Tick.
         /// </summary>
         /// <param name="compTempControl">Temperature Control Component</param>
-        private void GenerateDelta(CompTempControl compTempControl)
+        private void GenerateDelta(RimWorld.CompTempControl compTempControl)
         {
             var targetDelta = TargetTemperature - IntakeTemperature;
             var currentDelta = ConvertedTemperature - IntakeTemperature;

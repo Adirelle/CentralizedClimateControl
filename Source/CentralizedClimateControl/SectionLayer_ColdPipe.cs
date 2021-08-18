@@ -2,13 +2,13 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    internal class SectionLayer_ColdAirPipe : SectionLayer_AirPipe
+    internal class SectionLayer_ColdPipe : SectionLayer_Pipe
     {
         /// <summary>
         ///     Blue Pipe Overlay Section Layer
         /// </summary>
         /// <param name="section">Section of the Map</param>
-        public SectionLayer_ColdAirPipe(Section section) : base(AirFlowType.Cold, section)
+        public SectionLayer_ColdPipe(Section section) : base(base.FlowType.Cold, section)
         {
         }
     }

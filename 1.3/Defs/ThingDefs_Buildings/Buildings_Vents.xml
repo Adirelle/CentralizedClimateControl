@@ -32,7 +32,7 @@
   <ThingDef Abstract="True" Name="CentralizedClimateControl_BaseWallVent" ParentName="CentralizedClimateControl_BaseVent">
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_NeedsWall</li>
-      <li>CentralizedClimateControl.PlaceWorker_AirVent</li>
+      <li>CentralizedClimateControl.PlaceWorker_AirExhaust</li>
     </placeWorkers>
     <altitudeLayer>PawnUnused</altitudeLayer>
     <building>
@@ -55,7 +55,7 @@
     </building>
     <holdsRoof>true</holdsRoof>
     <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_SurroundAirVent</li>
+      <li>CentralizedClimateControl.PlaceWorker_AirExhaust</li>
     </placeWorkers>
   </ThingDef>
   <!-- Small Wall Vent -->

@@ -4,19 +4,19 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    public class AirFlowNet
+    public class AirNetwork
     {
         public float AverageConvertedTemperature;
 
         public float AverageIntakeTemperature;
 
         public List<CompAirFlow> Connectors = new List<CompAirFlow>();
-        public List<CompAirFlowConsumer> Consumers = new List<CompAirFlowConsumer>();
+        public List<CompVent> Consumers = new List<CompVent>();
         public float FlowEfficiency = 1.0f;
 
-        public AirFlowType FlowType;
-        public List<CompAirFlowProducer> Producers = new List<CompAirFlowProducer>();
-        public List<CompAirFlowTempControl> TempControls = new List<CompAirFlowTempControl>();
+        public FlowType FlowType;
+        public List<CompIntake> Producers = new List<CompIntake>();
+        public List<CompTempControl> TempControls = new List<CompTempControl>();
 
         public float ThermalCapacity;
         public float ThermalEfficiency = 1.0f;
@@ -112,7 +112,7 @@ namespace CentralizedClimateControl
         ///     Register a Producer of Air Flow in the Network.
         /// </summary>
         /// <param name="producer">The Producer's Component</param>
-        public void RegisterProducer(CompAirFlowProducer producer)
+        public void RegisterProducer(CompIntake producer)
         {
             if (Producers.Contains(producer))
             {
@@ -127,7 +127,7 @@ namespace CentralizedClimateControl
         ///     De-register a Producer in the Network.
         /// </summary>
         /// <param name="producer">The Producer's Component</param>
-        public void DeregisterProducer(CompAirFlowProducer producer)
+        public void DeregisterProducer(CompIntake producer)
         {
             if (!Producers.Contains(producer))
             {

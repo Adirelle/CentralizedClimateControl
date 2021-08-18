@@ -17,6 +17,10 @@
     <statBases>
       <Beauty>-10</Beauty>
     </statBases>
+    <placeWorkers>
+      <li>CentralizedClimateControl.PlaceWorker_NotOnAirPipe</li>
+      <li>CentralizedClimateControl.PlaceWorker_NeedsClearArea</li>
+    </placeWorkers>
   </ThingDef>
   <ThingDef Abstract="True" Name="AirPipe">
     <label>airpipe</label>
@@ -325,9 +329,6 @@
     <researchPrerequisites>
       <li>BasicClimateControl</li>
     </researchPrerequisites>
-    <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_IntakeFan</li>
-    </placeWorkers>
   </ThingDef>
   <ThingDef ParentName="CentralizedClimateControlBuilding">
     <defName>AirThermal</defName>
@@ -390,9 +391,6 @@
     <researchPrerequisites>
       <li>BasicClimateControl</li>
     </researchPrerequisites>
-    <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_AirThermal</li>
-    </placeWorkers>
   </ThingDef>
   <ThingDef ParentName="CentralizedClimateControlBuilding">
     <defName>LargeIntakeFan</defName>
@@ -455,9 +453,6 @@
     <researchPrerequisites>
       <li>IndustrialClimateControl</li>
     </researchPrerequisites>
-    <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_IntakeFan</li>
-    </placeWorkers>
   </ThingDef>
   <ThingDef ParentName="CentralizedClimateControlBuilding">
     <defName>LargeAirThermal</defName>
@@ -521,8 +516,5 @@
     <researchPrerequisites>
       <li>IndustrialClimateControl</li>
     </researchPrerequisites>
-    <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_AirThermal</li>
-    </placeWorkers>
   </ThingDef>
 </Defs>
