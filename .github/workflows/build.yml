@@ -72,7 +72,7 @@ jobs:
         draft: false
         prerelease: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         bodyFile: dist/${{ env.MOD_NAME }}/About/Changelog.txt
-        artifacts: dist//${{ env.MOD_NAME }}.zip
+        artifacts: dist/${{ env.MOD_NAME }}.zip
         artifactContentType: application/zip
         token: ${{ github.token }}
         allowUpdates: true
