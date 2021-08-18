@@ -9,9 +9,6 @@ on:
 
 env:
   MOD_NAME: CentralizedClimateControl
-  DOTNET_VERSION: '5.0.x'
-  DOTNET_DIR: Source/CentralizedClimateControl
-  DOTNET_CONFIG: Debug
 
 jobs:
   build:
@@ -26,13 +23,13 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+        dotnet-version: '5.0.x'
     - name: Install dependencies
-      working-directory: ${{ env.DOTNET_DIR }}
+      working-directory: Source/CentralizedClimateControl
       run: dotnet restore
     - name: Build the assembly
-      working-directory: ${{ env.DOTNET_DIR }}
-      run: dotnet build --configuration ${{ env.DOTNET_CONFIG }} --no-restore
+      working-directory: Source/CentralizedClimateControl
+      run: dotnet build --configuration Release --no-restore
     - name: Extract the version string
       id: version
       shell: bash
