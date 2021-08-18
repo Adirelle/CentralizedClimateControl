@@ -52,7 +52,7 @@ jobs:
   release:
     name: release
     needs: build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Download the distribution
       uses: actions/download-artifact@v2
