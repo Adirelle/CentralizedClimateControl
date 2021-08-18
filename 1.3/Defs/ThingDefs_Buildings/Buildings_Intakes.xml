@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef
+    Name="CCC_IntakeBase"
+    Abstract="True"
+    ParentName="CCC_BuildingBase"
+  >
+    <designatorDropdown>CCC_Intake</designatorDropdown>
+    <designationHotKey>Misc4</designationHotKey>
+    <comps>
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CentralizedClimateControl.CompProperties_Area">
+        <shape>Around</shape>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>CentralizedClimateControl.PlaceWorker_NeedsClearArea</li>
+      <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
+    </placeWorkers>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_IntakeFan"
+    Class="Building"
+    ParentName="CCC_IntakeBase"
+  >
+    <label>Intake fan</label>
+    <description>An intake fan.</description>
+    <graphicData>
+      <texPath>Things/Building/IntakeFan</texPath>
+    </graphicData>
+    <size>(1,1)</size>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
+    <statBases>
+      <WorkToBuild>1600</WorkToBuild>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Mass>20</Mass>
+    </statBases>
+    <costList>
+      <Steel>100</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+      </li>
+      <li Class="CentralizedClimateControl.CompProperties_Intake">
+        <baseAirIntake>300.0</baseAirIntake>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_LargeIntakeFan"
+    Class="Building"
+    ParentName="CCC_IntakeBase"
+  >
+    <label>Large intake fan</label>
+    <description>A large intake fan.</description>
+    <graphicData>
+      <texPath>Things/Building/LargeIntakeFan</texPath>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <statBases>
+      <WorkToBuild>4800</WorkToBuild>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Mass>100</Mass>
+    </statBases>
+    <costList>
+      <Steel>300</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>450</basePowerConsumption>
+      </li>
+      <li Class="CentralizedClimateControl.CompProperties_Intake">
+        <baseAirIntake>1500.0</baseAirIntake>
+      </li>
+    </comps>
+    <researchPrerequisites>
+      <li>IndustrialClimateControl</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

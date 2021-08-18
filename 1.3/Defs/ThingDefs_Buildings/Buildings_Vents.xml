@@ -1,215 +1,151 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- CentralizedClimateControl Vents -->
+
 <Defs>
-  <!-- Base Vent Building -->
-  <ThingDef Abstract="True" Name="CentralizedClimateControl_BaseVent" ParentName="BuildingBase">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <minifiedDef>MinifiedThing</minifiedDef>
-    <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <thingCategories>
-      <li>BuildingsClimate</li>
-    </thingCategories>
-    <statBases>
-      <Beauty>-10</Beauty>
-    </statBases>
-    <clearBuildingArea>false</clearBuildingArea>
-    <researchPrerequisites>
-      <li>BasicClimateControl</li>
-    </researchPrerequisites>
-    <designationCategory>Temperature</designationCategory>
+
+  <ThingDef
+    Name="CCC_VentBase"
+    Abstract="True"
+    ParentName="CCC_BuildingBase"
+  >
     <designatorDropdown>CCC_Vents</designatorDropdown>
     <designationHotKey>Misc4</designationHotKey>
-    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
-    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
-    <tickerType>Rare</tickerType>
-  </ThingDef>
-  <!-- Base Wall Mounted Vent Building -->
-  <ThingDef Abstract="True" Name="CentralizedClimateControl_BaseWallVent" ParentName="CentralizedClimateControl_BaseVent">
     <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_NeedsWall</li>
-      <li>CentralizedClimateControl.PlaceWorker_AirExhaust</li>
+      <li>CentralizedClimateControl.PlaceWorker_RoomHighlight</li>
     </placeWorkers>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_WallVentBase"
+    Abstract="True"
+    ParentName="CCC_VentBase"
+  >
     <altitudeLayer>PawnUnused</altitudeLayer>
     <building>
       <isEdifice>false</isEdifice>
-    </building>
-  </ThingDef>
-  <!-- Base Full Size Vent Building -->
-  <ThingDef Abstract="True" Name="CentralizedClimateControl_BaseSurroundVent" ParentName="CentralizedClimateControl_BaseVent">
-    <altitudeLayer>Building</altitudeLayer>
-    <passability>Impassable</passability>
-    <blockWind>true</blockWind>
-    <fillPercent>1</fillPercent>
-    <coversFloor>true</coversFloor>
-    <blockLight>true</blockLight>
-    <canOverlapZones>false</canOverlapZones>
-    <castEdgeShadows>true</castEdgeShadows>
-    <staticSunShadowHeight>1.0</staticSunShadowHeight>
-    <building>
       <canPlaceOverWall>true</canPlaceOverWall>
     </building>
-    <holdsRoof>true</holdsRoof>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Area">
+        <shape>Side</shape>
+      </li>
+    </comps>
     <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_AirExhaust</li>
+      <li>CentralizedClimateControl.PlaceWorker_NeedsWall</li>
     </placeWorkers>
   </ThingDef>
-  <!-- Small Wall Vent -->
-  <ThingDef ParentName="CentralizedClimateControl_BaseWallVent">
-    <defName>WallAirVentSmall</defName>
+
+  <ThingDef
+    Name="CCC_SmallWallVent"
+    Class="Building"
+    ParentName="CCC_WallVentBase"
+  >
     <label>Small wall air vent</label>
-    <thingClass>CentralizedClimateControl.Building_AirVent</thingClass>
+    <description>A small wall-mounted air vent.</description>
     <graphicData>
       <texPath>Things/Building/Vents/WallAirVentSmall</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <damageData>
-        <cornerTL>Damage/Corner</cornerTL>
-        <cornerTR>Damage/Corner</cornerTR>
-        <cornerBL>Damage/Corner</cornerBL>
-        <cornerBR>Damage/Corner</cornerBR>
-      </damageData>
     </graphicData>
     <statBases>
       <WorkToBuild>175</WorkToBuild>
       <MaxHitPoints>75</MaxHitPoints>
       <Mass>1</Mass>
-      <Flammability>1.0</Flammability>
     </statBases>
-    <description>A small wall-mounted air vent, pushes 50cc of air.</description>
     <costList>
       <Steel>35</Steel>
     </costList>
     <comps>
-      <li Class="CentralizedClimateControl.CompProperties_AirFlow">
-        <compClass>CentralizedClimateControl.CompAirFlowConsumer</compClass>
-        <flowType>Any</flowType>
+      <li Class="CentralizedClimateControl.CompProperties_Vent">
         <baseAirExhaust>50</baseAirExhaust>
-      </li>
-      <li Class="CompProperties_Flickable">
-        <commandTexture>UI/Commands/Vent</commandTexture>
-        <commandLabelKey>CommandDesignateOpenCloseVentLabel</commandLabelKey>
-        <commandDescKey>CommandDesignateOpenCloseVentDesc</commandDescKey>
       </li>
     </comps>
   </ThingDef>
-  <!-- Regular Wall Vent -->
-  <ThingDef ParentName="CentralizedClimateControl_BaseWallVent">
-    <defName>WallAirVent</defName>
+
+ <ThingDef
+    Name="CCC_WallVent"
+    Class="Building"
+    ParentName="CCC_WallVentBase"
+  >
     <label>Wall air vent</label>
-    <thingClass>CentralizedClimateControl.Building_AirVent</thingClass>
+    <description>A wall-mounted air vent.</description>
     <graphicData>
       <texPath>Things/Building/Vents/WallAirVent</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <damageData>
-        <cornerTL>Damage/Corner</cornerTL>
-        <cornerTR>Damage/Corner</cornerTR>
-        <cornerBL>Damage/Corner</cornerBL>
-        <cornerBR>Damage/Corner</cornerBR>
-      </damageData>
     </graphicData>
     <statBases>
       <WorkToBuild>350</WorkToBuild>
       <MaxHitPoints>75</MaxHitPoints>
       <Mass>2</Mass>
-      <Flammability>1.0</Flammability>
     </statBases>
-    <description>A wall-mounted air vent, pushes 100cc of air.</description>
     <costList>
       <Steel>70</Steel>
     </costList>
     <comps>
-      <li Class="CentralizedClimateControl.CompProperties_AirFlow">
-        <compClass>CentralizedClimateControl.CompAirFlowConsumer</compClass>
-        <flowType>Any</flowType>
+      <li Class="CentralizedClimateControl.CompProperties_Vent">
         <baseAirExhaust>100</baseAirExhaust>
-      </li>
-      <li Class="CompProperties_Flickable">
-        <commandTexture>UI/Commands/Vent</commandTexture>
-        <commandLabelKey>CommandDesignateOpenCloseVentLabel</commandLabelKey>
-        <commandDescKey>CommandDesignateOpenCloseVentDesc</commandDescKey>
       </li>
     </comps>
   </ThingDef>
-  <!-- Regular Surround Vents -->
-  <ThingDef ParentName="CentralizedClimateControl_BaseSurroundVent">
-    <defName>SurroundAirVent</defName>
+
+  <ThingDef
+    Name="CCC_SurroundVentBase"
+    Abstract="True"
+    ParentName="CCC_VentBase"
+  >
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Area">
+        <shape>Around</shape>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_SurroundVent"
+    Class="Building"
+    ParentName="CCC_SurroundVentBase"
+  >
     <label>Surround air vent</label>
-    <thingClass>CentralizedClimateControl.Building_AirVent</thingClass>
+    <description>A surround exhaust vent.</description>
     <graphicData>
       <texPath>Things/Building/Vents/SurroundAirVent</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <damageData>
-        <cornerTL>Damage/Corner</cornerTL>
-        <cornerTR>Damage/Corner</cornerTR>
-        <cornerBL>Damage/Corner</cornerBL>
-        <cornerBR>Damage/Corner</cornerBR>
-      </damageData>
     </graphicData>
     <statBases>
       <WorkToBuild>1050</WorkToBuild>
       <MaxHitPoints>100</MaxHitPoints>
       <Mass>50</Mass>
-      <Flammability>1.0</Flammability>
     </statBases>
-    <description>A surround exhaust vent, pushes 300cc of air.</description>
     <costList>
       <Steel>210</Steel>
     </costList>
     <comps>
-      <li Class="CentralizedClimateControl.CompProperties_AirFlow">
-        <compClass>CentralizedClimateControl.CompAirFlowConsumer</compClass>
-        <flowType>Any</flowType>
+      <li Class="CentralizedClimateControl.CompProperties_Vent">
         <baseAirExhaust>300</baseAirExhaust>
-      </li>
-      <li Class="CompProperties_Flickable">
-        <commandTexture>UI/Commands/Vent</commandTexture>
-        <commandLabelKey>CommandDesignateOpenCloseVentLabel</commandLabelKey>
-        <commandDescKey>CommandDesignateOpenCloseVentDesc</commandDescKey>
       </li>
     </comps>
   </ThingDef>
-  <!-- Wide Surround Vents -->
-  <ThingDef ParentName="CentralizedClimateControl_BaseSurroundVent">
-    <defName>SurroundAirVentWide</defName>
+
+  <ThingDef
+    Name="CCC_WideSurroundVent"
+    Class="Building"
+    ParentName="CCC_SurroundVentBase"
+  >
     <label>Large surround air vent</label>
-    <thingClass>CentralizedClimateControl.Building_AirVent</thingClass>
+    <description>A large surround exhaust vent.</description>
     <size>(2,1)</size>
     <graphicData>
       <drawSize>(2,1)</drawSize>
       <texPath>Things/Building/Vents/SurroundAirVentWide</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <damageData>
-        <cornerTL>Damage/Corner</cornerTL>
-        <cornerTR>Damage/Corner</cornerTR>
-        <cornerBL>Damage/Corner</cornerBL>
-        <cornerBR>Damage/Corner</cornerBR>
-      </damageData>
     </graphicData>
     <statBases>
       <WorkToBuild>2100</WorkToBuild>
       <MaxHitPoints>200</MaxHitPoints>
       <Mass>100</Mass>
-      <Flammability>1.0</Flammability>
     </statBases>
-    <description>A large surround exhaust vent, pushes 600cc of air.</description>
     <costList>
       <Steel>420</Steel>
     </costList>
     <comps>
-      <li Class="CentralizedClimateControl.CompProperties_AirFlow">
-        <compClass>CentralizedClimateControl.CompAirFlowConsumer</compClass>
-        <flowType>Any</flowType>
+      <li Class="CentralizedClimateControl.CompProperties_Vent">
         <baseAirExhaust>600</baseAirExhaust>
-      </li>
-      <li Class="CompProperties_Flickable">
-        <commandTexture>UI/Commands/Vent</commandTexture>
-        <commandLabelKey>CommandDesignateOpenCloseVentLabel</commandLabelKey>
-        <commandDescKey>CommandDesignateOpenCloseVentDesc</commandDescKey>
       </li>
     </comps>
   </ThingDef>
+
 </Defs>

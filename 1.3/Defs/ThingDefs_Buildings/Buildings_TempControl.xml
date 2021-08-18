@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+  <ThingDef
+    Name="CCC_TempControlBase"
+    Abstract="True"
+    ParentName="CCC_BuildingBase"
+  >
+    <designatorDropdown>CCC_ACC</designatorDropdown>
+    <designationHotKey>Misc4</designationHotKey>
+    <comps>
+      <li Class="CompProperties_TempControl" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CentralizedClimateControl.CompProperties_Area">
+        <shape>Side<shape>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>CentralizedClimateControl.PlaceWorker_NeedsClearArea</li>
+      <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
+    </placeWorkers>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_TempControl"
+    Class="Building"
+    ParentName="CCC_TempControlBase"
+  >
+    <label>Climate control unit</label>
+    <description>A climate control unit for heating and cooling air.</description>
+    <graphicData>
+      <texPath>Things/Building/AirThermal</texPath>
+    </graphicData>
+    <size>(1,1)</size>
+    <statBases>
+      <WorkToBuild>1600</WorkToBuild>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Mass>20</Mass>
+    </statBases>
+    <costList>
+      <Steel>200</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+      </li>
+      <li Class="CentralizedClimateControl.CompProperties_TempControl">
+        <thermalCapacity>900</thermalCapacity>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_LargeTempControl"
+    Class="Building"
+    ParentName="CCC_TempControlBase"
+  >
+    <label>Large climate control unit</label>
+    <description>A large climate control unit for heating and cooling air.</description>
+    <graphicData>
+      <texPath>Things/Building/LargeAirThermal</texPath>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <statBases>
+      <WorkToBuild>4800</WorkToBuild>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Mass>80</Mass>
+    </statBases>
+    <costList>
+      <Steel>600</Steel>
+      <ComponentIndustrial>9</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>600</basePowerConsumption>
+      </li>
+      <li Class="CentralizedClimateControl.CompProperties_TempControl">
+        <thermalCapacity>4500</thermalCapacity>
+      </li>
+    </comps>
+    <researchPrerequisites>
+      <li>IndustrialClimateControl</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>
