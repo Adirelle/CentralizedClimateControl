@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-
     name: build
     runs-on: windows-latest
 
@@ -29,3 +28,31 @@ jobs:
     - name: Build
       run: dotnet build --configuration Debug --no-restore
       working-directory: Source/CentralizedClimateControl
+
+    - name: Version
+      run: echo "::set-output name=version::$(git describe)"
+      id: version
+
+    - name: Update version information
+      run: sed -i -e 's/2.0.0.0/${{ steps.version.outputs.version }}/' About\Manifest.xml About\ModSync.xml
+      shell: bash
+
+    - name: Create the package
+      uses: thedoctor0/zip-release@master
+      with:
+        type: 'zip'
+        filename: 'CentralizedClimateControl.zip'
+        exclusions: '*.git* /Source/*'
+
+    - name: Create the release
+      uses: ncipollo/release-action@v1
+      with:
+        name: ${{ steps.version.outputs.version }}
+        draft: true
+        prerelease: false
+        bodyFile: About/Changelog.txt
+        artifacts: "CentralizedClimateControl.zip"
+        artifactContentType: application/zip
+        token: ${{ github.token }}
+        allowUpdates: true
+        replacesArtifacts: true
