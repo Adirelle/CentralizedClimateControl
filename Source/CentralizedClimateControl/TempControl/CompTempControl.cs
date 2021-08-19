@@ -81,10 +81,10 @@ namespace CentralizedClimateControl
             var builder = new StringBuilder();
 
             // @TODO: translate
-            builder.AppendLine($"Thermal capacity: {CurrentCapacity} cc/s");
+            builder.AppendInNewLine("Thermal capacity: {0}".Translate(CurrentCapacity.ToStringThroughput()));
 
             // @TODO: translate
-            builder.AppendLine($"Processing: {Input} => {Output}");
+            builder.AppendInNewLine("Processing: {0} => {1}".Translate(Input.Translate(), Output.Translate()));
 
             return builder.ToString();
         }

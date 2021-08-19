@@ -48,5 +48,18 @@ namespace CentralizedClimateControl
 
             exhaustCell.GetRoomOrAdjacent(parent.Map).Temperature += tempChange;
         }
+
+        public override string CompInspectStringExtra()
+        {
+            var stringBuilder = new StringBuilder();
+
+            // @TODO: translate
+            stringBuilder.AppendInNewLine("Maximum exhaust: {0}".Translate(MaxExhaust.ToStringThroughput()));
+
+            // @TODO: translate
+            stringBuilder.AppendInNewLine("Current exhaust: {0}".Translate(Exhaust.Translate()));
+
+            return stringBuilder.ToString();
+        }
     }
 }

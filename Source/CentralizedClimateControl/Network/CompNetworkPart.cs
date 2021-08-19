@@ -31,11 +31,11 @@ namespace CentralizedClimateControl
             if (!IsConnected)
             {
                 // @TODO: translate
-                return "Disconnected from air network";
+                return "Disconnected from air network".Translate();
             }
 
             // @TODO: translate
-            return $"Connected to air network";
+            return "Connected to air network".Translate();
         }
 
         public bool IsVisibleOnOverlay(FlowType type)

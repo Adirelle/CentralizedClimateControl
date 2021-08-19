@@ -37,13 +37,13 @@ namespace CentralizedClimateControl
             if (IsBlocked)
             {
                 // @TODO: translation
-                return "Totally blocked";
+                return "Totally blocked".Translate();
             }
 
             if (MaxLoad < 1.0)
             {
                 // @TODO: translate
-                return $"Blocked at {(1.0f - MaxLoad) * 100.0f}%";
+                return "Blocked at {0}".Translate((1.0f - MaxLoad).ToStringPercentEmptyZero());
             }
 
             return null;

@@ -58,10 +58,10 @@ namespace CentralizedClimateControl
             var builder = new StringBuilder();
 
             // @TODO: translate
-            builder.AppendLine($"Maximum intake: {MaxIntake} cc/s");
+            builder.AppendInNewLine("Maximum intake: {0}".Translate(MaxIntake.ToStringThroughput()));
 
             // @TODO: translate
-            builder.AppendLine($"Current intake: {Intake}");
+            builder.AppendInNewLine("Current intake: {0}".Translate(Intake.Translate()));
 
             return builder.ToString();
         }

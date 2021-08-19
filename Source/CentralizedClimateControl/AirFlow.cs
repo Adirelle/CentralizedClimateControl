@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Verse;
+
 namespace CentralizedClimateControl
 {
     public struct AirFlow
@@ -22,9 +24,24 @@ namespace CentralizedClimateControl
 
         public override string ToString()
         {
-            return $"{Throughput} cc/s at {Temperature}°c";
+            return Translate().ToString();
         }
 
+        public TaggedString Translate()
+        {
+            // @TODO: translate
+            return "{0} at {1}".Translate(ToStringThroughput(), ToStringTemperature());
+        }
+
+        public string ToStringThroughput()
+        {
+            return Throughput.ToStringThroughput();
+        }
+
+        public string ToStringTemperature()
+        {
+            return Temperature.ToStringTemperature();
+        }
         public static readonly AirFlow Zero = new();
 
         public static implicit operator bool(AirFlow flow)
@@ -65,6 +82,16 @@ namespace CentralizedClimateControl
             }
 
             return Zero;
+        }
+
+    }
+
+    public static class AirFlowExtension
+    {
+        public static string ToStringThroughput(this float throughput)
+        {
+            // @TODO: translate
+            return "{0} cc/s".Translate(throughput.ToStringDecimalIfSmall());
         }
     }
 }
