@@ -1,5 +1,5 @@
-using System.Text;
 using RimWorld;
+using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -7,8 +7,8 @@ namespace CentralizedClimateControl
 {
     public class CompTempControl : ThingComp
     {
-        private const float TempNominalChange = 10.0f;
-        private const float HeatExhaustFactor = 1.25f;
+        private const float tempNominalChange = 10.0f;
+        private const float heatExhaustFactor = 1.25f;
 
         // Input
         public AirFlow Input;
@@ -67,7 +67,7 @@ namespace CentralizedClimateControl
             var throughput = Mathf.Min(Input.Throughput, MaxInput);
             var tempDelta = tempControl.targetTemperature - Input.Temperature;
             var energyDelta = tempDelta * throughput;
-            var maxEnergyChange = CurrentCapacity * TempNominalChange;
+            var maxEnergyChange = CurrentCapacity * tempNominalChange;
             var energyChange = Mathf.Clamp(energyDelta, -maxEnergyChange, maxEnergyChange);
             var tempChange = energyChange / throughput;
             var highPowerUsage = !Mathf.Approximately(tempChange, 0.0f);
@@ -79,7 +79,7 @@ namespace CentralizedClimateControl
 
             if (tempChange < 0.0f)
             {
-                GenTemperature.PushHeat(area.FreeArea[0], parent.Map, HeatExhaustFactor * -tempChange);
+                GenTemperature.PushHeat(area.FreeArea[0], parent.Map, heatExhaustFactor * -tempChange);
             }
         }
 

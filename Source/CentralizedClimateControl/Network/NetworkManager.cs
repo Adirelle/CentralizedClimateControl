@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -39,7 +37,8 @@ namespace CentralizedClimateControl
 
         private Grid Grid(FlowType type)
         {
-            return type switch {
+            return type switch
+            {
                 FlowType.Hot => grids[0],
                 FlowType.Cold => grids[1],
                 FlowType.Frozen => grids[2],

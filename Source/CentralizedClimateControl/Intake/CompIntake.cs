@@ -1,6 +1,6 @@
+using RimWorld;
 using System.Linq;
 using System.Text;
-using RimWorld;
 using Verse;
 
 namespace CentralizedClimateControl
@@ -50,7 +50,7 @@ namespace CentralizedClimateControl
 
             var temperature = area.FreeArea.Average(cell => cell.GetTemperature(parent.Map));
             Intake = new AirFlow(MaxIntake * NetworkLoad, temperature);
-            powerTrader.PowerOutput = -powerTrader.Props.basePowerConsumption;   
+            powerTrader.PowerOutput = -powerTrader.Props.basePowerConsumption;
         }
 
         public override string CompInspectStringExtra()

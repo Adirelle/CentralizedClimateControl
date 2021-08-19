@@ -1,5 +1,5 @@
-using Verse;
 using System.Linq;
+using Verse;
 
 namespace CentralizedClimateControl
 {

@@ -36,7 +36,8 @@ namespace CentralizedClimateControl
 
         public static string ToString(this FlowType type)
         {
-            return type switch {
+            return type switch
+            {
                 FlowType.None => "None",
                 FlowType.Cold => "Cold",
                 FlowType.Hot => "Hot",
@@ -53,7 +54,8 @@ namespace CentralizedClimateControl
 
         public static UnityEngine.Color Color(this FlowType type)
         {
-            return type switch {
+            return type switch
+            {
                 FlowType.Cold => UnityEngine.Color.blue,
                 FlowType.Hot => UnityEngine.Color.red,
                 FlowType.Frozen => UnityEngine.Color.cyan,

@@ -1,6 +1,5 @@
-using Verse;
-using System.Text;
 using System.Collections.Generic;
+using Verse;
 
 namespace CentralizedClimateControl
 {
@@ -40,7 +39,7 @@ namespace CentralizedClimateControl
 
         public bool IsVisibleOnOverlay(FlowType type)
         {
-            return type.Accept(FlowType); 
+            return type.Accept(FlowType);
         }
 
         public void PrintOnOverlayLayer(SectionLayer layer)
@@ -50,7 +49,7 @@ namespace CentralizedClimateControl
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            foreach(var gizmo in base.CompGetGizmosExtra())
+            foreach (var gizmo in base.CompGetGizmosExtra())
             {
                 yield return gizmo;
             }

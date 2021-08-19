@@ -26,7 +26,7 @@ namespace CentralizedClimateControl
 
         public void Add(CompNetworkPart part)
         {
-            foreach(var cell in part.parent.OccupiedRect())
+            foreach (var cell in part.parent.OccupiedRect())
             {
                 Cells[cellIndices.CellToIndex(cell)] = part;
             }

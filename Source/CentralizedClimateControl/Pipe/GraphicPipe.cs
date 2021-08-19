@@ -1,6 +1,3 @@
-using System;
-using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace CentralizedClimateControl
@@ -9,7 +6,7 @@ namespace CentralizedClimateControl
     {
         public readonly FlowType FlowType;
 
-        public GraphicPipe(Graphic graphic, FlowType flowType): base(graphic)
+        public GraphicPipe(Graphic graphic, FlowType flowType) : base(graphic)
         {
             FlowType = flowType;
         }
