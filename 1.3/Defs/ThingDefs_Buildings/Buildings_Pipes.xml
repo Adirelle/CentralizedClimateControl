@@ -6,6 +6,7 @@
     Abstract="True"
     ParentName="CCC_Base"
   >
+    <thingClass>CentralizedClimateControl.Building_Pipe</thingClass>
     <building>
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
@@ -59,11 +60,8 @@
     </costList>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_RedAirPipe"
-    Class="CentralizedClimateControl.Building_AirPipe"
-    ParentName="CCC_AirPipeBase"
-  >
+  <ThingDef ParentName="CCC_AirPipeBase">
+    <defName>CCC_RedAirPipe</defName>
     <label>Red air pipe</label>
     <description>Red pipes for carrying air.</description>
     <uiIconPath>UI/RedAirPipe</uiIconPath>
@@ -82,11 +80,8 @@
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_HiddenRedAirPipe"
-    Class="CentralizedClimateControl.Building_AirPipe"
-    ParentName="CCC_HiddenAirPipeBase"
-  >
+  <ThingDef ParentName="CCC_HiddenAirPipeBase">
+    <defName>CCC_HiddenRedAirPipe</defName>
     <label>Red covered air pipe</label>
     <description>Red pipes for carrying air under floors.</description>
     <uiIconPath>UI/RedAirPipeHidden</uiIconPath>
@@ -98,16 +93,13 @@
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
         <flowType>Hot</flowType>
-        <hiddenPipe>true</hiddenPipe>
+        <hidden>true</hidden>
       </li>
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_BlueAirPipe"
-    Class="CentralizedClimateControl.Building_AirPipe"
-    ParentName="CCC_AirPipeBase"
-  >
+  <ThingDef ParentName="CCC_AirPipeBase">
+    <defName>CCC_BlueAirPipe</defName>
     <label>Blue air pipe</label>
     <description>Blue pipes for carrying air.</description>
     <uiIconPath>UI/BlueAirPipe</uiIconPath>
@@ -126,11 +118,8 @@
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_HiddenBlueAirPipe"
-    Class="CentralizedClimateControl.Building_AirPipe"
-    ParentName="CCC_HiddenAirPipeBase"
-  >
+  <ThingDef ParentName="CCC_HiddenAirPipeBase">
+    <defName>CCC_HiddenBlueAirPipe</defName>
     <label>Blue covered air pipe</label>
     <description>Blue pipes for carrying air under floors.</description>
     <uiIconPath>UI/BlueAirPipeHidden</uiIconPath>
@@ -142,16 +131,13 @@
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
         <flowType>Cold</flowType>
-        <hiddenPipe>true</hiddenPipe>
+        <hidden>true</hidden>
       </li>
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_CyanAirPipe"
-    Class="CentralizedClimateControl.Building_AirPipe"
-    ParentName="CCC_AirPipeBase"
-  >
+  <ThingDef ParentName="CCC_AirPipeBase">
+    <defName>CCC_CyanAirPipe</defName>
     <label>Cyan air pipe</label>
     <description>Cyan pipes for carrying air.</description>
     <uiIconPath>UI/CyanAirPipe</uiIconPath>
@@ -170,11 +156,8 @@
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_HiddenCyanAirPipe"
-    Class="CentralizedClimateControl.Building_AirPipe"
-    ParentName="CCC_HiddenAirPipeBase"
-  >
+  <ThingDef ParentName="CCC_HiddenAirPipeBase">
+    <defName>CCC_HiddenCyanAirPipe</defName>
     <label>Cyan covered air pipe</label>
     <description>Cyan pipes for carrying air under floors.</description>
     <uiIconPath>UI/CyanAirPipeHidden</uiIconPath>
@@ -186,7 +169,7 @@
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
         <flowType>Frozen</flowType>
-        <hiddenPipe>false</hiddenPipe>
+        <hidden>false</hidden>
       </li>
     </comps>
   </ThingDef>

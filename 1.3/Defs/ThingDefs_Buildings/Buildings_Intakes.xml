@@ -6,7 +6,7 @@
     Abstract="True"
     ParentName="CCC_BuildingBase"
   >
-    <designatorDropdown>CCC_Intake</designatorDropdown>
+    <designatorDropdown>CCC_Intakes</designatorDropdown>
     <designationHotKey>Misc4</designationHotKey>
     <comps>
       <li Class="CompProperties_Breakdownable" />
@@ -20,11 +20,8 @@
     </placeWorkers>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_IntakeFan"
-    Class="Building"
-    ParentName="CCC_IntakeBase"
-  >
+  <ThingDef ParentName="CCC_IntakeBase">
+    <defName>CCC_IntakeFan</defName>
     <label>Intake fan</label>
     <description>An intake fan.</description>
     <graphicData>
@@ -54,11 +51,8 @@
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_LargeIntakeFan"
-    Class="Building"
-    ParentName="CCC_IntakeBase"
-  >
+  <ThingDef ParentName="CCC_IntakeBase">
+    <defName>CCC_LargeIntakeFan</defName>
     <label>Large intake fan</label>
     <description>A large intake fan.</description>
     <graphicData>

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Defs>
+
   <ResearchProjectDef>
     <defName>BasicClimateControl</defName>
     <label>Basic Climate Control</label>
@@ -12,6 +13,7 @@
     <researchViewX>2</researchViewX>
     <researchViewY>5</researchViewY>
   </ResearchProjectDef>
+
   <ResearchProjectDef>
     <defName>IndustrialClimateControl</defName>
     <label>Industrial Climate Control</label>
@@ -24,4 +26,5 @@
     <researchViewX>3</researchViewX>
     <researchViewY>5</researchViewY>
   </ResearchProjectDef>
+
 </Defs>

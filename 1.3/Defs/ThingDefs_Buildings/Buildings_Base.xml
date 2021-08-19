@@ -15,9 +15,7 @@
     <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
     <designationCategory>Temperature</designationCategory>
     <tickerType>Rare</tickerType>
-    <thingCategories>
-      <li>BuildingsClimate</li>
-    </thingCategories>
+    <thingClass>Building</thingClass>
     <researchPrerequisites>
       <li>BasicClimateControl</li>
     </researchPrerequisites>
@@ -30,6 +28,9 @@
   >
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsClimate</li>
+    </thingCategories>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <blockWind>true</blockWind>

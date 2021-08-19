@@ -1,15 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Defs>
+
   <DesignatorDropdownGroupDef>
     <defName>CCC_Pipes</defName>
   </DesignatorDropdownGroupDef>
+
   <DesignatorDropdownGroupDef>
-    <defName>CCC_Intake</defName>
+    <defName>CCC_Intakes</defName>
   </DesignatorDropdownGroupDef>
+
   <DesignatorDropdownGroupDef>
-    <defName>CCC_ACC</defName>
+    <defName>CCC_TempControls</defName>
   </DesignatorDropdownGroupDef>
+
   <DesignatorDropdownGroupDef>
     <defName>CCC_Vents</defName>
   </DesignatorDropdownGroupDef>
+
 </Defs>

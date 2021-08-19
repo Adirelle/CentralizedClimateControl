@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Defs>
+
   <ThingDef
     Name="CCC_TempControlBase"
     Abstract="True"
     ParentName="CCC_BuildingBase"
   >
-    <designatorDropdown>CCC_ACC</designatorDropdown>
+    <designatorDropdown>CCC_TempControls</designatorDropdown>
     <designationHotKey>Misc4</designationHotKey>
     <comps>
       <li Class="CompProperties_TempControl" />
       <li Class="CompProperties_Breakdownable" />
       <li Class="CentralizedClimateControl.CompProperties_Area">
-        <shape>Side<shape>
+        <shape>Side</shape>
       </li>
     </comps>
     <placeWorkers>
@@ -21,11 +21,8 @@
     </placeWorkers>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_TempControl"
-    Class="Building"
-    ParentName="CCC_TempControlBase"
-  >
+  <ThingDef ParentName="CCC_TempControlBase">
+    <defName>CCC_TempControl</defName>
     <label>Climate control unit</label>
     <description>A climate control unit for heating and cooling air.</description>
     <graphicData>
@@ -52,11 +49,8 @@
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_LargeTempControl"
-    Class="Building"
-    ParentName="CCC_TempControlBase"
-  >
+  <ThingDef ParentName="CCC_TempControlBase">
+    <defName>CCC_LargeTempControl</defName>
     <label>Large climate control unit</label>
     <description>A large climate control unit for heating and cooling air.</description>
     <graphicData>

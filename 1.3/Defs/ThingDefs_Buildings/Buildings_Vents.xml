@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Defs>
 
   <ThingDef
@@ -24,6 +23,7 @@
       <isEdifice>false</isEdifice>
       <canPlaceOverWall>true</canPlaceOverWall>
     </building>
+    <fillPercent>0</fillPercent>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Area">
         <shape>Side</shape>
@@ -34,11 +34,8 @@
     </placeWorkers>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_SmallWallVent"
-    Class="Building"
-    ParentName="CCC_WallVentBase"
-  >
+  <ThingDef ParentName="CCC_WallVentBase">
+    <defName>CCC_SmallWallVent</defName>
     <label>Small wall air vent</label>
     <description>A small wall-mounted air vent.</description>
     <graphicData>
@@ -59,11 +56,8 @@
     </comps>
   </ThingDef>
 
- <ThingDef
-    Name="CCC_WallVent"
-    Class="Building"
-    ParentName="CCC_WallVentBase"
-  >
+ <ThingDef ParentName="CCC_WallVentBase">
+    <defName>CCC_WallVent</defName>
     <label>Wall air vent</label>
     <description>A wall-mounted air vent.</description>
     <graphicData>
@@ -96,11 +90,8 @@
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_SurroundVent"
-    Class="Building"
-    ParentName="CCC_SurroundVentBase"
-  >
+  <ThingDef ParentName="CCC_SurroundVentBase">
+    <defName>CCC_SurroundVent</defName>
     <label>Surround air vent</label>
     <description>A surround exhaust vent.</description>
     <graphicData>
@@ -121,11 +112,8 @@
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_WideSurroundVent"
-    Class="Building"
-    ParentName="CCC_SurroundVentBase"
-  >
+  <ThingDef ParentName="CCC_SurroundVentBase">
+    <defName>CCC_WideSurroundVent</defName>
     <label>Large surround air vent</label>
     <description>A large surround exhaust vent.</description>
     <size>(2,1)</size>
