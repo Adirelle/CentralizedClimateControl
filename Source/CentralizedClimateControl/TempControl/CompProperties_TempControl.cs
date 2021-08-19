@@ -6,8 +6,9 @@ namespace CentralizedClimateControl
     {
         public float thermalCapacity;
 
-        public CompProperties_TempControl() : base(typeof(CompTempControl))
+        public CompProperties_TempControl()
         {
+            compClass = typeof(CompTempControl);
         }
     }
 }
