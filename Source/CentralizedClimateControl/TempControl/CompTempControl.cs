@@ -46,7 +46,7 @@ namespace CentralizedClimateControl
         {
             base.CompTickRare();
 
-            if (!IsOperating || Mathf.Approximately(Input.Throughput, 0.0f))
+            if (!IsOperating)
             {
                 powerTrader.PowerOutput = 0.0f;
                 MaxInput = 0.0f;
@@ -56,6 +56,13 @@ namespace CentralizedClimateControl
 
             MaxInput = TempProps.thermalCapacity;
             CurrentCapacity = TempProps.thermalCapacity * area.MaxLoad;
+
+            if (Mathf.Approximately(Input.Throughput, 0.0f))
+            {
+                powerTrader.PowerOutput = 0.0f;
+                Output = AirFlow.Zero;
+                return;
+            }
 
             var throughput = Mathf.Min(Input.Throughput, MaxInput);
             var tempDelta = tempControl.targetTemperature - Input.Temperature;
