@@ -17,6 +17,21 @@ namespace CentralizedClimateControl
             grids = new Grid[] { new Grid(map), new Grid(map), new Grid(map) };
         }
 
+        public override void MapGenerated()
+        {
+            base.MapGenerated();
+            isDirty = true;
+        }
+
+        public override void MapRemoved()
+        {
+            base.MapRemoved();
+            networks.ForEach(network => network.Clear());
+            networks.Clear();
+            parts.Clear();
+            ClearGrids();
+        }
+
         public void RegisterPart(CompNetworkPart part)
         {
             if (!parts.Contains(part))
@@ -108,10 +123,7 @@ namespace CentralizedClimateControl
         }
         private void ReconstructGrids()
         {
-            foreach (var grid in grids)
-            {
-                grid.Clear();
-            }
+            ClearGrids();
 
             foreach (var part in parts)
             {
@@ -119,6 +131,14 @@ namespace CentralizedClimateControl
                 {
                     grid.Add(part);
                 }
+            }
+        }
+
+        private void ClearGrids()
+        {
+            foreach (var grid in grids)
+            {
+                grid.Clear();
             }
         }
 
