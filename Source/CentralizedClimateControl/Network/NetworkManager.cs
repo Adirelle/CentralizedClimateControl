@@ -15,6 +15,9 @@ namespace CentralizedClimateControl
         public NetworkManager(Map map) : base(map)
         {
             grids = new Grid[] { new Grid(map), new Grid(map), new Grid(map) };
+#if DEBUG
+            Log.Message($"NetworkManager created for {map}");
+#endif
         }
 
         public override void MapGenerated()
@@ -116,6 +119,9 @@ namespace CentralizedClimateControl
 
             if (isDirty)
             {
+#if DEBUG
+                Log.Message($"NetworkManager reconstructing networks on {map}");
+#endif
                 ReconstructGrids();
                 ReconstructNetworks();
                 isDirty = false;
