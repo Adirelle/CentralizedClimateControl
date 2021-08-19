@@ -9,7 +9,7 @@ namespace CentralizedClimateControl
 
         public bool IsConnected => Network != null;
 
-        public FlowType FlowType => NetworkPartProps.flowType;
+        public FlowType FlowType => parent.def.GetFlowType();
 
         private CompProperties_NetworkPart NetworkPartProps => (CompProperties_NetworkPart) props;
 
@@ -37,15 +37,6 @@ namespace CentralizedClimateControl
             return "Connected to air network".Translate();
         }
 
-        public bool IsVisibleOnOverlay(FlowType type)
-        {
-            return type.Accept(FlowType);
-        }
-
-        public void PrintOnOverlayLayer(SectionLayer layer)
-        {
-            GraphicsLoader.GetPipeOverlay(NetworkPartProps.flowType)?.Print(layer, parent, 0);
-        }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {

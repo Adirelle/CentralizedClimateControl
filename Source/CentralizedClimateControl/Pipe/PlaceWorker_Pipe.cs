@@ -8,15 +8,13 @@ namespace CentralizedClimateControl
         public override AcceptanceReport AllowsPlacing(BuildableDef def, IntVec3 loc, Rot4 rot, Map map,
             Thing thingToIgnore = null, Thing thing = null)
         {
-            var pipeProps = (def as ThingDef)?.GetCompProperties<CompProperties_Pipe>();
-            if (pipeProps == null)
+            if (def is ThingDef thingDef)
             {
-                return true;
+                var flowType = thingDef.GetFlowType();
+                return !flowType.Accept(map.linkGrid.LinkFlagsAt(loc).ToFlowType());
             }
-            var pipeType = pipeProps.flowType;
 
-            var manager = CentralizedClimateControlUtility.GetNetManager(map);
-            return !manager.GetAllPartsAt(loc, pipeType).Any();
+            return AcceptanceReport.WasAccepted;
         }
     }
 }
