@@ -70,13 +70,10 @@ namespace CentralizedClimateControl
 
         protected virtual void BuildInspectString(StringBuilder builder)
         {
-            builder.AppendInNewLine(
-                IsConnected
-                // @TODO: translate
-                ? "Connected to air network".Translate()
-                // @TODO: translate
-                : "Disconnected from air network".Translate()
-                );
+            if(!IsConnected)
+            {
+                builder.AppendInNewLine("Not connected to air grid".Translate());
+            }
         }
 
         public virtual string DebugString() =>
