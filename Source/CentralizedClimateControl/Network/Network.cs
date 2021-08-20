@@ -25,7 +25,7 @@ namespace CentralizedClimateControl
 
         public void Clear()
         {
-            parts.ForEach(part => part.Network = null);           
+            parts.ForEach(part => part.Disconnect());
             parts.Clear();
             pipes.Clear(); 
             vents.Clear();
@@ -92,7 +92,7 @@ namespace CentralizedClimateControl
             }
 
             parts.Add(part);
-            part.Network = this;
+            part.ConnectTo(this);
 
             var pipe = part.parent.TryGetComp<CompPipe>();
             if (pipe != null)
@@ -127,7 +127,7 @@ namespace CentralizedClimateControl
             }
 
             parts.Remove(part);
-            part.Network = null;
+            part.Disconnect();
 
             var pipe = part.parent.TryGetComp<CompPipe>();
             if (pipe != null)

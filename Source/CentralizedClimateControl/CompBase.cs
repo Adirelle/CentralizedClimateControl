@@ -5,7 +5,7 @@ namespace CentralizedClimateControl
 {
     public abstract class CompBase : ThingComp
     {
-        public Network Network;
+        public Network Network { get; private set; } = null;
 
         public bool IsConnected => Network is not null;
 
@@ -29,6 +29,32 @@ namespace CentralizedClimateControl
             Log.Message("deregistering network part");
 #endif
             map.NetworkManager().DeregisterPart(this);
+        }
+
+        public void ConnectTo(Network network)
+        {
+            if (Network == network)
+            {
+                return;
+            }
+            Network = network;
+            if (parent.Spawned)
+            {
+                this.CompTickRare();
+            }
+        }
+
+        public void Disconnect()
+        {
+            if (Network is null)
+            {
+                return;
+            }
+            Network = null;
+            if (parent.Spawned)
+            {
+                this.CompTickRare();
+            }
         }
 
         public sealed override string CompInspectStringExtra()
