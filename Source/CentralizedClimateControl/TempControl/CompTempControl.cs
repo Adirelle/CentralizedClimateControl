@@ -78,7 +78,11 @@ namespace CentralizedClimateControl
 
             if (tempChange < 0.0f)
             {
-                GenTemperature.PushHeat(ClearArea[0], parent.Map, heatExhaustFactor * -tempChange);
+                var heatExhaust = heatExhaustFactor * -tempChange / ClearArea.Count;
+                foreach (var cell in ClearArea)
+                {
+                    GenTemperature.PushHeat(cell, parent.Map, heatExhaust);
+                }
             }
         }
 

@@ -34,11 +34,12 @@ namespace CentralizedClimateControl
 
             MaxExhaust = AvailableExhaust;
 
-            var exhaustCell = ClearArea[0];
             var energyLimit = Mathf.Min(MaxExhaust, Exhaust.Throughput) * cellsPerCc * secondsPerRareTick / baseExhaust;
-            var tempChange = GenTemperature.ControlTemperatureTempChange(exhaustCell, parent.Map, energyLimit, Exhaust.Temperature);
-
-            exhaustCell.GetRoomOrAdjacent(parent.Map).Temperature += tempChange;
+            energyLimit /= ClearArea.Count;
+            foreach (var cell in ClearArea)
+            {
+                var tempChange = GenTemperature.ControlTemperatureTempChange(cell, parent.Map, energyLimit, Exhaust.Temperature);
+                cell.GetRoomOrAdjacent(parent.Map).Temperature += tempChange;
             }
         }
 
