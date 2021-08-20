@@ -70,7 +70,7 @@ namespace CentralizedClimateControl
 
         protected virtual void BuildInspectString(StringBuilder builder)
         {
-            if(!IsConnected)
+            if (!IsConnected)
             {
                 builder.AppendInNewLine("Not connected to air grid".Translate());
             }

@@ -27,7 +27,7 @@ namespace CentralizedClimateControl
         {
             parts.ForEach(part => part.Disconnect());
             parts.Clear();
-            pipes.Clear(); 
+            pipes.Clear();
             vents.Clear();
             intakes.Clear();
             tempControls.Clear();

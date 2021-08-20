@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace CentralizedClimateControl
@@ -16,7 +13,7 @@ namespace CentralizedClimateControl
 
         public static AreaShape GetAreaShape(this Thing thing)
         {
-           return thing.def.GetAreaShape();
+            return thing.def.GetAreaShape();
         }
 
         public static AreaShape GetAreaShape(this Def def)

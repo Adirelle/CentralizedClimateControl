@@ -7,7 +7,7 @@ namespace CentralizedClimateControl
 {
     public class NetworkManager : MapComponent
     {
-        private const FlowType dirtyCell = (FlowType)0xff;
+        private const FlowType dirtyCell = (FlowType) 0xff;
 
         private readonly List<CompBase> parts = new();
         private readonly List<Network> networks = new();
@@ -95,7 +95,7 @@ namespace CentralizedClimateControl
         public void NotifyChange(CompBase part = null)
         {
             if (part is not null)
-            { 
+            {
                 foreach (var loc in part.parent.OccupiedRect())
                 {
                     typeCacheGrid[map.cellIndices.CellToIndex(loc)] = dirtyCell;

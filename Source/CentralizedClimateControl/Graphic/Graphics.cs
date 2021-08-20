@@ -1,6 +1,5 @@
-﻿using Verse;
-using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Verse;
 
 namespace CentralizedClimateControl
 {
@@ -11,10 +10,12 @@ namespace CentralizedClimateControl
 
         private static readonly Dictionary<string, Graphic> pipeGraphics = new();
 
-        static Graphics() {
+        static Graphics()
+        {
             var overlayGraphic = GraphicDatabase.Get<Graphic_Single>("Things/Building/AirPipe_Overlay_Atlas", ShaderDatabase.MetaOverlay);
 
-            void addColoredVersion(FlowType flowType) {
+            void addColoredVersion(FlowType flowType)
+            {
                 var coloredGraphic = overlayGraphic.GetColoredVersion(overlayGraphic.Shader, flowType.Color(), overlayGraphic.colorTwo);
                 pipeOverlays.Add(flowType, new Graphic_LinkedPipeOverlay(coloredGraphic, flowType));
             }
