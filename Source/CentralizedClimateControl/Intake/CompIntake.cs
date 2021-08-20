@@ -28,9 +28,9 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            MaxIntake = Props.baseAirIntake * FreeArea.Count / Area.Count;
+            MaxIntake = Props.baseAirIntake * ClearArea.Count / Area.Count;
 
-            var temperature = FreeArea.Average(cell => cell.GetTemperature(parent.Map));
+            var temperature = ClearArea.Average(cell => cell.GetTemperature(parent.Map));
             Intake = new AirFlow(MaxIntake * NetworkLoad, temperature);
             powerTrader.PowerOutput = -powerTrader.Props.basePowerConsumption;
         }

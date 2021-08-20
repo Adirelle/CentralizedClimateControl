@@ -29,9 +29,9 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            MaxExhaust = Props.baseAirExhaust * FreeArea.Count / Area.Count;
+            MaxExhaust = Props.baseAirExhaust * ClearArea.Count / Area.Count;
 
-            var exhaustCell = FreeArea[0];
+            var exhaustCell = ClearArea[0];
             var energyLimit = Mathf.Min(MaxExhaust, Exhaust.Throughput) * cellsPerCc * secondsPerRareTick / baseExhaust;
             var tempChange = GenTemperature.ControlTemperatureTempChange(exhaustCell, parent.Map, energyLimit, Exhaust.Temperature);
 

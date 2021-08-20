@@ -47,11 +47,9 @@
         <cornerBR>Damage/Corner</cornerBR>
       </damageData>
     </graphicData>
-    <!--
     <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_NeedsClearArea</li>
+      <li>CentralizedClimateControl.PlaceWorker_NotBlockedArea</li>
     </placeWorkers>
-    -->
   </ThingDef>
 
   <ThingDef

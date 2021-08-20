@@ -8,11 +8,12 @@
   >
     <designatorDropdown>CCC_Vents</designatorDropdown>
     <designationHotKey>Misc5</designationHotKey>
-    <!--
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
     <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_RoomHighlight</li>
+      <li>CentralizedClimateControl.PlaceWorker_HighlightsRooms</li>
     </placeWorkers>
-  -->
   </ThingDef>
 
   <ThingDef
@@ -23,7 +24,6 @@
     <altitudeLayer>PawnUnused</altitudeLayer>
     <building>
       <isEdifice>false</isEdifice>
-      <canPlaceOverWall>true</canPlaceOverWall>
     </building>
     <fillPercent>0</fillPercent>
     <placeWorkers>
@@ -48,7 +48,7 @@
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Vent">
-        <shape>Side</shape>
+        <shape>AdjacentNorth</shape>
         <baseAirExhaust>50</baseAirExhaust>
       </li>
     </comps>
@@ -71,7 +71,7 @@
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Vent">
-        <shape>Side</shape>
+        <shape>AdjacentNorth</shape>
         <baseAirExhaust>100</baseAirExhaust>
       </li>
     </comps>
@@ -94,7 +94,7 @@
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Vent">
-        <shape>Around</shape>
+        <shape>AdjacentCardinal</shape>
         <baseAirExhaust>300</baseAirExhaust>
       </li>
     </comps>
@@ -119,7 +119,7 @@
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Vent">
-        <shape>Around</shape>
+        <shape>AdjacentCardinal</shape>
         <baseAirExhaust>600</baseAirExhaust>
       </li>
     </comps>

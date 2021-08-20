@@ -39,7 +39,7 @@
         <basePowerConsumption>150</basePowerConsumption>
       </li>
       <li Class="CentralizedClimateControl.CompProperties_Intake">
-        <shape>Around</shape>
+        <shape>AroundAndInside</shape>
         <baseAirIntake>300.0</baseAirIntake>
       </li>
     </comps>
@@ -69,7 +69,7 @@
         <basePowerConsumption>450</basePowerConsumption>
       </li>
       <li Class="CentralizedClimateControl.CompProperties_Intake">
-        <shape>Around</shape>
+        <shape>AroundAndInside</shape>
         <baseAirIntake>1500.0</baseAirIntake>
       </li>
     </comps>

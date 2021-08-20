@@ -8,6 +8,9 @@
   >
     <designatorDropdown>CCC_TempControls</designatorDropdown>
     <designationHotKey>Misc4</designationHotKey>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
     <comps>
       <li Class="CompProperties_TempControl" />
     </comps>
@@ -39,7 +42,7 @@
         <basePowerConsumption>200</basePowerConsumption>
       </li>
       <li Class="CentralizedClimateControl.CompProperties_TempControl">
-        <shape>Side</shape>
+        <shape>AdjacentSouth</shape>
         <thermalCapacity>900</thermalCapacity>
       </li>
     </comps>
@@ -69,7 +72,7 @@
         <basePowerConsumption>600</basePowerConsumption>
       </li>
       <li Class="CentralizedClimateControl.CompProperties_TempControl">
-        <shape>Side</shape>
+        <shape>AdjacentSouth</shape>
         <thermalCapacity>4500</thermalCapacity>
       </li>
     </comps>

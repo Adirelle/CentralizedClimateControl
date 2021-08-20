@@ -10,11 +10,13 @@ namespace CentralizedClimateControl
 {
     public abstract class CompBuilding : CompBase
     {
+        public AreaShape AreaShape => Props.shape;
+
         public List<IntVec3> Area { get; private set; }
 
-        public List<IntVec3> FreeArea { get; private set; }
+        public List<IntVec3> ClearArea { get; private set; }
 
-        public bool IsBlocked => FreeArea.Count == 0;
+        public bool IsBlocked => ClearArea.Count == 0;
 
         public override FlowType FlowType => FlowType.Any;
 
@@ -40,7 +42,7 @@ namespace CentralizedClimateControl
                 Area = Props.shape.Cells(parent).ToList();
             }
 
-            FreeArea = Area.Where(cell => !cell.Impassable(parent.Map)).ToList();
+            ClearArea = Area.AsEnumerable().IsClear(parent.Map, parent).ToList();
         }
     }
 }

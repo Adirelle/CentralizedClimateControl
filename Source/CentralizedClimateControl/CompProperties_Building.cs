@@ -15,6 +15,11 @@ namespace CentralizedClimateControl
                 yield return error;
             }
 
+            if (shape == AreaShape.None)
+            {
+                yield return $"{compClass.Name} requires an area shape";
+            }
+
             if (!parentDef.HasComp(typeof(CompFlickable)))
             {
                 yield return $"{compClass.Name} requires a CompFlickable";

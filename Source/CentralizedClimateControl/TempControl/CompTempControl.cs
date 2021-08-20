@@ -43,7 +43,7 @@ namespace CentralizedClimateControl
             }
 
             MaxInput = Props.thermalCapacity;
-            CurrentCapacity = Props.thermalCapacity * FreeArea.Count / Area.Count;
+            CurrentCapacity = Props.thermalCapacity * ClearArea.Count / Area.Count;
 
             if (Mathf.Approximately(Input.Throughput, 0.0f))
             {
@@ -67,7 +67,7 @@ namespace CentralizedClimateControl
 
             if (tempChange < 0.0f)
             {
-                GenTemperature.PushHeat(FreeArea[0], parent.Map, heatExhaustFactor * -tempChange);
+                GenTemperature.PushHeat(ClearArea[0], parent.Map, heatExhaustFactor * -tempChange);
             }
         }
 
