@@ -137,6 +137,44 @@ namespace CentralizedClimateControl
         private void ReconstructNetworks()
         {
             ClearNetworks();
+
+            var partList = parts.ListFullCopy();
+            var queue = new Queue<CompBase>();
+
+            while (partList.Count > 0)
+            {
+                var part = partList.OfType<CompBase>().FirstOrFallback(part => part.FlowType != FlowType.Any);
+                if (part is null)
+                {
+                    break;
+                }
+
+                var flowType = part.FlowType;
+                var network = NetworkPool.Acquire(flowType);
+                networks.Add(network);
+
+                queue.Enqueue(part);
+                while (queue.TryDequeue(out var current))
+                {
+                    partList.Remove(current);
+                    network.RegisterPart(current);
+
+                    foreach (var loc in current.parent.OccupiedRect().AdjacentCellsCardinal)
+                    {
+                        if (HasPartAt(loc, flowType))
+                        {
+                            foreach (var candidate in GetPartsAt(loc, flowType))
+                            {
+                                if (!candidate.IsConnected)
+                                {
+                                    queue.Enqueue(candidate);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
         }
 
         private void ClearNetworks()
