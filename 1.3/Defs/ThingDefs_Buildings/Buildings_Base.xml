@@ -19,9 +19,6 @@
     <researchPrerequisites>
       <li>BasicClimateControl</li>
     </researchPrerequisites>
-    <graphicData>
-      <linkType>Basic</linkType>
-    </graphicData>
   </ThingDef>
 
   <ThingDef
@@ -29,24 +26,13 @@
     Abstract="True"
     ParentName="CCC_Base"
   >
-    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <minifiedDef>MinifiedThing</minifiedDef>
     <thingCategories>
       <li>BuildingsClimate</li>
     </thingCategories>
-    <altitudeLayer>Building</altitudeLayer>
-    <passability>Impassable</passability>
-    <blockWind>true</blockWind>
-    <fillPercent>1</fillPercent>
-    <coversFloor>true</coversFloor>
-    <blockLight>true</blockLight>
-    <canOverlapZones>false</canOverlapZones>
-    <castEdgeShadows>true</castEdgeShadows>
-    <staticSunShadowHeight>1.0</staticSunShadowHeight>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <comps>
       <li Class="CompProperties_Flickable" />
-      <li Class="CentralizedClimateControl.CompProperties_NetworkPart" />
     </comps>
     <statBases>
       <Beauty>-10</Beauty>
@@ -60,12 +46,28 @@
         <cornerBL>Damage/Corner</cornerBL>
         <cornerBR>Damage/Corner</cornerBR>
       </damageData>
-      <linkFlags>
-        <li>Custom6</li>
-        <li>Custom7</li>
-        <li>Custom8</li>
-      </linkFlags>
     </graphicData>
   </ThingDef>
+
+  <ThingDef
+    Name="CCC_PoweredBase"
+    Abstract="True"
+    ParentName="CCC_BuildingBase"
+  >
+  <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+  <altitudeLayer>Building</altitudeLayer>
+  <passability>Impassable</passability>
+  <blockWind>true</blockWind>
+  <fillPercent>1</fillPercent>
+  <coversFloor>true</coversFloor>
+  <blockLight>true</blockLight>
+  <canOverlapZones>false</canOverlapZones>
+  <castEdgeShadows>true</castEdgeShadows>
+  <staticSunShadowHeight>1.0</staticSunShadowHeight>
+  <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+  <comps>
+    <li Class="CompProperties_Breakdownable" />
+  </comps>
+</ThingDef>
 
 </Defs>

@@ -3,37 +3,17 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    public enum FlowType : int
+    public enum FlowType : byte
     {
-        None = 0,
-        Hot = LinkFlags.Custom6,
-        Cold = LinkFlags.Custom7,
-        Frozen = LinkFlags.Custom8,
+        None = 0x00,
+        Hot = 0x01,
+        Cold = 0x02,
+        Frozen = 0x4,
         Any = Hot | Cold | Frozen,
     }
 
     public static class FlowTypeExtensions
     {
-        public static bool IsValid(this FlowType type)
-        {
-            return type is FlowType.None or FlowType.Hot or FlowType.Cold or FlowType.Frozen or FlowType.Any;
-        }
-
-        public static bool IsAny(this FlowType type)
-        {
-            return type == FlowType.Any;
-        }
-
-        public static bool IsNone(this FlowType type)
-        {
-            return type == FlowType.None;
-        }
-
-        public static bool IsConcrete(this FlowType type)
-        {
-            return type is FlowType.Hot or FlowType.Cold or FlowType.Frozen;
-        }
-
         public static string ToString(this FlowType type)
         {
             return type switch
@@ -68,29 +48,15 @@ namespace CentralizedClimateControl
             return (selector & candidate) != FlowType.None;
         }
 
-        public static LinkFlags ToLinkFlags(this FlowType type)
+        public static FlowType GetFlowType(this Thing thing)
         {
-            return (LinkFlags) type;
-        }
-
-        public static FlowType ToFlowType(this LinkFlags flags)
-        {
-            return ((FlowType) flags) & FlowType.Any;
+            return thing.TryGetComp<CompBase>()?.FlowType ?? FlowType.None;
         }
 
         public static FlowType GetFlowType(this ThingDef def)
         {
-            return def.graphicData?.linkFlags.ToFlowType() ?? FlowType.None;
+            return def.GetCompProperties<CompProperties_Pipe>()?.flowType ?? FlowType.None;
         }
 
-        public static FlowType GetFlowType(this Thing thing)
-        {
-            return thing.def.GetFlowType();
-        }
-
-        public static FlowType GetFlowType(this ThingComp comp)
-        {
-            return comp.parent.GetFlowType();
-        }
     }
 }

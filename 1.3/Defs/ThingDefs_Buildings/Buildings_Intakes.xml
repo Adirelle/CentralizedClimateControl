@@ -4,20 +4,16 @@
   <ThingDef
     Name="CCC_IntakeBase"
     Abstract="True"
-    ParentName="CCC_BuildingBase"
+    ParentName="CCC_PoweredBase"
   >
     <designatorDropdown>CCC_Intakes</designatorDropdown>
-    <designationHotKey>Misc4</designationHotKey>
-    <comps>
-      <li Class="CompProperties_Breakdownable" />
-      <li Class="CentralizedClimateControl.CompProperties_Area">
-        <shape>Around</shape>
-      </li>
-    </comps>
+    <designationHotKey>Misc3</designationHotKey>
+    <!--
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_NeedsClearArea</li>
       <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
     </placeWorkers>
+  -->
   </ThingDef>
 
   <ThingDef ParentName="CCC_IntakeBase">
@@ -46,6 +42,7 @@
         <basePowerConsumption>150</basePowerConsumption>
       </li>
       <li Class="CentralizedClimateControl.CompProperties_Intake">
+        <shape>Around</shape>
         <baseAirIntake>300.0</baseAirIntake>
       </li>
     </comps>
@@ -75,6 +72,7 @@
         <basePowerConsumption>450</basePowerConsumption>
       </li>
       <li Class="CentralizedClimateControl.CompProperties_Intake">
+        <shape>Around</shape>
         <baseAirIntake>1500.0</baseAirIntake>
       </li>
     </comps>

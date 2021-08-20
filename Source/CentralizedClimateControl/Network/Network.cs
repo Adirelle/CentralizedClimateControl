@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -7,23 +8,26 @@ namespace CentralizedClimateControl
 {
     public class Network
     {
-        public int NetworkId;
+        public readonly int NetworkId;
         public FlowType FlowType;
 
-        private readonly List<CompNetworkPart> parts = new();
+        private readonly List<CompBase> parts = new();
         private readonly List<CompPipe> pipes = new();
         private readonly List<CompVent> vents = new();
         private readonly List<CompIntake> intakes = new();
         private readonly List<CompTempControl> tempControls = new();
 
+        public Network(int networkId, FlowType flowType)
+        {
+            NetworkId = networkId;
+            FlowType = flowType;
+        }
+
         public void Clear()
         {
-            foreach (var part in parts)
-            {
-                part.Network = null;
-            }
+            parts.ForEach(part => part.Network = null);           
             parts.Clear();
-            pipes.Clear();
+            pipes.Clear(); 
             vents.Clear();
             intakes.Clear();
             tempControls.Clear();
@@ -80,7 +84,7 @@ namespace CentralizedClimateControl
             vents.ForEach(vent => vent.Exhaust = totalExhaust * (vent.MaxExhaust / maxExhaust * exhaustLoad));
         }
 
-        public void RegisterPart(CompNetworkPart part)
+        public void RegisterPart(CompBase part)
         {
             if (parts.Contains(part))
             {
@@ -115,7 +119,7 @@ namespace CentralizedClimateControl
             }
         }
 
-        public void DeregisterPart(CompNetworkPart part)
+        public void DeregisterPart(CompBase part)
         {
             if (!parts.Contains(part))
             {
@@ -148,6 +152,15 @@ namespace CentralizedClimateControl
             {
                 tempControls.Remove(tempControl);
             }
+        }
+
+        public string DebugString()
+        {
+            var builder = new StringBuilder($"Network(#{NetworkId}, {FlowType})");
+
+            builder.AppendLine($"{parts.Count} parts: {pipes.Count} pipes, {vents.Count} vents, {intakes.Count} intakes, {tempControls.Count} controls");
+
+            return builder.ToString();
         }
     }
 }

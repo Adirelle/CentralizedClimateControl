@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -6,18 +7,18 @@ namespace CentralizedClimateControl
 {
     public class NetworkManager : MapComponent
     {
-        private int networkId;
-        private readonly List<CompNetworkPart> parts = new();
+        private const FlowType dirtyCell = (FlowType)0xff;
+
+        private readonly List<CompBase> parts = new();
         private readonly List<Network> networks = new();
         private bool isDirty = true;
-        private readonly Grid[] grids;
+
+        private readonly FlowType[] typeCacheGrid;
 
         public NetworkManager(Map map) : base(map)
         {
-            grids = new Grid[] { new Grid(map), new Grid(map), new Grid(map) };
-#if DEBUG
-            Log.Message($"NetworkManager created for {map}");
-#endif
+            typeCacheGrid = new FlowType[map.cellIndices.NumGridCells];
+            Array.Fill(typeCacheGrid, dirtyCell);
         }
 
         public override void MapGenerated()
@@ -29,74 +30,77 @@ namespace CentralizedClimateControl
         public override void MapRemoved()
         {
             base.MapRemoved();
-            networks.ForEach(network => network.Clear());
-            networks.Clear();
             parts.Clear();
-            ClearGrids();
+            ClearNetworks();
         }
 
-        public void RegisterPart(CompNetworkPart part)
+        public void RegisterPart(CompBase part)
         {
             if (!parts.Contains(part))
             {
                 parts.Add(part);
-                isDirty = true;
+                NotifyChange(part);
             }
         }
 
-        public void DeregisterPart(CompNetworkPart part)
+        public void DeregisterPart(CompBase part)
         {
             if (parts.Contains(part))
             {
                 parts.Remove(part);
-                isDirty = true;
+                NotifyChange(part);
             }
         }
 
-        private Grid Grid(FlowType type)
+        public IEnumerable<CompBase> GetAllPartsAt(IntVec3 loc)
         {
-            return type switch
+            return map.thingGrid
+                .ThingsListAtFast(loc)
+                .OfType<ThingWithComps>()
+                .SelectMany(t => t.AllComps)
+                .OfType<CompBase>();
+        }
+
+        public IEnumerable<CompBase> GetPartsAt(IntVec3 loc, FlowType selector)
+        {
+            return selector switch
             {
-                FlowType.Hot => grids[0],
-                FlowType.Cold => grids[1],
-                FlowType.Frozen => grids[2],
-                _ => null
+                FlowType.None => Enumerable.Empty<CompBase>(),
+                FlowType.Any => GetAllPartsAt(loc),
+                _ => GetAllPartsAt(loc).Where(c => selector.Accept(c.FlowType))
             };
         }
 
-        private IEnumerable<Grid> Grids(FlowType type)
+        public bool HasPartAt(IntVec3 loc, FlowType selector)
         {
-            switch (type)
+            return selector.Accept(GetCachedType(loc));
+        }
+
+        private FlowType GetCachedType(IntVec3 loc)
+        {
+            var index = map.cellIndices.CellToIndex(loc);
+            var cellType = typeCacheGrid[index];
+            if (cellType is dirtyCell)
             {
-                case FlowType.Any:
-                    yield return grids[0];
-                    yield return grids[1];
-                    yield return grids[2];
-                    break;
-                case FlowType.None:
-                    break;
-                default:
-                    yield return Grid(type);
-                    break;
+                cellType = FlowType.None;
+                foreach (var part in GetAllPartsAt(loc))
+                {
+                    cellType |= part.FlowType;
+                }
+                typeCacheGrid[index] = cellType;
             }
+            return cellType;
         }
 
-        public CompNetworkPart GetFirstPartAt(IntVec3 loc, FlowType select = FlowType.Any)
+        public void NotifyChange(CompBase part = null)
         {
-            return Grids(select)
-                .Select(grid => grid.FindAt(loc, select))
-                .FirstOrDefault(part => part != null);
-        }
-
-        public IEnumerable<CompNetworkPart> GetAllPartsAt(IntVec3 loc, FlowType select = FlowType.Any)
-        {
-            return Grids(select)
-                .Select(grid => grid.FindAt(loc, select))
-                .Where(part => part != null);
-        }
-
-        public void NotifyChange()
-        {
+            if (part is not null)
+            { 
+                foreach (var loc in part.parent.OccupiedRect())
+                {
+                    typeCacheGrid[map.cellIndices.CellToIndex(loc)] = dirtyCell;
+                }
+            }
             isDirty = true;
         }
 
@@ -120,84 +124,25 @@ namespace CentralizedClimateControl
             if (isDirty)
             {
 #if DEBUG
-                Log.Message($"NetworkManager reconstructing networks on {map}");
+                Log.Message($"--- NetworkManager reconstructing networks on map #{map.uniqueID} ---");
 #endif
-                ReconstructGrids();
                 ReconstructNetworks();
                 isDirty = false;
-            }
-        }
-        private void ReconstructGrids()
-        {
-            ClearGrids();
-
-            foreach (var part in parts)
-            {
-                foreach (var grid in Grids(part.FlowType))
-                {
-                    grid.Add(part);
-                }
-            }
-        }
-
-        private void ClearGrids()
-        {
-            foreach (var grid in grids)
-            {
-                grid.Clear();
+#if DEBUG
+                Log.Message("--- NetworkManager reconstruction done ---");
+#endif
             }
         }
 
         private void ReconstructNetworks()
         {
-            foreach (var network in networks)
-            {
-                network.Clear();
-            }
-            var prevNetworks = new Queue<Network>(networks);
-            networks.Clear();
-
-            foreach (var part in parts)
-            {
-                if (part.IsConnected || !part.FlowType.IsConcrete())
-                {
-                    continue;
-                }
-
-                if (!prevNetworks.TryDequeue(out var network))
-                {
-                    network = new Network();
-                }
-                network.NetworkId = ++networkId;
-                network.FlowType = part.FlowType;
-                networks.Add(network);
-
-                BuildNetwork(network, part);
-            }
+            ClearNetworks();
         }
 
-        private void BuildNetwork(Network network, CompNetworkPart source)
+        private void ClearNetworks()
         {
-            var type = source.FlowType;
-            var grid = Grid(type);
-
-            var workQueue = new Queue<CompNetworkPart>();
-            workQueue.Enqueue(source);
-            network.RegisterPart(source);
-
-            while (workQueue.TryDequeue(out var current))
-            {
-                foreach (var loc in GenAdj.CellsAdjacentCardinal(current.parent))
-                {
-                    var newPart = grid.FindAt(loc, type);
-                    if (newPart == null || newPart.IsConnected)
-                    {
-                        continue;
-                    }
-                    network.RegisterPart(newPart);
-                    workQueue.Enqueue(newPart);
-                }
-            }
+            networks.ForEach(NetworkPool.Release);
+            networks.Clear();
         }
     }
 }

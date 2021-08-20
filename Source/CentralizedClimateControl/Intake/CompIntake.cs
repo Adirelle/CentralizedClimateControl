@@ -5,7 +5,7 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    public class CompIntake : ThingComp
+    public class CompIntake : CompPowered
     {
         public float NetworkLoad;
 
@@ -14,25 +14,7 @@ namespace CentralizedClimateControl
 
         public float MaxIntake { get; private set; }
 
-        public bool IsOperating => !area.IsBlocked && networkPart.IsConnected && flickable.SwitchIsOn && powerTrader.PowerOn && !breakdownable.BrokenDown;
-
-        private CompArea area;
-        private CompFlickable flickable;
-        private CompPowerTrader powerTrader;
-        private CompBreakdownable breakdownable;
-        private CompNetworkPart networkPart;
-
-        private CompProperties_Intake IntakeProps => (CompProperties_Intake) props;
-
-        public override void PostSpawnSetup(bool respawningAfterLoad)
-        {
-            base.PostSpawnSetup(respawningAfterLoad);
-            area = parent.GetComp<CompArea>();
-            flickable = parent.GetComp<CompFlickable>();
-            powerTrader = parent.GetComp<CompPowerTrader>();
-            breakdownable = parent.GetComp<CompBreakdownable>();
-            networkPart = parent.GetComp<CompNetworkPart>();
-        }
+        protected new CompProperties_Intake Props => (CompProperties_Intake) props;
 
         public override void CompTickRare()
         {
@@ -46,24 +28,22 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            MaxIntake = IntakeProps.baseAirIntake * area.MaxLoad;
+            MaxIntake = Props.baseAirIntake * FreeArea.Count / Area.Count;
 
-            var temperature = area.FreeArea.Average(cell => cell.GetTemperature(parent.Map));
+            var temperature = FreeArea.Average(cell => cell.GetTemperature(parent.Map));
             Intake = new AirFlow(MaxIntake * NetworkLoad, temperature);
             powerTrader.PowerOutput = -powerTrader.Props.basePowerConsumption;
         }
 
-        public override string CompInspectStringExtra()
+        protected override void BuildInspectString(StringBuilder builder)
         {
-            var builder = new StringBuilder();
+            base.BuildInspectString(builder);
 
             // @TODO: translate
             builder.AppendInNewLine("Maximum intake: {0}".Translate(MaxIntake.ToStringThroughput()));
 
             // @TODO: translate
             builder.AppendInNewLine("Current intake: {0}".Translate(Intake.Translate()));
-
-            return builder.ToString();
         }
     }
 }

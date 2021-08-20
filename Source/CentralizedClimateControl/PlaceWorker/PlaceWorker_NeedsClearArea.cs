@@ -35,10 +35,10 @@ namespace CentralizedClimateControl
         {
             if (def is ThingDef thingDef)
             {
-                var props = thingDef.GetCompProperties<CompProperties_Area>();
+                var props = thingDef.GetCompProperties<CompProperties_Building>();
                 if (props != null)
                 {
-                    return CompArea.GetArea(props.shape, center, rot, thingDef.size);
+                    return props.shape.Cells(center, rot, thingDef.size);
                 }
             }
             return Enumerable.Empty<IntVec3>();

@@ -5,7 +5,7 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    public class CompTempControl : ThingComp
+    public class CompTempControl : CompPowered
     {
         private const float tempNominalChange = 10.0f;
         private const float heatExhaustFactor = 1.25f;
@@ -20,25 +20,13 @@ namespace CentralizedClimateControl
 
         public float CurrentCapacity { get; private set; }
 
-        public bool IsOperating => !area.IsBlocked && flickable.SwitchIsOn && networkPart.IsConnected && !breakdownable.BrokenDown && powerTrader.PowerOn;
+        protected RimWorld.CompTempControl tempControl;
 
-        private CompArea area;
-        private CompFlickable flickable;
-        private CompNetworkPart networkPart;
-        private CompPowerTrader powerTrader;
-        private CompBreakdownable breakdownable;
-        private RimWorld.CompTempControl tempControl;
-
-        private CompProperties_TempControl TempProps => (CompProperties_TempControl) props;
+        protected new CompProperties_TempControl Props => (CompProperties_TempControl) props;
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            area = parent.GetComp<CompArea>();
-            flickable = parent.GetComp<CompFlickable>();
-            networkPart = parent.GetComp<CompNetworkPart>();
-            powerTrader = parent.GetComp<CompPowerTrader>();
-            breakdownable = parent.GetComp<CompBreakdownable>();
             tempControl = parent.GetComp<RimWorld.CompTempControl>();
         }
 
@@ -54,8 +42,8 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            MaxInput = TempProps.thermalCapacity;
-            CurrentCapacity = TempProps.thermalCapacity * area.MaxLoad;
+            MaxInput = Props.thermalCapacity;
+            CurrentCapacity = Props.thermalCapacity * FreeArea.Count / Area.Count;
 
             if (Mathf.Approximately(Input.Throughput, 0.0f))
             {
@@ -79,21 +67,19 @@ namespace CentralizedClimateControl
 
             if (tempChange < 0.0f)
             {
-                GenTemperature.PushHeat(area.FreeArea[0], parent.Map, heatExhaustFactor * -tempChange);
+                GenTemperature.PushHeat(FreeArea[0], parent.Map, heatExhaustFactor * -tempChange);
             }
         }
 
-        public override string CompInspectStringExtra()
+        protected override void BuildInspectString(StringBuilder builder)
         {
-            var builder = new StringBuilder();
+            base.BuildInspectString(builder);
 
             // @TODO: translate
             builder.AppendInNewLine("Thermal capacity: {0}".Translate(CurrentCapacity.ToStringThroughput()));
 
             // @TODO: translate
             builder.AppendInNewLine("Processing: {0} => {1}".Translate(Input.Translate(), Output.Translate()));
-
-            return builder.ToString();
         }
     }
 }

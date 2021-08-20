@@ -4,21 +4,19 @@
   <ThingDef
     Name="CCC_TempControlBase"
     Abstract="True"
-    ParentName="CCC_BuildingBase"
+    ParentName="CCC_PoweredBase"
   >
     <designatorDropdown>CCC_TempControls</designatorDropdown>
     <designationHotKey>Misc4</designationHotKey>
     <comps>
       <li Class="CompProperties_TempControl" />
-      <li Class="CompProperties_Breakdownable" />
-      <li Class="CentralizedClimateControl.CompProperties_Area">
-        <shape>Side</shape>
-      </li>
     </comps>
+      <!--
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_NeedsClearArea</li>
       <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
     </placeWorkers>
+      -->
   </ThingDef>
 
   <ThingDef ParentName="CCC_TempControlBase">
@@ -44,6 +42,7 @@
         <basePowerConsumption>200</basePowerConsumption>
       </li>
       <li Class="CentralizedClimateControl.CompProperties_TempControl">
+        <shape>Side</shape>
         <thermalCapacity>900</thermalCapacity>
       </li>
     </comps>
@@ -73,6 +72,7 @@
         <basePowerConsumption>600</basePowerConsumption>
       </li>
       <li Class="CentralizedClimateControl.CompProperties_TempControl">
+        <shape>Side</shape>
         <thermalCapacity>4500</thermalCapacity>
       </li>
     </comps>

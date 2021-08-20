@@ -31,7 +31,7 @@ namespace CentralizedClimateControl
             var thingFlowType = thing.GetFlowType();
             if (flowType.Accept(thingFlowType))
             {
-                OverlayGraphics.Get(thingFlowType)?.Print(this, thing, 0);
+                Graphics.PipeOverlay(thingFlowType)?.Print(this, thing, 0);
             }
         }
     }

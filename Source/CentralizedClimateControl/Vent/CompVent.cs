@@ -5,7 +5,7 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    public class CompVent : ThingComp
+    public class CompVent : CompBuilding
     {
         private const float secondsPerRareTick = 250.0f / 60;
         private const float cellsPerCc = 12.0f;
@@ -16,21 +16,8 @@ namespace CentralizedClimateControl
 
         // Output
         public float MaxExhaust { get; private set; }
-        public bool IsOperating => !area.IsBlocked && flickable.SwitchIsOn && networkPart.IsConnected;
 
-        private CompArea area;
-        private CompFlickable flickable;
-        private CompNetworkPart networkPart;
-
-        private CompProperties_Vent VentProps => (CompProperties_Vent) props;
-
-        public override void PostSpawnSetup(bool respawningAfterLoad)
-        {
-            base.PostSpawnSetup(respawningAfterLoad);
-            area = parent.GetComp<CompArea>();
-            flickable = parent.GetComp<CompFlickable>();
-            networkPart = parent.GetComp<CompNetworkPart>();
-        }
+        protected new CompProperties_Vent Props => (CompProperties_Vent) props;
 
         public override void CompTickRare()
         {
@@ -42,26 +29,24 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            MaxExhaust = VentProps.baseAirExhaust * area.MaxLoad;
+            MaxExhaust = Props.baseAirExhaust * FreeArea.Count / Area.Count;
 
-            var exhaustCell = area.FreeArea[0];
+            var exhaustCell = FreeArea[0];
             var energyLimit = Mathf.Min(MaxExhaust, Exhaust.Throughput) * cellsPerCc * secondsPerRareTick / baseExhaust;
             var tempChange = GenTemperature.ControlTemperatureTempChange(exhaustCell, parent.Map, energyLimit, Exhaust.Temperature);
 
             exhaustCell.GetRoomOrAdjacent(parent.Map).Temperature += tempChange;
         }
 
-        public override string CompInspectStringExtra()
+        protected override void BuildInspectString(StringBuilder builder)
         {
-            var stringBuilder = new StringBuilder();
+            base.BuildInspectString(builder);
 
             // @TODO: translate
-            stringBuilder.AppendInNewLine("Maximum exhaust: {0}".Translate(MaxExhaust.ToStringThroughput()));
+            builder.AppendInNewLine("Maximum exhaust: {0}".Translate(MaxExhaust.ToStringThroughput()));
 
             // @TODO: translate
-            stringBuilder.AppendInNewLine("Current exhaust: {0}".Translate(Exhaust.Translate()));
-
-            return stringBuilder.ToString();
+            builder.AppendInNewLine("Current exhaust: {0}".Translate(Exhaust.Translate()));
         }
     }
 }

@@ -7,10 +7,12 @@
     ParentName="CCC_BuildingBase"
   >
     <designatorDropdown>CCC_Vents</designatorDropdown>
-    <designationHotKey>Misc4</designationHotKey>
+    <designationHotKey>Misc5</designationHotKey>
+    <!--
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_RoomHighlight</li>
     </placeWorkers>
+  -->
   </ThingDef>
 
   <ThingDef
@@ -24,14 +26,11 @@
       <canPlaceOverWall>true</canPlaceOverWall>
     </building>
     <fillPercent>0</fillPercent>
-    <comps>
-      <li Class="CentralizedClimateControl.CompProperties_Area">
-        <shape>Side</shape>
-      </li>
-    </comps>
+    <!--
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_NeedsWall</li>
     </placeWorkers>
+  -->
   </ThingDef>
 
   <ThingDef ParentName="CCC_WallVentBase">
@@ -51,6 +50,7 @@
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Vent">
+        <shape>Side</shape>
         <baseAirExhaust>50</baseAirExhaust>
       </li>
     </comps>
@@ -73,24 +73,13 @@
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Vent">
+        <shape>Side</shape>
         <baseAirExhaust>100</baseAirExhaust>
       </li>
     </comps>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_SurroundVentBase"
-    Abstract="True"
-    ParentName="CCC_VentBase"
-  >
-    <comps>
-      <li Class="CentralizedClimateControl.CompProperties_Area">
-        <shape>Around</shape>
-      </li>
-    </comps>
-  </ThingDef>
-
-  <ThingDef ParentName="CCC_SurroundVentBase">
+  <ThingDef ParentName="CCC_VentBase">
     <defName>CCC_SurroundVent</defName>
     <label>Surround air vent</label>
     <description>A surround exhaust vent.</description>
@@ -107,12 +96,13 @@
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Vent">
+        <shape>Around</shape>
         <baseAirExhaust>300</baseAirExhaust>
       </li>
     </comps>
   </ThingDef>
 
-  <ThingDef ParentName="CCC_SurroundVentBase">
+  <ThingDef ParentName="CCC_VentBase">
     <defName>CCC_WideSurroundVent</defName>
     <label>Large surround air vent</label>
     <description>A large surround exhaust vent.</description>
@@ -131,6 +121,7 @@
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Vent">
+        <shape>Around</shape>
         <baseAirExhaust>600</baseAirExhaust>
       </li>
     </comps>
