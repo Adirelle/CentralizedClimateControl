@@ -86,7 +86,7 @@ namespace CentralizedClimateControl
             string.Join("\n",
                 $"FlowType={FlowType}",
                 $"IsConnected={IsConnected}",
-                $"NetworkId={Network?.NetworkId}"
+                $"Network={Network?.DebugString()}"
             );
 
         /*
