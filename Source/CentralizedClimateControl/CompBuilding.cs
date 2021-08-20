@@ -15,11 +15,13 @@ namespace CentralizedClimateControl
 
         public bool IsBlocked => ClearArea?.Count == 0;
 
-        public override FlowType FlowType => FlowType.Any;
+        public override FlowType FlowType => flowType;
 
         public override bool IsOperating => base.IsOperating && !IsBlocked && flickable.SwitchIsOn;
 
         protected CompFlickable flickable;
+
+        private FlowType flowType = FlowType.Any;
 
         protected CompProperties_Building Props => (CompProperties_Building) props;
 
@@ -28,6 +30,16 @@ namespace CentralizedClimateControl
             base.PostSpawnSetup(respawningAfterLoad);
             flickable = parent.GetComp<CompFlickable>();
             Area = null;
+        }
+
+        protected override void PostConnected() {
+            flowType = Network.FlowType;
+            parent.Map.NetworkManager().NotifyChange(this);
+        }
+
+        protected override void PostDisconnected() {
+            flowType = FlowType.Any;
+            parent.Map.NetworkManager().NotifyChange(this);
         }
 
         public override void CompTickRare()
