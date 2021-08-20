@@ -11,6 +11,8 @@ namespace CentralizedClimateControl
         // Output
         public AirFlow Intake { get; private set; }
 
+        public float AvailableIntake { get; private set; }
+
         public float MaxIntake { get; private set; }
 
         protected new CompProperties_Intake Props => (CompProperties_Intake) props;
@@ -18,6 +20,8 @@ namespace CentralizedClimateControl
         public override void CompTickRare()
         {
             base.CompTickRare();
+
+            AvailableIntake = Props.baseAirIntake * ClearArea.Count / Area.Count;
 
             if (!IsOperating)
             {
@@ -27,8 +31,7 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            MaxIntake = Props.baseAirIntake * ClearArea.Count / Area.Count;
-
+            MaxIntake = AvailableIntake;
             var temperature = ClearArea.Average(cell => cell.GetTemperature(parent.Map));
             Intake = new AirFlow(MaxIntake * NetworkLoad, temperature);
             powerTrader.PowerOutput = -powerTrader.Props.basePowerConsumption;
@@ -39,10 +42,24 @@ namespace CentralizedClimateControl
             base.BuildInspectString(builder);
 
             // @TODO: translate
-            builder.AppendInNewLine("Maximum intake: {0}".Translate(MaxIntake.ToStringThroughput()));
+            builder.AppendInNewLine("Maximum intake: {0}".Translate(AvailableIntake.ToStringThroughput()));
 
-            // @TODO: translate
-            builder.AppendInNewLine("Current intake: {0}".Translate(Intake.Translate()));
+            if (IsOperating)
+            {
+                // @TODO: translate
+                builder.AppendInNewLine("Current intake: {0}".Translate(Intake.Translate()));
+            }
+
+            if (IsConnected)
+            {
+                // @TODO: translate
+                builder.AppendInNewLine(
+                    "Grid current / maximum intake: {0} / {1}".Translate(
+                        Network.CurrentIntake.ToStringThroughput(),
+                        Network.MaxIntake.ToStringThroughput()
+                    )
+                );
+            }
         }
 
         public override string DebugString() =>

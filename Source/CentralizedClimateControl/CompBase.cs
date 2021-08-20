@@ -71,7 +71,7 @@ namespace CentralizedClimateControl
             {
                 builder.Append($"\n--- DEBUG:\n{DebugString().Trim()}");
             }
-            return builder.ToString();
+            return builder.ToString().Trim();
         }
 
         protected virtual void BuildInspectString(StringBuilder builder)

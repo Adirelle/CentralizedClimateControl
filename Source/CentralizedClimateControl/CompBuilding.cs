@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Verse;
 
 namespace CentralizedClimateControl
@@ -52,6 +53,22 @@ namespace CentralizedClimateControl
             }
 
             ClearArea = Area.AsEnumerable().IsClear(parent.Map, parent).ToList();
+        }
+
+        protected override void BuildInspectString(StringBuilder builder)
+        {
+            base.BuildInspectString(builder);
+
+            if (IsBlocked)
+            {
+                // @TODO: translate
+                builder.AppendInNewLine("Blocked by nearby buildings".Translate());
+            }
+            else if (ClearArea.Count < Area.Count)
+            {
+                // @TODO: translate
+                builder.AppendInNewLine("Performance is hindered by nearby buildings".Translate());
+            }
         }
 
         public override string DebugString() =>
