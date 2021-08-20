@@ -16,7 +16,7 @@ namespace CentralizedClimateControl
 
         public List<IntVec3> ClearArea { get; private set; }
 
-        public bool IsBlocked => ClearArea.Count == 0;
+        public bool IsBlocked => ClearArea?.Count == 0;
 
         public override FlowType FlowType => FlowType.Any;
 
