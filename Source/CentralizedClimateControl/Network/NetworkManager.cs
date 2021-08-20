@@ -71,9 +71,9 @@ namespace CentralizedClimateControl
             };
         }
 
-        public bool HasPartAt(IntVec3 loc, FlowType selector)
+        public bool HasPartAt(IntVec3 loc, FlowType filter = FlowType.Any)
         {
-            return selector.Accept(GetCachedType(loc));
+            return filter.Accept(GetCachedType(loc));
         }
 
         private FlowType GetCachedType(IntVec3 loc)

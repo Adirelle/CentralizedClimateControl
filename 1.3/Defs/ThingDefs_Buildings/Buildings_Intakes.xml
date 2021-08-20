@@ -8,12 +8,9 @@
   >
     <designatorDropdown>CCC_Intakes</designatorDropdown>
     <designationHotKey>Misc3</designationHotKey>
-    <!--
     <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_NeedsClearArea</li>
       <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
     </placeWorkers>
-  -->
   </ThingDef>
 
   <ThingDef ParentName="CCC_IntakeBase">

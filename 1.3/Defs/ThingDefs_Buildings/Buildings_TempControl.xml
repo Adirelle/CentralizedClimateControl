@@ -11,12 +11,9 @@
     <comps>
       <li Class="CompProperties_TempControl" />
     </comps>
-      <!--
     <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_NeedsClearArea</li>
       <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
     </placeWorkers>
-      -->
   </ThingDef>
 
   <ThingDef ParentName="CCC_TempControlBase">

@@ -23,11 +23,9 @@
         <rect>(0,0.35,1,0.3)</rect>
       </damageData>
     </graphicData>
-    <!--
     <placeWorkers>
-      <li>CentralizedClimateControl.PlaceWorker_Pipe</li>
+      <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
     </placeWorkers>
-    -->
   </ThingDef>
 
   <ThingDef
@@ -48,7 +46,6 @@
     <costList>
       <Steel>1</Steel>
     </costList>
-
   </ThingDef>
 
   <ThingDef

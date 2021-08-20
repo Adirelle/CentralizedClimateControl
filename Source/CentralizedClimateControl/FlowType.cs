@@ -50,12 +50,23 @@ namespace CentralizedClimateControl
 
         public static FlowType GetFlowType(this Thing thing)
         {
-            return thing.TryGetComp<CompBase>()?.FlowType ?? FlowType.None;
+            var part = thing.TryGetComp<CompBase>();
+            return part is not null ? part.FlowType : FlowType.None;
         }
 
         public static FlowType GetFlowType(this ThingDef def)
         {
-            return def.GetCompProperties<CompProperties_Pipe>()?.flowType ?? FlowType.None;
+            var pipeProps = def.GetCompProperties<CompProperties_Pipe>();
+            if (pipeProps is not null)
+            {
+                return pipeProps.flowType;
+            }
+            return def.HasAssignableCompFrom(typeof(CompBuilding)) ? FlowType.Any : FlowType.None;
+        }
+
+        public static FlowType GetFlowType(this Def def)
+        {
+            return (def is ThingDef t) ? t.GetFlowType() : FlowType.None;
         }
 
     }

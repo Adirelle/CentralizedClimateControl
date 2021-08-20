@@ -26,11 +26,9 @@
       <canPlaceOverWall>true</canPlaceOverWall>
     </building>
     <fillPercent>0</fillPercent>
-    <!--
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_NeedsWall</li>
     </placeWorkers>
-  -->
   </ThingDef>
 
   <ThingDef ParentName="CCC_WallVentBase">
