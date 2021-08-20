@@ -61,6 +61,10 @@ namespace CentralizedClimateControl
         {
             StringBuilder builder = new StringBuilder();
             BuildInspectString(builder);
+            if (Prefs.DevMode)
+            {
+                builder.Append($"\n--- DEBUG:\n{DebugString().Trim()}");
+            }
             return builder.ToString();
         }
 
@@ -75,7 +79,13 @@ namespace CentralizedClimateControl
                 );
         }
 
-        public virtual string DebugString() => $"NetworkPart(FlowType={FlowType}, IsConnected={IsConnected}, NetworkId={Network?.NetworkId})";
+        public virtual string DebugString() =>
+            string.Join("\n",
+                $"FlowType={FlowType}",
+                $"IsConnected={IsConnected}",
+                $"NetworkId={Network?.NetworkId}"
+            );
+
         /*
 
     public override IEnumerable<Gizmo> CompGetGizmosExtra()

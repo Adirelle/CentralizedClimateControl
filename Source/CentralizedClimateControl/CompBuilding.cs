@@ -44,5 +44,15 @@ namespace CentralizedClimateControl
 
             ClearArea = Area.AsEnumerable().IsClear(parent.Map, parent).ToList();
         }
+
+        public override string DebugString() =>
+            string.Join("\n",
+                base.DebugString(),
+                $"IsOperating={IsOperating}",
+                $"Area.Count={Area?.Count}",
+                $"ClearArea.Count={ClearArea?.Count}",
+                $"IsBlocked={IsBlocked}",
+                $"SwitchIsOn={flickable.SwitchIsOn}"
+            );
     }
 }

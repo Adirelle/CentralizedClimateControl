@@ -24,7 +24,7 @@ namespace CentralizedClimateControl
 
         public override string ToString()
         {
-            return Translate().ToString();
+            return $"{Throughput:F0}cc/s at {Temperature:F1}°c";
         }
 
         public TaggedString Translate()

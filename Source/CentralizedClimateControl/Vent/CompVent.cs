@@ -48,5 +48,12 @@ namespace CentralizedClimateControl
             // @TODO: translate
             builder.AppendInNewLine("Current exhaust: {0}".Translate(Exhaust.Translate()));
         }
+
+        public override string DebugString() =>
+            string.Join("\n",
+                base.DebugString(),
+                $"Exhaust={Exhaust}",
+                $"MaxExhaust={MaxExhaust}"
+            );
     }
 }

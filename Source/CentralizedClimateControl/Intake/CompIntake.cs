@@ -45,5 +45,12 @@ namespace CentralizedClimateControl
             // @TODO: translate
             builder.AppendInNewLine("Current intake: {0}".Translate(Intake.Translate()));
         }
+
+        public override string DebugString() =>
+              string.Join("\n",
+                  base.DebugString(),
+                  $"Intake={Intake}",
+                  $"MaxIntake={MaxIntake}"
+              );
     }
 }

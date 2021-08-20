@@ -15,5 +15,14 @@ namespace CentralizedClimateControl
             powerTrader = parent.GetComp<CompPowerTrader>();
             breakdownable = parent.GetComp<CompBreakdownable>();
         }
+
+        public override string DebugString() =>
+                string.Join("\n",
+                    base.DebugString(),
+                    $"BrokenDown={breakdownable.BrokenDown}",
+                    $"PowerNet={powerTrader.PowerNet is not null}",
+                    $"PowerOn={powerTrader.PowerOn}",
+                    $"PowerOutput={powerTrader.PowerOutput}"
+                );
     }
 }

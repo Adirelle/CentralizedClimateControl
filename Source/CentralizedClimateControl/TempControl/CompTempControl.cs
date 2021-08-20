@@ -81,5 +81,14 @@ namespace CentralizedClimateControl
             // @TODO: translate
             builder.AppendInNewLine("Processing: {0} => {1}".Translate(Input.Translate(), Output.Translate()));
         }
+
+        public override string DebugString() =>
+            string.Join("\n",
+                base.DebugString(),
+                $"Input={Input}",
+                $"MaxInput={MaxInput}",
+                $"Output={Output}",
+                $"CurrentCapacity={CurrentCapacity}"
+            );
     }
 }
