@@ -69,7 +69,11 @@ namespace CentralizedClimateControl
             BuildInspectString(builder);
             if (Prefs.DevMode)
             {
-                builder.Append($"\n--- DEBUG:\n{DebugString().Trim()}");
+                builder.Append($"\n--- UNIT DEBUG:\n{DebugString().Trim()}");
+                if (Network is not null)
+                {
+                    builder.Append($"\n--- NETWORK DEBUG:\n{Network.DebugString().Trim()}");
+                }
             }
             return builder.ToString().Trim();
         }
@@ -86,7 +90,7 @@ namespace CentralizedClimateControl
             string.Join("\n",
                 $"FlowType={FlowType}",
                 $"IsConnected={IsConnected}",
-                $"Network={Network?.DebugString()}"
+                $"Network={Network?.ToString() ?? "None"}"
             );
 
         /*

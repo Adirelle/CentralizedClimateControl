@@ -163,6 +163,12 @@ namespace CentralizedClimateControl
             }
         }
 
+
+        public override string ToString()
+        {
+            return $"Network(#{NetworkId}, {FlowType})";
+        }
+
         public string DebugString() =>
             string.Join("\n",
                 $"NetworkId={NetworkId}",
