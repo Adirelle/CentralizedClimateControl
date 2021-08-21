@@ -92,36 +92,6 @@ namespace CentralizedClimateControl
                 $"IsConnected={IsConnected}",
                 $"Network={Network?.ToString() ?? "None"}"
             );
-
-        /*
-
-    public override IEnumerable<Gizmo> CompGetGizmosExtra()
-    {
-        foreach (var gizmo in base.CompGetGizmosExtra())
-        {
-            yield return gizmo;
-        }
-        if (NetworkPartProps.flowType.IsAny())
-        {
-            yield return PipeSwitchGizmo();
-        }
-    
-    }
-
-    private Command_Action PipeSwitchGizmo()
-    {
-        var currentFlow = NetworkPartProps.flowType;
-        var next
-
-        return new Command_Action {
-            defaultLabel = FlowType.CommandLabelKey().Translate(),
-            defaultDesc = "CentralizedClimateControl.Command.SwitchPipe.Desc".Translate(),
-            hotKey = KeyBindingDefOf.Misc4,
-            icon = ContentFinder<Texture2D>.Get(currentPriority.CommandIconName()),
-            action = delegate { compAirFlowConsumer.SetPriority(currentPriority.Next()); }
-        };
-    }
-    */
     }
 }
 
