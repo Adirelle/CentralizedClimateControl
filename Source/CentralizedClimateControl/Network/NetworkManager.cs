@@ -99,7 +99,6 @@ namespace CentralizedClimateControl
                 foreach (var loc in part.parent.OccupiedRect())
                 {
                     typeCacheGrid[map.cellIndices.CellToIndex(loc)] = dirtyCell;
-                    map.mapDrawer.MapMeshDirty(loc, MapMeshFlag.Buildings, true, false);
                 }
             }
             isDirty = true;
@@ -159,7 +158,10 @@ namespace CentralizedClimateControl
                 {
                     partList.Remove(current);
                     network.RegisterPart(current);
-
+                    foreach (var loc in current.parent.OccupiedRect().Cells)
+                    {
+                        map.mapDrawer.MapMeshDirty(loc, MapMeshFlag.Buildings | MapMeshFlag.Things);
+                    }
                     foreach (var loc in current.parent.OccupiedRect().AdjacentCellsCardinal)
                     {
                         if (HasPartAt(loc, flowType))
