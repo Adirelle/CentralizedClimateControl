@@ -74,7 +74,7 @@
     <uiIconPath>UI/RedAirPipe</uiIconPath>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
-        <flowType>Hot</flowType>
+        <flowType>Red</flowType>
       </li>
     </comps>
     <graphicData>
@@ -94,7 +94,7 @@
     <uiIconPath>UI/RedAirPipeHidden</uiIconPath>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
-        <flowType>Hot</flowType>
+        <flowType>Red</flowType>
       </li>
     </comps>
     <building>
@@ -111,7 +111,7 @@
     <uiIconPath>UI/BlueAirPipe</uiIconPath>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
-        <flowType>Cold</flowType>
+        <flowType>Blue</flowType>
       </li>
     </comps>
     <graphicData>
@@ -131,7 +131,7 @@
     <uiIconPath>UI/BlueAirPipeHidden</uiIconPath>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
-        <flowType>Cold</flowType>
+        <flowType>Blue</flowType>
       </li>
     </comps>
     <building>
@@ -151,7 +151,7 @@
     </graphicData>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
-        <flowType>Frozen</flowType>
+        <flowType>Cyan</flowType>
       </li>
     </comps>
     <building>
@@ -168,7 +168,7 @@
     <uiIconPath>UI/CyanAirPipeHidden</uiIconPath>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
-        <flowType>Frozen</flowType>
+        <flowType>Cyan</flowType>
       </li>
     </comps>
     <building>

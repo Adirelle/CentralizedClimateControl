@@ -19,7 +19,7 @@ namespace CentralizedClimateControl
                 yield return error;
             }
 
-            if (flowType != FlowType.Cold && flowType != FlowType.Frozen && flowType != FlowType.Hot)
+            if (flowType != FlowType.Blue && flowType != FlowType.Cyan && flowType != FlowType.Red)
             {
                 yield return $"flowType must be a basic type, not {flowType}";
             }

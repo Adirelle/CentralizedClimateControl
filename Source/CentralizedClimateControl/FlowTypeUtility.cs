@@ -10,9 +10,9 @@ namespace CentralizedClimateControl
             return type switch
             {
                 FlowType.None => "None",
-                FlowType.Cold => "Cold",
-                FlowType.Hot => "Hot",
-                FlowType.Frozen => "Frozen",
+                FlowType.Blue => "Blue",
+                FlowType.Red => "Red",
+                FlowType.Cyan => "Cyan",
                 FlowType.Any => "Any",
                 _ => "Unknown"
             };
@@ -20,16 +20,16 @@ namespace CentralizedClimateControl
 
         public static string ToKey(this FlowType type)
         {
-            return $"CentralizedClimateControl.{type}Air";
+            return $"CentralizedClimateControl.FlowType.{type}";
         }
 
         public static UnityEngine.Color Color(this FlowType type)
         {
             return type switch
             {
-                FlowType.Cold => UnityEngine.Color.blue,
-                FlowType.Hot => UnityEngine.Color.red,
-                FlowType.Frozen => UnityEngine.Color.cyan,
+                FlowType.Blue => UnityEngine.Color.blue,
+                FlowType.Red => UnityEngine.Color.red,
+                FlowType.Cyan => UnityEngine.Color.cyan,
                 _ => UnityEngine.Color.white
             };
         }

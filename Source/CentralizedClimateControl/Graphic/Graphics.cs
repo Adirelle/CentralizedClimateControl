@@ -24,9 +24,9 @@ namespace CentralizedClimateControl
             }
 
             loadPipeOverlayGraphic(FlowType.Any);
-            loadPipeOverlayGraphic(FlowType.Hot);
-            loadPipeOverlayGraphic(FlowType.Cold);
-            loadPipeOverlayGraphic(FlowType.Frozen);
+            loadPipeOverlayGraphic(FlowType.Red);
+            loadPipeOverlayGraphic(FlowType.Blue);
+            loadPipeOverlayGraphic(FlowType.Cyan);
 
             void loadPreferredFlowTypeIcon(FlowType flowType, string word)
             {
@@ -34,10 +34,10 @@ namespace CentralizedClimateControl
                 preferredFlowTypeIcons.Add(flowType, icon);
             }
 
-            loadPreferredFlowTypeIcon(FlowType.Hot, "Red");
-            loadPreferredFlowTypeIcon(FlowType.Cold, "Blue");
-            loadPreferredFlowTypeIcon(FlowType.Frozen, "Cyan");
-            loadPreferredFlowTypeIcon(FlowType.Any, "Auto");
+            loadPreferredFlowTypeIcon(FlowType.Red);
+            loadPreferredFlowTypeIcon(FlowType.Blue);
+            loadPreferredFlowTypeIcon(FlowType.Cyan);
+            loadPreferredFlowTypeIcon(FlowType.Any);
         }
 
         public static Graphic PipeOverlay(FlowType flowType) => pipeOverlays.GetValueOrDefault(flowType);

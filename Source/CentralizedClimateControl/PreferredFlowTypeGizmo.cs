@@ -17,10 +17,10 @@ namespace CentralizedClimateControl
 
         private FlowType NextFlowType => CurrentFlowType switch
         {
-            FlowType.Hot => FlowType.Cold,
-            FlowType.Cold => FlowType.Frozen,
-            FlowType.Frozen => FlowType.Any,
-            _ => FlowType.Hot,
+            FlowType.Red => FlowType.Blue,
+            FlowType.Blue => FlowType.Cyan,
+            FlowType.Cyan => FlowType.Any,
+            _ => FlowType.Red,
         };
 
         public PreferredFlowTypeGizmo(CompBuilding parent) : base()
@@ -40,13 +40,13 @@ namespace CentralizedClimateControl
             defaultLabel = CurrentFlowType switch
             {
                 // @TODO: translate
-                FlowType.Hot => "Red only".Translate(),
+                FlowType.Red => "Red only".Translate(),
 
                 // @TODO: translate
-                FlowType.Cold => "Blue only".Translate(),
+                FlowType.Blue => "Blue only".Translate(),
 
                 // @TODO: translate
-                FlowType.Frozen => "Cyan only".Translate(),
+                FlowType.Cyan => "Cyan only".Translate(),
 
                 // @TODO: translate
                 _ => "Auto".Translate(),
