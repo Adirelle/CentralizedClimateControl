@@ -42,10 +42,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: assemblies
-        path: '**/*.dll'
+        path: '**/Assemblies/*.dll'
 
   package:
-    name: Package the mod
+    name: Package
     needs: build
     runs-on: ubuntu-latest
     defaults:
@@ -84,7 +84,7 @@ jobs:
         path: dist/
 
   release:
-    name: Release the package to GitHub
+    name: Release to GitHub
     needs: package
     if: ${{ ! github.base_ref }}
     runs-on: ubuntu-latest
@@ -100,6 +100,7 @@ jobs:
         directory: dist/
         path: ${{ env.MOD_NAME }}/
         filename: ${{ env.MOD_NAME }}.zip
+        exclusions: 'Source .git*'
 
     - name: Create the release
       uses: ncipollo/release-action@v1
