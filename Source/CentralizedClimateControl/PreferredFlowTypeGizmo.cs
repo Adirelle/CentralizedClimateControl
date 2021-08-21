@@ -13,7 +13,9 @@ namespace CentralizedClimateControl
     {
         private CompBuilding parent;
 
-        private FlowType NextFlowType => parent.PreferredFlowType switch
+        private FlowType CurrentFlowType => parent.PreferredFlowType;
+
+        private FlowType NextFlowType => CurrentFlowType switch
         {
             FlowType.Hot => FlowType.Cold,
             FlowType.Cold => FlowType.Frozen,
@@ -26,14 +28,16 @@ namespace CentralizedClimateControl
             this.parent = parent;
 
             // @TODO: translate
-            defaultDesc ="Click to change color affinity".Translate();
+            defaultDesc = "Click to change color affinity".Translate();
             hotKey = KeyBindingDefOf.Misc4;
+
+            NotifyChange();
         }
 
         public void NotifyChange()
         {
-            icon = Graphics.PreferredFlowTypeIcons(parent.PreferredFlowType);
-            defaultLabel = parent.PreferredFlowType switch
+            icon = Graphics.PreferredFlowTypeIcons(CurrentFlowType);
+            defaultLabel = CurrentFlowType switch
             {
                 // @TODO: translate
                 FlowType.Hot => "Red only".Translate(),
@@ -53,6 +57,7 @@ namespace CentralizedClimateControl
         {
             base.ProcessInput(ev);
             parent.SetPreferredFlowType(NextFlowType);
+            NotifyChange();
         }
     }
 }

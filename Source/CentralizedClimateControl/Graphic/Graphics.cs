@@ -37,6 +37,7 @@ namespace CentralizedClimateControl
             loadPreferredFlowTypeIcon(FlowType.Hot, "Red");
             loadPreferredFlowTypeIcon(FlowType.Cold, "Blue");
             loadPreferredFlowTypeIcon(FlowType.Frozen, "Cyan");
+            loadPreferredFlowTypeIcon(FlowType.Any, "Auto");
         }
 
         public static Graphic PipeOverlay(FlowType flowType) => pipeOverlays.GetValueOrDefault(flowType);
