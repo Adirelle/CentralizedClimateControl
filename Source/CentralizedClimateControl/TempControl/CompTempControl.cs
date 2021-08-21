@@ -6,7 +6,6 @@ namespace CentralizedClimateControl
 {
     public class CompTempControl : CompPowered
     {
-        private const float tempNominalChange = 10.0f;
         private const float heatExhaustFactor = 1.25f;
 
         // Input
@@ -15,9 +14,9 @@ namespace CentralizedClimateControl
         // Output
         public AirFlow Output { get; private set; }
 
-        public float MaxInput { get; private set; }
+        public float MaxInput => IsOperating ? Props.baseAirThroughput : 0.0f;
 
-        public float CurrentCapacity { get; private set; }
+        public float CurrentCapacity => Props.baseAirThroughput * Props.maxTempChange;
 
         public float CurrentLoad { get; private set; }
 
@@ -37,19 +36,15 @@ namespace CentralizedClimateControl
         {
             base.CompTickRare();
 
-            CurrentCapacity = Props.thermalCapacity * ClearArea.Count / Area.Count;
-
             if (!IsOperating)
             {
                 powerTrader.PowerOutput = 0.0f;
                 CurrentLoad = 0.0f;
                 CurrentEfficiency = 0.0f;
-                MaxInput = 0.0f;
                 Output = AirFlow.Zero;
                 return;
             }
 
-            MaxInput = Props.thermalCapacity;
             var throughput = Mathf.Min(Input.Throughput, MaxInput);
 
             if (Mathf.Approximately(throughput, 0.0f))
@@ -62,7 +57,7 @@ namespace CentralizedClimateControl
             var tempDelta = tempControl.targetTemperature - Input.Temperature;
             var energyDelta = tempDelta * throughput;
 
-            var maxEnergyChange = CurrentCapacity * tempNominalChange;
+            var maxEnergyChange = CurrentCapacity;
             var energyChange = Mathf.Clamp(energyDelta, -maxEnergyChange, maxEnergyChange);
             CurrentLoad = Mathf.Abs(energyChange / maxEnergyChange);
 
@@ -91,7 +86,10 @@ namespace CentralizedClimateControl
             base.BuildInspectString(builder);
 
             // @TODO: translate
-            builder.AppendInNewLine("Maximum processing capacity: {0}".Translate(CurrentCapacity.ToStringThroughput()));
+            builder.AppendInNewLine("Maximum throughput: {0}".Translate(Props.baseAirThroughput.ToStringThroughput()));
+
+            // @TODO: translate
+            builder.AppendInNewLine("Thermal capacity: {0}.cc/s".Translate(CurrentCapacity.ToStringTemperature()));
 
             if (IsOperating)
             {

@@ -5,7 +5,9 @@ namespace CentralizedClimateControl
 {
     public class CompProperties_TempControl : CompProperties_Powered
     {
-        public float thermalCapacity;
+        public float baseAirThroughput;
+
+        public float maxTempChange = 10.0f;
 
         public CompProperties_TempControl()
         {
@@ -24,9 +26,14 @@ namespace CentralizedClimateControl
                 yield return $"{compClass.Name} requires a RimWorld.CompTempControl";
             }
 
-            if (!(thermalCapacity > 0))
+            if (!(baseAirThroughput > 0))
             {
-                yield return "thermalCapacity must be strictly positive";
+                yield return "baseAirThroughput must be strictly positive";
+            }
+
+            if (!(maxTempChange > 0))
+            {
+                yield return "maxTempChange must be strictly positive";
             }
         }
     }
