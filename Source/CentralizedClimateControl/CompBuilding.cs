@@ -31,7 +31,7 @@ namespace CentralizedClimateControl
 
         protected CompProperties_Building Props => (CompProperties_Building) props;
 
-        public CompBuilding(): base()
+        public CompBuilding() : base()
         {
             preferredFlowTypeGizmo = new PreferredFlowTypeGizmo(this);
         }
@@ -85,7 +85,7 @@ namespace CentralizedClimateControl
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            foreach(var gizmo in base.CompGetGizmosExtra())
+            foreach (var gizmo in base.CompGetGizmosExtra())
             {
                 yield return gizmo;
             }
