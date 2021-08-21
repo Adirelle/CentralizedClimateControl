@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using Verse;
 
 namespace CentralizedClimateControl
@@ -16,15 +17,24 @@ namespace CentralizedClimateControl
 
         public bool IsBlocked => ClearArea?.Count == 0;
 
-        public override FlowType FlowType => flowType;
+        public FlowType PreferredFlowType = FlowType.Any;
+
+        public override FlowType FlowType => Network?.FlowType ?? PreferredFlowType;
 
         public override bool IsOperating => base.IsOperating && !IsBlocked && flickable.SwitchIsOn;
 
         protected CompFlickable flickable;
 
-        private FlowType flowType = FlowType.Any;
+        private PreferredFlowTypeGizmo preferredFlowTypeGizmo;
+
+        private FlowType previousFlowType = FlowType.None;
 
         protected CompProperties_Building Props => (CompProperties_Building) props;
+
+        public CompBuilding(): base()
+        {
+            preferredFlowTypeGizmo = new PreferredFlowTypeGizmo(this);
+        }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
@@ -33,14 +43,54 @@ namespace CentralizedClimateControl
             Area = null;
         }
 
-        protected override void PostConnected() {
-            flowType = Network.FlowType;
+        protected override void PostConnected()
+        {
+            CheckFlowType();
+        }
+
+        protected override void PostDisconnected()
+        {
+            CheckFlowType();
+        }
+
+        public override void PostExposeData()
+        {
+            base.PostExposeData();
+            Scribe_Values.Look(ref PreferredFlowType, "preferredFlowType", FlowType.Any);
+            preferredFlowTypeGizmo.NotifyChange();
+        }
+
+        private void CheckFlowType()
+        {
+            if (FlowType == previousFlowType)
+            {
+                return;
+            }
+            previousFlowType = FlowType;
             parent.Map.NetworkManager().NotifyChange(this);
         }
 
-        protected override void PostDisconnected() {
-            flowType = FlowType.Any;
-            parent.Map.NetworkManager().NotifyChange(this);
+        public void SetPreferredFlowType(FlowType preferredFlowType)
+        {
+            if (PreferredFlowType != preferredFlowType)
+            {
+                PreferredFlowType = preferredFlowType;
+                preferredFlowTypeGizmo.NotifyChange();
+                if (IsConnected && !PreferredFlowType.Accept(Network.FlowType))
+                {
+                    Disconnect();
+                }
+            }
+        }
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach(var gizmo in base.CompGetGizmosExtra())
+            {
+                yield return gizmo;
+            }
+
+            yield return preferredFlowTypeGizmo;
         }
 
         public override void CompTickRare()

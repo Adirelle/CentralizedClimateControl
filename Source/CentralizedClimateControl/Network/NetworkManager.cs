@@ -99,6 +99,7 @@ namespace CentralizedClimateControl
                 foreach (var loc in part.parent.OccupiedRect())
                 {
                     typeCacheGrid[map.cellIndices.CellToIndex(loc)] = dirtyCell;
+                    map.mapDrawer.MapMeshDirty(loc, MapMeshFlag.Buildings, true, false);
                 }
             }
             isDirty = true;
