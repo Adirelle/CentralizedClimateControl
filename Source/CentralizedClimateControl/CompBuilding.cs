@@ -27,8 +27,6 @@ namespace CentralizedClimateControl
 
         private readonly PreferredFlowTypeGizmo preferredFlowTypeGizmo;
 
-        private FlowType previousFlowType = FlowType.None;
-
         protected CompProperties_Building Props => (CompProperties_Building) props;
 
         public CompBuilding() : base()
@@ -43,16 +41,6 @@ namespace CentralizedClimateControl
             Area = null;
         }
 
-        protected override void PostConnected()
-        {
-            CheckFlowType();
-        }
-
-        protected override void PostDisconnected()
-        {
-            CheckFlowType();
-        }
-
         public override void PostExposeData()
         {
             base.PostExposeData();
@@ -60,26 +48,14 @@ namespace CentralizedClimateControl
             preferredFlowTypeGizmo.NotifyChange();
         }
 
-        private void CheckFlowType()
-        {
-            if (FlowType == previousFlowType)
-            {
-                return;
-            }
-            previousFlowType = FlowType;
-            parent.Map.NetworkManager().NotifyChange(this);
-        }
-
         public void SetPreferredFlowType(FlowType preferredFlowType)
         {
-            if (PreferredFlowType != preferredFlowType)
+            if (preferredFlowType != PreferredFlowType)
             {
                 PreferredFlowType = preferredFlowType;
                 preferredFlowTypeGizmo.NotifyChange();
-                if (IsConnected && !PreferredFlowType.Accept(Network.FlowType))
-                {
-                    Disconnect();
-                }
+                Disconnect();
+                parent.Map.NetworkManager().NotifyChange(this);
             }
         }
 
@@ -124,6 +100,7 @@ namespace CentralizedClimateControl
         public override string DebugString() =>
             string.Join("\n",
                 base.DebugString(),
+                $"PreferredFlowType={PreferredFlowType}",
                 $"IsOperating={IsOperating}",
                 $"Area.Count={Area?.Count}",
                 $"ClearArea.Count={ClearArea?.Count}",

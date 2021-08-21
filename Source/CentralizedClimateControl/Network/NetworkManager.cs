@@ -144,7 +144,7 @@ namespace CentralizedClimateControl
 
             while (partList.Count > 0)
             {
-                var part = partList.OfType<CompBase>().FirstOrFallback(part => part.FlowType != FlowType.Any);
+                var part = partList.OfType<CompPipe>().FirstOrFallback(part => part.FlowType != FlowType.Any);
                 if (part is null)
                 {
                     break;

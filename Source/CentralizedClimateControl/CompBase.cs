@@ -38,7 +38,6 @@ namespace CentralizedClimateControl
                 return;
             }
             Network = network;
-            this.PostConnected();
             if (parent.Spawned)
             {
                 this.CompTickRare();
@@ -52,16 +51,11 @@ namespace CentralizedClimateControl
                 return;
             }
             Network = null;
-            this.PostDisconnected();
             if (parent.Spawned)
             {
                 this.CompTickRare();
             }
         }
-
-        protected virtual void PostConnected() { }
-
-        protected virtual void PostDisconnected() { }
 
         public sealed override string CompInspectStringExtra()
         {
