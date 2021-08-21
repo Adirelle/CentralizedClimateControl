@@ -4,7 +4,7 @@ namespace CentralizedClimateControl
 {
     static class NetworkPool
     {
-        private static Queue<Network> pool = new Queue<Network>();
+        private static readonly Queue<Network> pool = new();
 
         private static int lastId;
 

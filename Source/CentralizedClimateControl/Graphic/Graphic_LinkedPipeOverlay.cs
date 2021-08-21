@@ -5,7 +5,7 @@ namespace CentralizedClimateControl
 {
     public class Graphic_LinkedPipeOverlay : Graphic_Linked
     {
-        private static readonly Vector2 cellSize = new Vector2(1f, 1f);
+        private static readonly Vector2 cellSize = new(1f, 1f);
 
         private readonly FlowType flowType;
 

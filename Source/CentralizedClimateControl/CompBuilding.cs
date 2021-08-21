@@ -25,7 +25,7 @@ namespace CentralizedClimateControl
 
         protected CompFlickable flickable;
 
-        private PreferredFlowTypeGizmo preferredFlowTypeGizmo;
+        private readonly PreferredFlowTypeGizmo preferredFlowTypeGizmo;
 
         private FlowType previousFlowType = FlowType.None;
 
