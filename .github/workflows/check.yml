@@ -34,4 +34,4 @@ jobs:
       uses: xt0rted/dotnet-format-problem-matcher@v1
 
     - name: Check code formatting
-      run: dotnet-format --no-restore --check -wsa
+      run: dotnet tool run dotnet-format --no-restore --check -wsa
