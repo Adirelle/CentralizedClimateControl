@@ -39,20 +39,20 @@ namespace CentralizedClimateControl
         {
             base.BuildInspectString(builder);
 
-            // @TODO: translate
-            builder.AppendInNewLine("Maximum exhaust: {0}".Translate(AvailableExhaust.ToStringThroughput()));
+            // @TRANSLATE: Maximum exhaust: {0}
+            builder.AppendInNewLine("CentralizedClimateControl.Vent.Exhaust.Maximum".Translate(AvailableExhaust.ToStringThroughput()));
 
             if (IsOperating)
             {
-                // @TODO: translate
-                builder.AppendInNewLine("Current exhaust: {0}".Translate(Exhaust.Translate()));
+                // @TRANSLATE: Current exhaust: {0}
+                builder.AppendInNewLine("CentralizedClimateControl.Vent.Exhaust.Current".Translate(Exhaust.Translate()));
             }
 
             if (IsConnected)
             {
-                // @TODO: translate
+                // @TRANSLATE: Grid current / maximum exhaust: {0} / {1}
                 builder.AppendInNewLine(
-                    "Grid current / maximum exhaust: {0} / {1}".Translate(
+                    "CentralizedClimateControl.Vent.Exhaust.Network".Translate(
                         Network.CurrentExhaust.ToStringThroughput(),
                         Network.MaxExhaust.ToStringThroughput()
                     )

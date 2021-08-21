@@ -27,8 +27,8 @@ namespace CentralizedClimateControl
         {
             this.parent = parent;
 
-            // @TODO: translate
-            defaultDesc = "Click to change color affinity".Translate();
+            // @TRANSLATE: Click to change color affinity
+            defaultDesc = "CentralizedClimateControl.PreferredGizmo.Description".Translate();
             hotKey = KeyBindingDefOf.Misc4;
 
             NotifyChange();
@@ -37,20 +37,13 @@ namespace CentralizedClimateControl
         public void NotifyChange()
         {
             icon = Graphics.PreferredFlowTypeIcons(CurrentFlowType);
-            defaultLabel = CurrentFlowType switch
-            {
-                // @TODO: translate
-                FlowType.Red => "Red only".Translate(),
-
-                // @TODO: translate
-                FlowType.Blue => "Blue only".Translate(),
-
-                // @TODO: translate
-                FlowType.Cyan => "Cyan only".Translate(),
-
-                // @TODO: translate
-                _ => "Auto".Translate(),
-            };
+            if (CurrentFlowType == FlowType.Any) {
+                // @TRANSLATE: Auto
+                defaultLabel = "CentralizedClimateControl.PreferredGizmo.Label.Auto".Translate();
+            } else {
+                // @TRANSLATE: {0} only
+                defaultLabel = "CentralizedClimateControl.PreferredGizmo.Label.RestrictedTo".Translate(CurrentFlowType.Translate());
+            }
         }
 
         public override void ProcessInput(Event ev)

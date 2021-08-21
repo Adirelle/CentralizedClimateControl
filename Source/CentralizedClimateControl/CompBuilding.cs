@@ -87,13 +87,13 @@ namespace CentralizedClimateControl
 
             if (IsBlocked)
             {
-                // @TODO: translate
-                builder.AppendInNewLine("Blocked by nearby buildings".Translate());
+                // @TRANSLATE: Blocked by nearby buildings
+                builder.AppendInNewLine("CentralizedClimateControl.Blocked".Translate());
             }
             else if (ClearArea.Count < Area.Count)
             {
-                // @TODO: translate
-                builder.AppendInNewLine("Performance is hindered by nearby buildings".Translate());
+                // @TRANSLATE: Performance is hindered by nearby buildings
+                builder.AppendInNewLine("CentralizedClimateControl.PartiallyBlocked".Translate());
             }
         }
 

@@ -9,8 +9,8 @@ namespace CentralizedClimateControl
     {
         public static string ToStringThroughput(this float throughput)
         {
-            // @TODO: translate
-            return "{0}cc/s".Translate(throughput.ToStringDecimalIfSmall());
+            // @TRANSLATE: {0}cc/s
+            return "CentralizedClimateControl.Throughput".Translate(throughput.ToStringDecimalIfSmall());
         }
 
         public static AirFlow Sum(this IEnumerable<AirFlow> flows)

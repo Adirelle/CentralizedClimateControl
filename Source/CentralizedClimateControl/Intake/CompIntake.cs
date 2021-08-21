@@ -27,20 +27,20 @@ namespace CentralizedClimateControl
         {
             base.BuildInspectString(builder);
 
-            // @TODO: translate
-            builder.AppendInNewLine("Maximum intake: {0}".Translate(AvailableIntake.ToStringThroughput()));
+            // @TRANSLATE: Maximum intake: {0}
+            builder.AppendInNewLine("CentralizedClimateControl.Inspect.Intake.Maximum".Translate(AvailableIntake.ToStringThroughput()));
 
             if (IsOperating)
             {
-                // @TODO: translate
-                builder.AppendInNewLine("Current intake: {0}".Translate(Intake.Translate()));
+                // @TRANSLATE: Current intake: {0}
+                builder.AppendInNewLine("CentralizedClimateControl.Inspect.Intake.Current".Translate(Intake.Translate()));
             }
 
             if (IsConnected)
             {
-                // @TODO: translate
                 builder.AppendInNewLine(
-                    "Grid current / maximum intake: {0} / {1}".Translate(
+                    // @TRANSLATE: Grid current / maximum intake: {0} / {1}
+                    "CentralizedClimateControl.Inspect.Intake.Network".Translate(
                         Network.CurrentIntake.ToStringThroughput(),
                         Network.MaxIntake.ToStringThroughput()
                     )

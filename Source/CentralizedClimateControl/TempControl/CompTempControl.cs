@@ -63,30 +63,30 @@ namespace CentralizedClimateControl
         {
             base.BuildInspectString(builder);
 
-            // @TODO: translate
-            builder.AppendInNewLine("Maximum throughput: {0}".Translate(Props.baseAirThroughput.ToStringThroughput()));
+            // @TRANSLATE: Maximum throughput: {0}
+            builder.AppendInNewLine("CentralizedClimateControl.TempControl.Throughput.Maximum".Translate(Props.baseAirThroughput.ToStringThroughput()));
 
-            // @TODO: translate
+            // @TRANSLATE: Thermal capacity: ï¿½{0} for {1}
             var capacity = AirFlow.FromEnergy(CurrentCapacity, MaxInput);
-            builder.AppendInNewLine("Thermal capacity: ±{0} for {1}".Translate(capacity.ToStringTemperature(), capacity.ToStringThroughput()));
+            builder.AppendInNewLine("CentralizedClimateControl.TempControl.Capacity".Translate(capacity.ToStringTemperature(), capacity.ToStringThroughput()));
 
             if (IsOperating)
             {
-                // @TODO: translate
-                builder.AppendInNewLine("Current input => output: {0} => {1}".Translate(Input.Translate(), Output.Translate()));
+                // @TRANSLATE: Current input => output: {0} => {1}
+                builder.AppendInNewLine("CentralizedClimateControl.TempControl.Processing.Current".Translate(Input.Translate(), Output.Translate()));
 
                 if (IsActive)
                 {
-                    // @TODO: translate
-                    builder.AppendInNewLine("Current load: {0}".Translate(CurrentLoad.ToStringPercent()));
+                    // @TRANSLATE: Current load: {0}
+                    builder.AppendInNewLine("CentralizedClimateControl.TempControl.Load".Translate(CurrentLoad.ToStringPercent()));
                 }
             }
 
             if (IsConnected)
             {
-                // @TODO: translate
                 builder.AppendInNewLine(
-                    "Grid current / maximum processing: {0} / {1}".Translate(
+                    // @TRANSLATE: Grid current / maximum processing: {0} / {1}
+                    "CentralizedClimateControl.TempControl.Processing.Network".Translate(
                         Network.CurrentProcessed.ToStringThroughput(),
                         Network.MaxProcessing.ToStringThroughput()
                     )

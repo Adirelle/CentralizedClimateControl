@@ -82,7 +82,8 @@ namespace CentralizedClimateControl
         {
             if (!IsConnected)
             {
-                builder.AppendInNewLine("Not connected to air grid".Translate());
+                // @TRANSLATE: Not connected to air grid
+                builder.AppendInNewLine("CentralizedClimateControl.Disconnected".Translate());
             }
         }
 

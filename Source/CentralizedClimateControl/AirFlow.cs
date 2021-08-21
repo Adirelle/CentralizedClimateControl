@@ -24,11 +24,11 @@ namespace CentralizedClimateControl
             => Make(Mathf.Min(Throughput, throughput), Temperature);
 
         public override string ToString()
-            => $"{Throughput:F0}cc/s at {Temperature:F1}°C";
+            => $"{Throughput:F0}cc/s at {Temperature:F1}Â°C";
 
         public TaggedString Translate()
-        // @TODO: translate
-            => this ? "{0} at {1}".Translate(ToStringThroughput(), ToStringTemperature()) : 0.0f.ToStringThroughput();
+        // @TRANSLATE: {0} at {1}
+            => this ? "CentralizedClimateControl.AirFlow".Translate(ToStringThroughput(), ToStringTemperature()) : 0.0f.ToStringThroughput();
 
         public string ToStringThroughput()
             => Throughput.ToStringThroughput();

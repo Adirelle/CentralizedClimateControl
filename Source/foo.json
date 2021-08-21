@@ -1,0 +1,38 @@
+[
+  {
+    "DocumentId": {
+      "ProjectId": {
+        "Id": "d94680b4-d09a-4e12-9852-ad169c112405"
+      },
+      "Id": "f7f6289f-eaa7-498b-880d-bdb5a546f79d"
+    },
+    "FileName": "PlaceWorker_HighlightsRooms.cs",
+    "FilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\CentralizedClimateControl\\Source\\CentralizedClimateControl\\PlaceWorker\\PlaceWorker_HighlightsRooms.cs",
+    "FileChanges": [
+      {
+        "LineNumber": 13,
+        "CharNumber": 20,
+        "DiagnosticId": "WHITESPACE",
+        "FormatDescription": "Corrigez la mise en forme des espaces blancs. Insert \u0027\\s\u0027."
+      }
+    ]
+  },
+  {
+    "DocumentId": {
+      "ProjectId": {
+        "Id": "d94680b4-d09a-4e12-9852-ad169c112405"
+      },
+      "Id": "7ba9ef47-3ab3-493d-9a99-8865a178d3e3"
+    },
+    "FileName": "PreferredFlowTypeGizmo.cs",
+    "FilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\CentralizedClimateControl\\Source\\CentralizedClimateControl\\PreferredFlowTypeGizmo.cs",
+    "FileChanges": [
+      {
+        "LineNumber": 29,
+        "CharNumber": 26,
+        "DiagnosticId": "WHITESPACE",
+        "FormatDescription": "Corrigez la mise en forme des espaces blancs. Insert \u0027\\s\u0027."
+      }
+    ]
+  }
+]
