@@ -15,7 +15,7 @@ namespace CentralizedClimateControl
 
         static Graphics()
         {
-            var overlayGraphic = GraphicDatabase.Get<Graphic_Single>("Things/Building/AirPipe_Overlay_Atlas", ShaderDatabase.MetaOverlay);
+            var overlayGraphic = GraphicDatabase.Get<Graphic_Single>("Things/Building/PipeAtlas/Overlay", ShaderDatabase.MetaOverlay);
 
             void loadPipeOverlayGraphic(FlowType flowType)
             {
@@ -28,9 +28,9 @@ namespace CentralizedClimateControl
             loadPipeOverlayGraphic(FlowType.Blue);
             loadPipeOverlayGraphic(FlowType.Cyan);
 
-            void loadPreferredFlowTypeIcon(FlowType flowType, string word)
+            void loadPreferredFlowTypeIcon(FlowType flowType)
             {
-                var icon = ContentFinder<Texture2D>.Get($"UI/PipeSelect_{word}");
+                var icon = ContentFinder<Texture2D>.Get($"UI/Preferred/{flowType}");
                 preferredFlowTypeIcons.Add(flowType, icon);
             }
 

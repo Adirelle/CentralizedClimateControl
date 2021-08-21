@@ -36,7 +36,7 @@
     <label>Small wall air vent</label>
     <description>A small wall-mounted air vent.</description>
     <graphicData>
-      <texPath>Things/Building/Vents/WallAirVentSmall</texPath>
+      <texPath>Things/Building/Vent/Wall/Small</texPath>
     </graphicData>
     <statBases>
       <WorkToBuild>175</WorkToBuild>
@@ -59,7 +59,7 @@
     <label>Wall air vent</label>
     <description>A wall-mounted air vent.</description>
     <graphicData>
-      <texPath>Things/Building/Vents/WallAirVent</texPath>
+      <texPath>Things/Building/Vent/Wall/Regular</texPath>
     </graphicData>
     <statBases>
       <WorkToBuild>350</WorkToBuild>
@@ -82,7 +82,7 @@
     <label>Surround air vent</label>
     <description>A surround exhaust vent.</description>
     <graphicData>
-      <texPath>Things/Building/Vents/SurroundAirVent</texPath>
+      <texPath>Things/Building/Vent/Surround/Regular</texPath>
     </graphicData>
     <statBases>
       <WorkToBuild>1050</WorkToBuild>
@@ -107,7 +107,7 @@
     <size>(2,1)</size>
     <graphicData>
       <drawSize>(2,1)</drawSize>
-      <texPath>Things/Building/Vents/SurroundAirVentWide</texPath>
+      <texPath>Things/Building/Vent/Surround/Wide</texPath>
     </graphicData>
     <statBases>
       <WorkToBuild>2100</WorkToBuild>

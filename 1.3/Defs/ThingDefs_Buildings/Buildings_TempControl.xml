@@ -24,7 +24,7 @@
     <label>Climate control unit</label>
     <description>A climate control unit for heating and cooling air.</description>
     <graphicData>
-      <texPath>Things/Building/AirThermal</texPath>
+      <texPath>Things/Building/TempControl/Regular</texPath>
     </graphicData>
     <size>(1,1)</size>
     <statBases>
@@ -54,7 +54,7 @@
     <label>Large climate control unit</label>
     <description>A large climate control unit for heating and cooling air.</description>
     <graphicData>
-      <texPath>Things/Building/LargeAirThermal</texPath>
+      <texPath>Things/Building/TempControl/Large</texPath>
       <drawSize>(2,2)</drawSize>
     </graphicData>
     <size>(2,2)</size>

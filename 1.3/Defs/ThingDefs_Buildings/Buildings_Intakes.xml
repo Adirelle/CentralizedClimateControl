@@ -18,7 +18,7 @@
     <label>Intake fan</label>
     <description>An intake fan.</description>
     <graphicData>
-      <texPath>Things/Building/IntakeFan</texPath>
+      <texPath>Things/Building/IntakeFan/Regular</texPath>
     </graphicData>
     <size>(1,1)</size>
     <building>
@@ -50,7 +50,7 @@
     <label>Large intake fan</label>
     <description>A large intake fan.</description>
     <graphicData>
-      <texPath>Things/Building/LargeIntakeFan</texPath>
+      <texPath>Things/Building/IntakeFan/Large</texPath>
       <drawSize>(2,2)</drawSize>
     </graphicData>
     <size>(2,2)</size>
