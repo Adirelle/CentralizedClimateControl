@@ -4,6 +4,10 @@ on: push
 
 permissions: read-all
 
+concurrency:
+  group: check-${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     name: Run dotnet checks
