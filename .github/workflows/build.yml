@@ -19,19 +19,21 @@ jobs:
       run:
         working-directory: Source/CentralizedClimateControl
     steps:
+
     - name: Check out sources
       uses: actions/checkout@v2
-      working-directory: .
-      with:
-        fetch-depth: 0
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '5.0.x'
-    - name: Install dependencies and tools
+
+    - name: Install dependencies
       run: dotnet restore
+
     - name: Build the assembly
       run: dotnet build --configuration Release --no-restore
+
     - name: Upload the assemblies
       uses: actions/upload-artifact@v2
       with:
@@ -48,18 +50,21 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
+
     - name: Check out sources
       uses: actions/checkout@v2
-      working-directory: .
       with:
         fetch-depth: 0
+
     - name: Extract the version string
       id: version
       run: |
         VERSION="$(git describe --always)"
         echo "::set-output name=version::${VERSION%-g*}"
+
     - name: Download the assemblies
       uses: actions/download-artifact@v2
+
     - name: Create the distribution
       run: |
         mkdir -p "dist/$MOD_NAME"
@@ -67,6 +72,7 @@ jobs:
         git log --format="* %s" $(git describe --tags --abbrev=0 HEAD^)..HEAD | grep -v '^CI:' > "dist/$MOD_NAME/About/Changelog.txt"
         rm -rf "dist/$MOD_NAME/Textures/Things/Updates"
         sed -i -e 's/2.0.0.0/${{ steps.version.outputs.version }}/' "dist/$MOD_NAME/About/"*.xml
+
     - name: Upload the distribution
       uses: actions/upload-artifact@v2
       with:
@@ -79,8 +85,10 @@ jobs:
     if: ${{ ! github.base_ref }}
     runs-on: ubuntu-latest
     steps:
+
     - name: Download the distribution
       uses: actions/download-artifact@v2
+
     - name: Create the package
       uses: thedoctor0/zip-release@master
       with:
@@ -88,6 +96,7 @@ jobs:
         directory: dist/
         path: ${{ env.MOD_NAME }}/
         filename: ${{ env.MOD_NAME }}.zip
+
     - name: Create the release
       uses: ncipollo/release-action@v1
       with:

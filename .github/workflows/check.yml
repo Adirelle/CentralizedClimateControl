@@ -2,6 +2,8 @@ name: Check source code
 
 on: push
 
+permissions: read-all
+
 jobs:
   check:
     name: Run dotnet checks
@@ -10,17 +12,22 @@ jobs:
       run:
         working-directory: Source/CentralizedClimateControl
     steps:
+
     - name: Check out sources
       uses: actions/checkout@v2
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '5.0.x'
+
     - name: Install dependencies and tools
       run: |
         dotnet restore
         dotnet tool restore
+
     - name: Add dotnet-format problem matcher
       uses: xt0rted/dotnet-format-problem-matcher@v1
+
     - name: Check code formatting
       run: dotnet-format --no-restore --check -wsa
