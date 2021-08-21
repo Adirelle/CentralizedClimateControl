@@ -8,23 +8,33 @@ namespace CentralizedClimateControl
     {
         private const float heatExhaustFactor = 1.25f;
 
-        // Input
-        public AirFlow Input;
-
-        // Output
-        public AirFlow Output { get; private set; }
-
         public float MaxInput => IsOperating ? Props.baseAirThroughput : 0.0f;
 
-        public float CurrentCapacity => Props.baseAirThroughput * Props.maxTempChange;
+        protected AirFlow Input => IsOperating ? (Network.CurrentIntake * (MaxInput / Network.MaxProcessing)).Clamp(MaxInput) : AirFlow.Zero;
 
-        public float CurrentLoad { get; private set; }
+        protected float EnergyDelta => AirFlow.Make(Input.Throughput, tempControl.targetTemperature).Energy - Input.Energy;
 
-        public float CurrentEfficiency { get; private set; }
+        protected float CurrentCapacity { get; private set; }
+
+        protected bool IsActive => Mathf.Abs(tempControl.targetTemperature - Input.Temperature) > 0.5f;
+
+        protected float EffectiveEnergyChange => IsActive ? Mathf.Clamp(EnergyDelta, -CurrentCapacity, CurrentCapacity) : 0.0f;
+
+        public AirFlow Output => AirFlow.FromEnergy(Input.Energy + EffectiveEnergyChange, Input.Throughput);
+
+        protected float EffectiveTempChange => Output.Temperature - Input.Temperature;
+
+        protected float CurrentLoad => Mathf.Abs(EffectiveEnergyChange) / CurrentCapacity;
 
         protected RimWorld.CompTempControl tempControl;
 
         protected new CompProperties_TempControl Props => (CompProperties_TempControl) props;
+
+        public override void Initialize(CompProperties props)
+        {
+            base.Initialize(props);
+            CurrentCapacity = AirFlow.Make(Props.baseAirThroughput, Props.maxTempChange).Energy;
+        }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
@@ -36,44 +46,12 @@ namespace CentralizedClimateControl
         {
             base.CompTickRare();
 
-            if (!IsOperating)
+            tempControl.operatingAtHighPower = IsActive;
+            powerTrader.PowerOutput = -powerTrader.Props.basePowerConsumption * (IsActive ? 1.0f : tempControl.Props.lowPowerConsumptionFactor);
+
+            if (EffectiveTempChange < 0.0f)
             {
-                powerTrader.PowerOutput = 0.0f;
-                CurrentLoad = 0.0f;
-                CurrentEfficiency = 0.0f;
-                Output = AirFlow.Zero;
-                return;
-            }
-
-            var throughput = Mathf.Min(Input.Throughput, MaxInput);
-
-            if (Mathf.Approximately(throughput, 0.0f))
-            {
-                powerTrader.PowerOutput = 0.0f;
-                Output = AirFlow.Zero;
-                return;
-            }
-
-            var tempDelta = tempControl.targetTemperature - Input.Temperature;
-            var energyDelta = tempDelta * throughput;
-
-            var maxEnergyChange = CurrentCapacity;
-            var energyChange = Mathf.Clamp(energyDelta, -maxEnergyChange, maxEnergyChange);
-            CurrentLoad = Mathf.Abs(energyChange / maxEnergyChange);
-
-            var tempChange = energyChange / throughput;
-            CurrentEfficiency = Mathf.Abs(tempChange / tempDelta);
-
-            var highPowerUsage = !Mathf.Approximately(tempChange, 0.0f);
-
-            Output = new AirFlow(throughput, Input.Temperature + tempChange);
-
-            tempControl.operatingAtHighPower = highPowerUsage;
-            powerTrader.PowerOutput = -powerTrader.Props.basePowerConsumption * (highPowerUsage ? 1.0f : tempControl.Props.lowPowerConsumptionFactor);
-
-            if (tempChange < 0.0f)
-            {
-                var heatExhaust = heatExhaustFactor * -tempChange / ClearArea.Count;
+                var heatExhaust = heatExhaustFactor * -EffectiveTempChange / ClearArea.Count * TickerType.Rare.TickDuration();
                 foreach (var cell in ClearArea)
                 {
                     GenTemperature.PushHeat(cell, parent.Map, heatExhaust);
@@ -89,18 +67,19 @@ namespace CentralizedClimateControl
             builder.AppendInNewLine("Maximum throughput: {0}".Translate(Props.baseAirThroughput.ToStringThroughput()));
 
             // @TODO: translate
-            builder.AppendInNewLine("Thermal capacity: {0}.cc/s".Translate(CurrentCapacity.ToStringTemperature()));
+            var capacity = AirFlow.FromEnergy(CurrentCapacity, MaxInput);
+            builder.AppendInNewLine("Thermal capacity: ±{0} for {1}".Translate(capacity.ToStringTemperature(), capacity.ToStringThroughput()));
 
             if (IsOperating)
             {
                 // @TODO: translate
                 builder.AppendInNewLine("Current input => output: {0} => {1}".Translate(Input.Translate(), Output.Translate()));
 
-                // @TODO: translate
-                builder.AppendInNewLine("Unit load: {0}".Translate(CurrentLoad.ToStringPercent()));
-
-                // @TODO: translate
-                builder.AppendInNewLine("Unit efficiency: {0}".Translate(CurrentEfficiency.ToStringPercent()));
+                if (IsActive)
+                {
+                    // @TODO: translate
+                    builder.AppendInNewLine("Current load: {0}".Translate(CurrentLoad.ToStringPercent()));
+                }
             }
 
             if (IsConnected)
@@ -118,10 +97,15 @@ namespace CentralizedClimateControl
         public override string DebugString() =>
             string.Join("\n",
                 base.DebugString(),
-                $"Input={Input}",
                 $"MaxInput={MaxInput}",
+                $"Input={Input}",
+                $"EnergyDelta={EnergyDelta}",
+                $"CurrentCapacity={CurrentCapacity}",
+                $"EffectiveEnergyChange={EffectiveEnergyChange}",
+                $"EffectiveTempChange={EffectiveTempChange}",
                 $"Output={Output}",
-                $"CurrentCapacity={CurrentCapacity}"
+                $"CurrentLoad={CurrentLoad}",
+                $"IsActive={IsActive}",
             );
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using Verse;
@@ -11,78 +12,57 @@ namespace CentralizedClimateControl
 
         public readonly float Temperature;
 
-        public AirFlow(float throughput = 0.0f, float temperature = 0.0f)
+        public float Energy => EnergyPerCelsius(Throughput) * Temperature;
+
+        private AirFlow(float throughput, float temperature)
         {
             Throughput = throughput;
             Temperature = temperature;
         }
 
         public AirFlow Clamp(float throughput)
-        {
-            return new AirFlow(Mathf.Min(Throughput, throughput), Temperature);
-        }
+            => Make(Mathf.Min(Throughput, throughput), Temperature);
 
         public override string ToString()
-        {
-            return $"{Throughput:F0}cc/s at {Temperature:F1}°c";
-        }
+            => $"{Throughput:F0}cc/s at {Temperature:F1}°C";
 
         public TaggedString Translate()
-        {
-            // @TODO: translate
-            return "{0} at {1}".Translate(ToStringThroughput(), ToStringTemperature());
-        }
+        // @TODO: translate
+            => this ? "{0} at {1}".Translate(ToStringThroughput(), ToStringTemperature()) : 0.0f.ToStringThroughput();
 
         public string ToStringThroughput()
-        {
-            return Throughput.ToStringThroughput();
-        }
+            => Throughput.ToStringThroughput();
 
         public string ToStringTemperature()
-        {
-            return Temperature.ToStringTemperature();
-        }
-        public static readonly AirFlow Zero = new();
+            => Temperature.ToStringTemperature();
+
+        public static readonly AirFlow Zero = new(0.0f, 0.0f);
+
+        public static AirFlow Make(float throughput, float temperature)
+            => Mathf.Approximately(throughput, 0) ? Zero : new AirFlow(throughput, temperature);
+
+        public static AirFlow FromEnergy(float energy, float throughput)
+            => Make(throughput, energy / EnergyPerCelsius(throughput));
 
         public static implicit operator bool(AirFlow flow)
-        {
-            return flow.Throughput > 0;
-        }
+            => !Mathf.Approximately(flow.Throughput, 0.0f);
 
         public static AirFlow operator +(AirFlow a, AirFlow b)
-        {
-            var throughput = a.Throughput + b.Throughput;
-            return new AirFlow(throughput, ((a.Temperature * a.Throughput) + (b.Temperature * b.Throughput)) / throughput);
-        }
+            => a || b ? Make(
+                a.Throughput + b.Throughput,
+                (a.Temperature * a.Throughput + b.Temperature * b.Throughput) / (a.Throughput + b.Throughput)
+            ) : Zero;
+
+        public static AirFlow operator -(AirFlow a, AirFlow b)
+            => a.Throughput > b.Throughput ? Make(a.Throughput - b.Throughput, a.Temperature) : Zero;
 
         public static AirFlow operator *(AirFlow a, float x)
-        {
-            return new AirFlow(a.Throughput * x, a.Temperature);
-        }
+            => Make(a.Throughput * x, a.Temperature);
 
         public static AirFlow operator /(AirFlow a, float x)
-        {
-            return new AirFlow(a.Throughput / x, a.Temperature);
-        }
+            => Make(a.Throughput / x, a.Temperature);
 
-        public static AirFlow Collect(IEnumerable<AirFlow> flows)
-        {
-            var throughput = 0.0f;
-            var tempSum = 0.0f;
-
-            foreach (var flow in flows)
-            {
-                throughput += flow.Throughput;
-                tempSum += flow.Temperature * flow.Throughput;
-            }
-
-            if (throughput > 0)
-            {
-                return new AirFlow(throughput, tempSum / throughput);
-            }
-
-            return Zero;
-        }
-
+        private static float EnergyPerCelsius(float throughput)
+            => throughput;
     }
 }

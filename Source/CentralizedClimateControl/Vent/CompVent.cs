@@ -6,17 +6,14 @@ namespace CentralizedClimateControl
 {
     public class CompVent : CompBuilding
     {
-        private const float secondsPerRareTick = 250.0f / 60;
         private const float cellsPerCc = 12.0f;
         private const float baseExhaust = 100.0f;
 
-        // Input
-        public AirFlow Exhaust;
+        public AirFlow Exhaust => IsOperating ? Network.CurrentExhaust * (MaxExhaust / Network.MaxExhaust) : AirFlow.Zero;
 
-        // Output
-        public float AvailableExhaust { get; private set; }
+        public float AvailableExhaust => Props.baseAirExhaust * ClearArea.Count / Area.Count;
 
-        public float MaxExhaust { get; private set; }
+        public float MaxExhaust => IsOperating ? AvailableExhaust : 0.0f;
 
         protected new CompProperties_Vent Props => (CompProperties_Vent) props;
 
@@ -24,17 +21,12 @@ namespace CentralizedClimateControl
         {
             base.CompTickRare();
 
-            AvailableExhaust = Props.baseAirExhaust * ClearArea.Count / Area.Count;
-
             if (!IsOperating)
             {
-                MaxExhaust = 0;
                 return;
             }
 
-            MaxExhaust = AvailableExhaust;
-
-            var energyLimit = Mathf.Min(MaxExhaust, Exhaust.Throughput) * cellsPerCc * secondsPerRareTick / baseExhaust;
+            var energyLimit = Mathf.Min(MaxExhaust, Exhaust.Throughput) * cellsPerCc * TickerType.Rare.TickDuration() / baseExhaust;
             energyLimit /= ClearArea.Count;
             foreach (var cell in ClearArea)
             {

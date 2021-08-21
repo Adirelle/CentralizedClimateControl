@@ -6,35 +6,21 @@ namespace CentralizedClimateControl
 {
     public class CompIntake : CompPowered
     {
-        public float NetworkLoad;
-
         // Output
-        public AirFlow Intake { get; private set; }
+        public AirFlow Intake => IsOperating ? AirFlow.Make(MaxIntake * Network.CurrentThroughput / Network.MaxIntake, AverageTemperature) : AirFlow.Zero;
 
-        public float AvailableIntake { get; private set; }
+        public float AvailableIntake => Props.baseAirIntake * ClearArea.Count / Area.Count;
 
-        public float MaxIntake { get; private set; }
+        public float MaxIntake => IsOperating ? AvailableIntake : 0.0f;
+
+        public float AverageTemperature { get; private set; }
 
         protected new CompProperties_Intake Props => (CompProperties_Intake) props;
 
         public override void CompTickRare()
         {
             base.CompTickRare();
-
-            AvailableIntake = Props.baseAirIntake * ClearArea.Count / Area.Count;
-
-            if (!IsOperating)
-            {
-                MaxIntake = 0.0f;
-                Intake = AirFlow.Zero;
-                powerTrader.PowerOutput = 0.0f;
-                return;
-            }
-
-            MaxIntake = AvailableIntake;
-            var temperature = ClearArea.Average(cell => cell.GetTemperature(parent.Map));
-            Intake = new AirFlow(MaxIntake * NetworkLoad, temperature);
-            powerTrader.PowerOutput = -powerTrader.Props.basePowerConsumption;
+            AverageTemperature = ClearArea.Count > 0 ? ClearArea.Average(cell => cell.GetTemperature(parent.Map)) : 0.0f;
         }
 
         protected override void BuildInspectString(StringBuilder builder)

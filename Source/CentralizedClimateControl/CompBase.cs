@@ -57,6 +57,12 @@ namespace CentralizedClimateControl
             }
         }
 
+        public override void CompTickRare()
+        {
+            base.CompTickRare();
+            Network?.NotifyPartChange();
+        }
+
         public sealed override string CompInspectStringExtra()
         {
             StringBuilder builder = new StringBuilder();
