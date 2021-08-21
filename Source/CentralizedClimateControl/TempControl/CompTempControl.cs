@@ -105,7 +105,7 @@ namespace CentralizedClimateControl
                 $"EffectiveTempChange={EffectiveTempChange}",
                 $"Output={Output}",
                 $"CurrentLoad={CurrentLoad}",
-                $"IsActive={IsActive}",
+                $"IsActive={IsActive}"
             );
     }
 }
