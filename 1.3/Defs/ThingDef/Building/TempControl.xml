@@ -56,6 +56,7 @@
     <defName>CCC_LargeTempControl</defName>
     <label>Large climate control unit</label>
     <description>A large climate control unit for heating and cooling air.</description>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <graphicData>
       <texPath>Things/Building/TempControl/Large</texPath>
       <drawSize>(2,2)</drawSize>

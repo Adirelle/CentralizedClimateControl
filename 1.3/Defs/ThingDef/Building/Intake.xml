@@ -52,6 +52,7 @@
     <defName>CCC_LargeIntakeFan</defName>
     <label>Large intake fan</label>
     <description>A large intake fan.</description>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <graphicData>
       <texPath>Things/Building/IntakeFan/Large</texPath>
       <drawSize>(2,2)</drawSize>

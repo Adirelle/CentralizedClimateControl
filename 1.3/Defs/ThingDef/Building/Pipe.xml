@@ -10,6 +10,7 @@
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
     </building>
+    <drawerType>MapMeshOnly</drawerType>
     <altitudeLayer>FloorEmplacement</altitudeLayer>
     <passability>Standable</passability>
     <placingDraggableDimensions>1</placingDraggableDimensions>

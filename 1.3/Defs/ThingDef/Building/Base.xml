@@ -54,17 +54,9 @@
     Abstract="True"
     ParentName="CCC_BuildingBase"
   >
-  <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
   <altitudeLayer>Building</altitudeLayer>
   <passability>Impassable</passability>
-  <blockWind>true</blockWind>
   <fillPercent>1</fillPercent>
-  <coversFloor>true</coversFloor>
-  <blockLight>true</blockLight>
-  <canOverlapZones>false</canOverlapZones>
-  <castEdgeShadows>true</castEdgeShadows>
-  <staticSunShadowHeight>1.0</staticSunShadowHeight>
-  <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
   <comps>
     <li Class="CompProperties_Breakdownable" />
   </comps>
