@@ -4,8 +4,8 @@
   <!-- @TRANSLATE: {0} at {1} -->
   <CentralizedClimateControl.AirFlow>{0} at {1}</CentralizedClimateControl.AirFlow>
 
-  <!-- @TRANSLATE: {0}cc/s -->
-  <CentralizedClimateControl.Throughput>{0}cc/s</CentralizedClimateControl.Throughput>
+  <!-- @TRANSLATE: {0} m³/h -->
+  <CentralizedClimateControl.Throughput>{0}&#160;m&#179;/h</CentralizedClimateControl.Throughput>
 
   <!-- @TRANSLATE: Not connected to air grid -->
   <CentralizedClimateControl.Disconnected>Not connected to air network</CentralizedClimateControl.Disconnected>
@@ -58,8 +58,8 @@
   <!-- @TRANSLATE: Maximum throughput: {0} -->
   <CentralizedClimateControl.TempControl.Throughput.Maximum>Maximum throughput: {0}</CentralizedClimateControl.TempControl.Throughput.Maximum>
 
-  <!-- @TRANSLATE: Thermal capacity: �{0} for {1} -->
-  <CentralizedClimateControl.TempControl.Capacity>Thermal capacity: �{0} for {1}</CentralizedClimateControl.TempControl.Capacity>
+  <!-- @TRANSLATE: Thermal capacity: +-{0} for {1} -->
+  <CentralizedClimateControl.TempControl.Capacity>Thermal capacity: &#177;{0} for {1}</CentralizedClimateControl.TempControl.Capacity>
 
   <!-- @TRANSLATE: Current input => output: {0} => {1} -->
   <CentralizedClimateControl.TempControl.Processing.Current>Current input => output: {0} => {1}</CentralizedClimateControl.TempControl.Processing.Current>
