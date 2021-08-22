@@ -47,9 +47,10 @@
       <Steel>35</Steel>
     </costList>
     <comps>
-      <li Class="CentralizedClimateControl.CompProperties_Vent">
+      <li Class="CentralizedClimateControl.CompProperties_Building">
+        <compClass>CentralizedClimateControl.CompVent</compClass>
         <shape>AdjacentNorth</shape>
-        <baseAirExhaust>50</baseAirExhaust>
+        <flowPerTile>50.0</flowPerTile>
       </li>
     </comps>
   </ThingDef>
@@ -70,9 +71,9 @@
       <Steel>70</Steel>
     </costList>
     <comps>
-      <li Class="CentralizedClimateControl.CompProperties_Vent">
+      <li Class="CentralizedClimateControl.CompProperties_Building">
+        <compClass>CentralizedClimateControl.CompVent</compClass>
         <shape>AdjacentNorth</shape>
-        <baseAirExhaust>100</baseAirExhaust>
       </li>
     </comps>
   </ThingDef>
@@ -93,9 +94,9 @@
       <Steel>210</Steel>
     </costList>
     <comps>
-      <li Class="CentralizedClimateControl.CompProperties_Vent">
+      <li Class="CentralizedClimateControl.CompProperties_Building">
+        <compClass>CentralizedClimateControl.CompVent</compClass>
         <shape>AdjacentCardinal</shape>
-        <baseAirExhaust>300</baseAirExhaust>
       </li>
     </comps>
   </ThingDef>
@@ -118,9 +119,9 @@
       <Steel>420</Steel>
     </costList>
     <comps>
-      <li Class="CentralizedClimateControl.CompProperties_Vent">
+      <li Class="CentralizedClimateControl.CompProperties_Building">
+        <compClass>CentralizedClimateControl.CompVent</compClass>
         <shape>AdjacentCardinal</shape>
-        <baseAirExhaust>600</baseAirExhaust>
       </li>
     </comps>
   </ThingDef>

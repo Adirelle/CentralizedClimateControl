@@ -4,9 +4,11 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    public abstract class CompProperties_Building : CompProperties
+    public class CompProperties_Building : CompProperties
     {
         public AreaShape shape;
+
+        public float flowPerTile = 100.0f;
 
         public override IEnumerable<string> ConfigErrors(ThingDef parentDef)
         {
@@ -15,14 +17,14 @@ namespace CentralizedClimateControl
                 yield return error;
             }
 
-            if (shape == AreaShape.None)
+            if (flowPerTile <= 0.0f)
             {
-                yield return $"{compClass.Name} requires an area shape";
+                yield return "flowPerTile must be strictly positive";
             }
 
             if (!parentDef.HasComp(typeof(CompFlickable)))
             {
-                yield return $"{compClass.Name} requires a CompFlickable";
+                yield return "A CompFlickable is required";
             }
         }
     }

@@ -39,7 +39,7 @@ namespace CentralizedClimateControl
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            tempControl = parent.GetComp<RimWorld.CompTempControl>();
+            tempControl = parent.GetComp<RimWorld.CompTempControl>() ?? throw new System.NullReferenceException("could not find a CompTempControl");
         }
 
         public override void CompTickRare()

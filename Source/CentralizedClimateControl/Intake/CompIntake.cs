@@ -9,13 +9,9 @@ namespace CentralizedClimateControl
         // Output
         public AirFlow Intake => IsOperating ? AirFlow.Make(MaxIntake * Network.CurrentThroughput / Network.MaxIntake, AverageTemperature) : AirFlow.Zero;
 
-        public float AvailableIntake => Props.baseAirIntake * ClearArea.Count / Area.Count;
-
-        public float MaxIntake => IsOperating ? AvailableIntake : 0.0f;
+        public float MaxIntake => IsOperating ? AvailableThroughput : 0.0f;
 
         public float AverageTemperature { get; private set; }
-
-        protected new CompProperties_Intake Props => (CompProperties_Intake) props;
 
         public override void CompTickRare()
         {
@@ -28,7 +24,7 @@ namespace CentralizedClimateControl
             base.BuildInspectString(builder);
 
             // @TRANSLATE: Maximum intake: {0}
-            builder.AppendInNewLine("CentralizedClimateControl.Inspect.Intake.Maximum".Translate(AvailableIntake.ToStringThroughput()));
+            builder.AppendInNewLine("CentralizedClimateControl.Inspect.Intake.Maximum".Translate(ThroughputCapacity.ToStringThroughput()));
 
             if (IsOperating)
             {

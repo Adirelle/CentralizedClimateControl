@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using UnityEngine;
 
 namespace CentralizedClimateControl
 {
@@ -9,11 +10,22 @@ namespace CentralizedClimateControl
         protected CompPowerTrader powerTrader;
         protected CompBreakdownable breakdownable;
 
+        protected virtual float PowerCost => powerTrader.Props.basePowerConsumption * Area.Count;
+
+        protected new CompProperties_Powered Props => (CompProperties_Powered) props;
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            powerTrader = parent.GetComp<CompPowerTrader>();
-            breakdownable = parent.GetComp<CompBreakdownable>();
+            powerTrader = parent.GetComp<CompPowerTrader>() ?? throw new System.NullReferenceException("could not find a CompPowerTrader");
+            breakdownable = parent.GetComp<CompBreakdownable>() ?? throw new System.NullReferenceException("could not find a CompBreakdownable");
+        }
+
+        public override void CompTickRare()
+        {
+            base.CompTickRare();
+
+            powerTrader.PowerOutput = -5.0f * Mathf.Ceil(PowerCost / Props.energyEfficiency / 5.0f);
         }
 
         public override string DebugString() =>

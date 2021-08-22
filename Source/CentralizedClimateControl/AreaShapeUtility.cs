@@ -6,19 +6,19 @@ namespace CentralizedClimateControl
 {
     internal static class AreaShapeUtility
     {
-        public static AreaShape GetAreaShape(this ThingComp comp)
+        public static AreaShape? GetAreaShape(this ThingComp comp)
         {
             return comp.parent.GetAreaShape();
         }
 
-        public static AreaShape GetAreaShape(this Thing thing)
+        public static AreaShape? GetAreaShape(this Thing thing)
         {
             return thing.def.GetAreaShape();
         }
 
-        public static AreaShape GetAreaShape(this Def def)
+        public static AreaShape? GetAreaShape(this Def def)
         {
-            return (def as ThingDef)?.GetCompProperties<CompProperties_Building>()?.shape ?? AreaShape.None;
+            return (def as ThingDef)?.GetCompProperties<CompProperties_Building>()?.shape;
         }
 
         public static IEnumerable<IntVec3> Cells(this AreaShape areaShape, IntVec3 center, Rot4 rot, IntVec2 size)
@@ -29,6 +29,7 @@ namespace CentralizedClimateControl
                 AreaShape.AdjacentCardinal => GenAdj.CellsAdjacentCardinal(center, rot, size),
                 AreaShape.AdjacentSouth => CellsAdjacentEdge(center, rot, size, Rot4.South),
                 AreaShape.AdjacentNorth => CellsAdjacentEdge(center, rot, size, Rot4.North),
+                AreaShape.AdjacentCardinalAndInside => GenAdj.CellsAdjacentCardinal(center, rot, size).Concat(GenAdj.CellsOccupiedBy(center, rot, size)),
                 _ => Enumerable.Empty<IntVec3>()
             };
         }

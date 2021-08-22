@@ -8,6 +8,13 @@
   >
     <designatorDropdown>CCC_Intakes</designatorDropdown>
     <designationHotKey>Misc3</designationHotKey>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <!-- Note: this is the power consumption for one free tile -->
+        <basePowerConsumption>30</basePowerConsumption>
+      </li>
+    </comps>
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
     </placeWorkers>
@@ -34,13 +41,9 @@
       <ComponentIndustrial>1</ComponentIndustrial>
     </costList>
     <comps>
-      <li Class="CompProperties_Power">
-        <compClass>CompPowerTrader</compClass>
-        <basePowerConsumption>150</basePowerConsumption>
-      </li>
-      <li Class="CentralizedClimateControl.CompProperties_Intake">
-        <shape>AroundAndInside</shape>
-        <baseAirIntake>300.0</baseAirIntake>
+      <li Class="CentralizedClimateControl.CompProperties_Powered">
+        <compClass>CentralizedClimateControl.CompIntake</compClass>
+        <shape>AdjacentCardinalAndInside</shape>
       </li>
     </comps>
     <researchPrerequisites>
@@ -68,13 +71,10 @@
       <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
-      <li Class="CompProperties_Power">
-        <compClass>CompPowerTrader</compClass>
-        <basePowerConsumption>450</basePowerConsumption>
-      </li>
-      <li Class="CentralizedClimateControl.CompProperties_Intake">
+      <li Class="CentralizedClimateControl.CompProperties_Powered">
+        <compClass>CentralizedClimateControl.CompIntake</compClass>
         <shape>AroundAndInside</shape>
-        <baseAirIntake>1500.0</baseAirIntake>
+        <energyEfficiency>1.2</energyEfficiency>
       </li>
     </comps>
     <researchPrerequisites>

@@ -8,13 +8,18 @@ namespace CentralizedClimateControl
     {
         public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing thing = null)
         {
-            GenDraw.DrawFieldEdges(def.GetAreaShape().Cells(center, rot, def.Size).ToList(), ghostCol);
+            var maybeShape = def.GetAreaShape();
+            if (maybeShape is AreaShape shape)
+            {
+                GenDraw.DrawFieldEdges(shape.Cells(center, rot, def.Size).ToList(), ghostCol);
+            }
         }
 
         public override AcceptanceReport AllowsPlacing(BuildableDef def, IntVec3 center, Rot4 rot, Map map,
             Thing thingToIgnore = null, Thing thing = null)
         {
-            if (def.GetAreaShape().Cells(center, rot, def.Size).IsBlocked(map, thingToIgnore))
+            var maybeShape = def.GetAreaShape();
+            if (maybeShape is AreaShape shape && shape.Cells(center, rot, def.Size).IsBlocked(map, thingToIgnore))
             {
                 // @TRANSLATE: Air area is blocked
                 return "CentralizedClimateControl.PlaceWorker.AreaBlocked".Translate();

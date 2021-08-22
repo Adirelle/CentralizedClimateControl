@@ -9,11 +9,17 @@ namespace CentralizedClimateControl
 {
     public abstract class CompBuilding : CompBase
     {
+        protected const float RareTickDuration = 250.0f / 60.0f;
+
         public AreaShape AreaShape => Props.shape;
 
         public List<IntVec3> Area { get; private set; }
 
         public List<IntVec3> ClearArea { get; private set; }
+
+        public float ThroughputCapacity => Props.flowPerTile * Area.Count;
+
+        public float AvailableThroughput => Props.flowPerTile * ClearArea.Count;
 
         public bool IsBlocked => ClearArea?.Count == 0;
 
@@ -37,8 +43,9 @@ namespace CentralizedClimateControl
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            flickable = parent.GetComp<CompFlickable>();
-            Area = null;
+            flickable = parent.GetComp<CompFlickable>() ?? throw new System.NullReferenceException("could not find a CompFlickable");
+            Area = AreaShape.Cells(parent).ToList();
+            ClearArea = Area;
         }
 
         public override void PostExposeData()
@@ -72,12 +79,6 @@ namespace CentralizedClimateControl
         public override void CompTickRare()
         {
             base.CompTickRare();
-
-            if (Area is null)
-            {
-                Area = Props.shape.Cells(parent).ToList();
-            }
-
             ClearArea = Area.AsEnumerable().IsClear(parent.Map, parent).ToList();
         }
 
