@@ -9,7 +9,9 @@ namespace CentralizedClimateControl
         {
             var manager = map.NetworkManager();
             var flowType = def.GetFlowType();
-            return GenAdj.CellsOccupiedBy(loc, rot, def.Size).All(cell => !manager.HasPartAt(cell, flowType));
+            return GenAdj.CellsOccupiedBy(loc, rot, def.Size).All(cell => !manager.HasPartAt(cell, flowType))
+                ? AcceptanceReport.WasAccepted
+                : new AcceptanceReport("CentralizedClimateControl.PlaceWorker.NotOnPipe".Translate());
         }
     }
 }

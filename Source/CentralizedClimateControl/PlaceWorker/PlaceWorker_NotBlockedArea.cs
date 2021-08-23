@@ -21,7 +21,6 @@ namespace CentralizedClimateControl
             var maybeShape = def.GetAreaShape();
             if (maybeShape is AreaShape shape && shape.Cells(center, rot, def.Size).IsBlocked(map, thingToIgnore))
             {
-                // @TRANSLATE: Air area is blocked
                 return "CentralizedClimateControl.PlaceWorker.AreaBlocked".Translate();
             }
 

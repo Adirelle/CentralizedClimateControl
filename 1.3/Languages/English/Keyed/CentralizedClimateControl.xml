@@ -43,8 +43,9 @@
   <!-- @TRANSLATE: Grid current / maximum intake: {0} / {1} -->
   <CentralizedClimateControl.Inspect.Intake.Network>Network current / maximum intake: {0} / {1}</CentralizedClimateControl.Inspect.Intake.Network>
 
-  <!-- @TRANSLATE: Air area is blocked -->
-  <CentralizedClimateControl.PlaceWorker.AreaBlocked>Blocked by nearby buildings</CentralizedClimateControl.PlaceWorker.AreaBlocked>
+  <CentralizedClimateControl.PlaceWorker.AreaBlocked>This would be blocked by nearby buildings here.</CentralizedClimateControl.PlaceWorker.AreaBlocked>
+  <CentralizedClimateControl.PlaceWorker.NeedsWall>This must be built on a wall</CentralizedClimateControl.PlaceWorker.NeedsWall>
+  <CentralizedClimateControl.PlaceWorker.NotOnPipe>This cannot be built over existing air pipe or climate buildings.</CentralizedClimateControl.PlaceWorker.NotOnPipe>
 
   <!-- @TRANSLATE: Click to change color affinity -->
   <CentralizedClimateControl.PreferredGizmo.Description>The type of network to connect to. Click to cycle through possible values.</CentralizedClimateControl.PreferredGizmo.Description>
