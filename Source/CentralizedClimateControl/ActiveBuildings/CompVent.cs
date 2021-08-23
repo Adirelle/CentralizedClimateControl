@@ -24,9 +24,9 @@ namespace CentralizedClimateControl
             var baseEnergy = Exhaust.Throughput / roomHeight / Area.Count;
             foreach (var cell in ClearArea)
             {
-                var tempDelta = cell.GetTemperature(parent.Map) - Exhaust.Temperature;
+                var tempDelta = Exhaust.Temperature - cell.GetTemperature(parent.Map);
                 var diminishingReturn = Mathf.Clamp01(1.0f / (0.5f + Mathf.Abs(tempDelta)));
-                var energyLimit = baseEnergy * diminishingReturn;
+                var energyLimit = baseEnergy * diminishingReturn * Mathf.Sign(tempDelta);
                 var tempChange = GenTemperature.ControlTemperatureTempChange(cell, parent.Map, energyLimit, Exhaust.Temperature);
                 cell.GetRoomOrAdjacent(parent.Map).Temperature += tempChange;
             }
