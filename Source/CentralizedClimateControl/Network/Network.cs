@@ -50,7 +50,7 @@ namespace CentralizedClimateControl
 
         private bool DoesTick()
         {
-            return (Find.TickManager.TicksGame + NetworkId.HashOffset()) % 60 != 0;
+            return (Find.TickManager.TicksGame + NetworkId.HashOffset()) % 60 == 0;
         }
 
         public void NetworkTick()
@@ -138,7 +138,6 @@ namespace CentralizedClimateControl
             {
                 tempControls.Remove(tempControl);
             }
-
         }
 
         public override string ToString()
