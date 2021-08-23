@@ -11,7 +11,7 @@
       <isEdifice>false</isEdifice>
     </building>
     <drawerType>MapMeshOnly</drawerType>
-    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <altitudeLayer>Conduits</altitudeLayer>
     <passability>Standable</passability>
     <placingDraggableDimensions>1</placingDraggableDimensions>
     <rotatable>false</rotatable>
@@ -19,6 +19,7 @@
     <clearBuildingArea>false</clearBuildingArea>
     <designatorDropdown>CCC_Pipes</designatorDropdown>
     <designationHotKey>Misc2</designationHotKey>
+    <tickerType>Never</tickerType>
     <graphicData>
       <damageData>
         <rect>(0,0.35,1,0.3)</rect>

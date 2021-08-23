@@ -9,7 +9,6 @@ namespace CentralizedClimateControl
     {
         public static string ToStringThroughput(this float throughput)
         {
-            // @TRANSLATE: {0}cc/s
             return "CentralizedClimateControl.Throughput".Translate(throughput.ToStringDecimalIfSmall());
         }
 

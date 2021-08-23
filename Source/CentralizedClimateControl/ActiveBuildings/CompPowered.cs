@@ -21,11 +21,10 @@ namespace CentralizedClimateControl
             breakdownable = parent.GetComp<CompBreakdownable>() ?? throw new System.NullReferenceException("could not find a CompBreakdownable");
         }
 
-        public override void CompTickRare()
+        public override void NetworkPostTick()
         {
-            base.CompTickRare();
-
             powerTrader.PowerOutput = -5.0f * Mathf.Ceil(PowerCost / Props.energyEfficiency / 5.0f);
+            base.NetworkPostTick();
         }
 
         public override string DebugString() =>

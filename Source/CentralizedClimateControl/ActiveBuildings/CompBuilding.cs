@@ -9,8 +9,6 @@ namespace CentralizedClimateControl
 {
     public abstract class CompBuilding : CompBase
     {
-        protected const float RareTickDuration = 250.0f / 60.0f;
-
         public AreaShape AreaShape => Props.shape;
 
         public List<IntVec3> Area { get; private set; }
@@ -52,7 +50,6 @@ namespace CentralizedClimateControl
         {
             base.PostExposeData();
             Scribe_Values.Look(ref PreferredFlowType, "preferredFlowType", FlowType.Any);
-            preferredFlowTypeGizmo.NotifyChange();
         }
 
         public void SetPreferredFlowType(FlowType preferredFlowType)
@@ -60,8 +57,7 @@ namespace CentralizedClimateControl
             if (preferredFlowType != PreferredFlowType)
             {
                 PreferredFlowType = preferredFlowType;
-                preferredFlowTypeGizmo.NotifyChange();
-                Disconnect();
+                Network = null;
                 parent.Map.NetworkManager().NotifyChange(this);
             }
         }
@@ -76,9 +72,9 @@ namespace CentralizedClimateControl
             yield return preferredFlowTypeGizmo;
         }
 
-        public override void CompTickRare()
+        public override void NetworkPreTick()
         {
-            base.CompTickRare();
+            base.NetworkPreTick();
             ClearArea = Area.AsEnumerable().IsClear(parent.Map, parent).ToList();
         }
 
@@ -88,16 +84,13 @@ namespace CentralizedClimateControl
 
             if (IsBlocked)
             {
-                // @TRANSLATE: Blocked by nearby buildings
                 builder.AppendInNewLine("CentralizedClimateControl.Blocked".Translate());
             }
             else if (ClearArea.Count < Area.Count)
             {
-                // @TRANSLATE: Performance is hindered by nearby buildings
                 builder.AppendInNewLine("CentralizedClimateControl.PartiallyBlocked".Translate());
             }
         }
-
         public override string DebugString() =>
             string.Join("\n",
                 base.DebugString(),

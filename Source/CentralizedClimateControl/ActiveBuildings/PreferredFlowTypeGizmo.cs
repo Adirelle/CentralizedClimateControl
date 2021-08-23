@@ -11,7 +11,7 @@ namespace CentralizedClimateControl
 {
     internal class PreferredFlowTypeGizmo : Command
     {
-        private CompBuilding parent;
+        private readonly CompBuilding parent;
 
         private FlowType CurrentFlowType => parent.PreferredFlowType;
 
@@ -23,34 +23,33 @@ namespace CentralizedClimateControl
             _ => FlowType.Red,
         };
 
+        public override string Label => "CentralizedClimateControl.PreferredGizmo.Label".Translate(PreferredTypeLabel);
+
+        private string PreferredTypeLabel => CurrentFlowType switch
+        {
+            FlowType.Any => "CentralizedClimateControl.PreferredGizmo.Label.Auto".Translate(),
+            _ => "CentralizedClimateControl.PreferredGizmo.Label.RestrictedTo".Translate(CurrentFlowType.Translate())
+        };
+
         public PreferredFlowTypeGizmo(CompBuilding parent) : base()
         {
             this.parent = parent;
 
-            // @TRANSLATE: Click to change color affinity
+            activateSound = SoundDefOf.Click;
             defaultDesc = "CentralizedClimateControl.PreferredGizmo.Description".Translate();
             hotKey = KeyBindingDefOf.Misc4;
-
-            NotifyChange();
         }
 
-        public void NotifyChange()
+        protected override void DrawIcon(Rect rect, Material buttonMat, GizmoRenderParms parms)
         {
             icon = Graphics.PreferredFlowTypeIcons(CurrentFlowType);
-            if (CurrentFlowType == FlowType.Any) {
-                // @TRANSLATE: Auto
-                defaultLabel = "CentralizedClimateControl.PreferredGizmo.Label.Auto".Translate();
-            } else {
-                // @TRANSLATE: {0} only
-                defaultLabel = "CentralizedClimateControl.PreferredGizmo.Label.RestrictedTo".Translate(CurrentFlowType.Translate());
-            }
+            base.DrawIcon(rect, buttonMat, parms);
         }
 
         public override void ProcessInput(Event ev)
         {
             base.ProcessInput(ev);
             parent.SetPreferredFlowType(NextFlowType);
-            NotifyChange();
         }
     }
 }

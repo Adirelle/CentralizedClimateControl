@@ -12,7 +12,7 @@
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <!-- Note: this is the power consumption for one free tile -->
-        <basePowerConsumption>30</basePowerConsumption>
+        <basePowerConsumption>10</basePowerConsumption>
       </li>
     </comps>
     <placeWorkers>
@@ -37,7 +37,7 @@
       <Mass>20</Mass>
     </statBases>
     <costList>
-      <Steel>100</Steel>
+      <Steel>30</Steel>
       <ComponentIndustrial>1</ComponentIndustrial>
     </costList>
     <comps>
@@ -63,12 +63,12 @@
     <size>(2,2)</size>
     <statBases>
       <WorkToBuild>4800</WorkToBuild>
-      <MaxHitPoints>300</MaxHitPoints>
-      <Mass>100</Mass>
+      <MaxHitPoints>400</MaxHitPoints>
+      <Mass>80</Mass>
     </statBases>
     <costList>
-      <Steel>300</Steel>
-      <ComponentIndustrial>3</ComponentIndustrial>
+      <Steel>120</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Powered">

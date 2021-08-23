@@ -20,12 +20,6 @@ namespace CentralizedClimateControl
 
         public static TaggedString Translate(this FlowType type)
         {
-            // @TRANSLATE: None
-            // @TRANSLATE: Blue
-            // @TRANSLATE: Red
-            // @TRANSLATE: Cyan
-            // @TRANSLATE: Any
-            // @TRANSLATE: Unknown
             return $"CentralizedClimateControl.FlowType.{type}".Translate();
         }
 

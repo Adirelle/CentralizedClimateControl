@@ -5,7 +5,7 @@ namespace CentralizedClimateControl
 {
     public abstract class CompBase : ThingComp
     {
-        public Network Network { get; private set; } = null;
+        public Network Network;
 
         public bool IsConnected => Network is not null;
 
@@ -31,36 +31,12 @@ namespace CentralizedClimateControl
             map.NetworkManager().DeregisterPart(this);
         }
 
-        public void ConnectTo(Network network)
+        public virtual void NetworkPreTick()
         {
-            if (Network == network)
-            {
-                return;
-            }
-            Network = network;
-            if (parent.Spawned)
-            {
-                this.CompTickRare();
-            }
         }
 
-        public void Disconnect()
+        public virtual void NetworkPostTick()
         {
-            if (Network is null)
-            {
-                return;
-            }
-            Network = null;
-            if (parent.Spawned)
-            {
-                this.CompTickRare();
-            }
-        }
-
-        public override void CompTickRare()
-        {
-            base.CompTickRare();
-            Network?.NotifyPartChange();
         }
 
         public sealed override string CompInspectStringExtra()
@@ -82,7 +58,6 @@ namespace CentralizedClimateControl
         {
             if (!IsConnected)
             {
-                // @TRANSLATE: Not connected to air grid
                 builder.AppendInNewLine("CentralizedClimateControl.Disconnected".Translate());
             }
         }

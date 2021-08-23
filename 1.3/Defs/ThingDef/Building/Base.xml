@@ -54,12 +54,12 @@
     Abstract="True"
     ParentName="CCC_BuildingBase"
   >
-  <altitudeLayer>Building</altitudeLayer>
-  <passability>Impassable</passability>
-  <fillPercent>1</fillPercent>
-  <comps>
-    <li Class="CompProperties_Breakdownable" />
-  </comps>
-</ThingDef>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>1</fillPercent>
+    <comps>
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+  </ThingDef>
 
 </Defs>

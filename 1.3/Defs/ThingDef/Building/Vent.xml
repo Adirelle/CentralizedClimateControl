@@ -8,9 +8,6 @@
   >
     <designatorDropdown>CCC_Vents</designatorDropdown>
     <designationHotKey>Misc5</designationHotKey>
-    <building>
-      <canPlaceOverWall>true</canPlaceOverWall>
-    </building>
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_HighlightsRooms</li>
     </placeWorkers>
@@ -21,7 +18,10 @@
     Abstract="True"
     ParentName="CCC_VentBase"
   >
-    <altitudeLayer>PawnUnused</altitudeLayer>
+    <altitudeLayer>BuildingOnTop</altitudeLayer>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
     <building>
       <isEdifice>false</isEdifice>
     </building>
@@ -29,6 +29,22 @@
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_NeedsWall</li>
     </placeWorkers>
+    <researchPrerequisites>
+      <li>BasicClimateControl</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_SurroundVentBase"
+    Abstract="True"
+    ParentName="CCC_BuildingBase"
+  >
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.5</fillPercent>
+    <researchPrerequisites>
+      <li>IndustrialClimateControl</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <ThingDef ParentName="CCC_WallVentBase">
@@ -44,7 +60,7 @@
       <Mass>1</Mass>
     </statBases>
     <costList>
-      <Steel>35</Steel>
+      <Steel>15</Steel>
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Building">
@@ -68,7 +84,7 @@
       <Mass>2</Mass>
     </statBases>
     <costList>
-      <Steel>70</Steel>
+      <Steel>30</Steel>
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Building">
@@ -78,7 +94,7 @@
     </comps>
   </ThingDef>
 
-  <ThingDef ParentName="CCC_VentBase">
+  <ThingDef ParentName="CCC_SurroundVentBase">
     <defName>CCC_SurroundVent</defName>
     <label>Surround air vent</label>
     <description>A surround exhaust vent.</description>
@@ -91,7 +107,7 @@
       <Mass>50</Mass>
     </statBases>
     <costList>
-      <Steel>210</Steel>
+      <Steel>120</Steel>
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Building">
@@ -101,7 +117,7 @@
     </comps>
   </ThingDef>
 
-  <ThingDef ParentName="CCC_VentBase">
+  <ThingDef ParentName="CCC_SurroundVentBase">
     <defName>CCC_WideSurroundVent</defName>
     <label>Wide surround air vent</label>
     <description>A wide surround exhaust vent.</description>
@@ -116,7 +132,7 @@
       <Mass>100</Mass>
     </statBases>
     <costList>
-      <Steel>420</Steel>
+      <Steel>240</Steel>
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Building">

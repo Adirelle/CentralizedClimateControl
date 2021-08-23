@@ -28,7 +28,6 @@ namespace CentralizedClimateControl
         private bool isDirty = true;
 
         private readonly List<CompBase> parts = new();
-        private readonly List<CompPipe> pipes = new();
         private readonly List<CompVent> vents = new();
         private readonly List<CompIntake> intakes = new();
         private readonly List<CompTempControl> tempControls = new();
@@ -41,38 +40,50 @@ namespace CentralizedClimateControl
 
         public void Clear()
         {
-            parts.ForEach(part => part.Disconnect());
+            parts.ForEach(part => part.Network = null);
             parts.Clear();
-            pipes.Clear();
             vents.Clear();
             intakes.Clear();
             tempControls.Clear();
             isDirty = false;
         }
 
-        public void Tick()
+        private bool DoesTick()
         {
-            if (!isDirty)
-            {
-                return;
-            }
+            return (Find.TickManager.TicksGame + NetworkId.HashOffset()) % 60 != 0;
+        }
 
-            // Calculate the network capacity
+        public void NetworkTick()
+        {
+            if (isDirty || DoesTick())
+            {
+                DoNetworkTick();
+                isDirty = false;
+            }
+        }
+
+        private void DoNetworkTick()
+        {
+            // Calculate the network capacities
+            vents.ForEach(vent => vent.NetworkPreTick());
             MaxExhaust = vents.Sum(vent => vent.MaxExhaust);
+
+            intakes.ForEach(intake => intake.NetworkPreTick());
             MaxIntake = intakes.Sum(intake => intake.MaxIntake);
+
+            tempControls.ForEach(control => control.NetworkPreTick());
             MaxProcessing = tempControls.Sum(control => control.MaxInput);
 
-            if (Mathf.Approximately(CurrentThroughput, 0.0f))
-            {
-                CurrentIntake = AirFlow.Zero;
-                CurrentProcessed = AirFlow.Zero;
-                return;
-            }
-
+            // Update intake
+            intakes.ForEach(intake => intake.NetworkPostTick());
             CurrentIntake = intakes.Select(intake => intake.Intake).Sum();
+
+            // Update processing
+            tempControls.ForEach(control => control.NetworkPostTick());
             CurrentProcessed = tempControls.Select(control => control.Output).Sum();
 
-            isDirty = false;
+            // Update exhaust
+            vents.ForEach(vent => vent.NetworkPostTick());
         }
 
         public void RegisterPart(CompBase part)
@@ -83,33 +94,23 @@ namespace CentralizedClimateControl
             }
 
             parts.Add(part);
-            part.ConnectTo(this);
+            part.Network = this;
+            isDirty = true;
 
-            var pipe = part.parent.TryGetComp<CompPipe>();
-            if (pipe != null)
-            {
-                pipes.Add(pipe);
-            }
-
-            var vent = part.parent.TryGetComp<CompVent>();
-            if (vent != null)
+            if (part is CompVent vent)
             {
                 vents.Add(vent);
             }
 
-            var intake = part.parent.TryGetComp<CompIntake>();
-            if (intake != null)
+            if (part is CompIntake intake)
             {
                 intakes.Add(intake);
             }
 
-            var tempControl = part.parent.TryGetComp<CompTempControl>();
-            if (tempControl != null)
+            if (part is CompTempControl tempControl)
             {
                 tempControls.Add(tempControl);
             }
-
-            isDirty = true;
         }
 
         public void DeregisterPart(CompBase part)
@@ -120,38 +121,24 @@ namespace CentralizedClimateControl
             }
 
             parts.Remove(part);
-            part.Disconnect();
+            part.Network = null;
+            isDirty = true;
 
-            var pipe = part.parent.TryGetComp<CompPipe>();
-            if (pipe != null)
-            {
-                pipes.Remove(pipe);
-            }
-
-            var vent = part.parent.TryGetComp<CompVent>();
-            if (vent != null)
+            if (part is CompVent vent)
             {
                 vents.Remove(vent);
             }
 
-            var intake = part.parent.TryGetComp<CompIntake>();
-            if (intake != null)
+            if (part is CompIntake intake)
             {
                 intakes.Remove(intake);
             }
 
-            var tempControl = part.parent.TryGetComp<CompTempControl>();
-            if (tempControl != null)
+            if (part is CompTempControl tempControl)
             {
                 tempControls.Remove(tempControl);
             }
 
-            NotifyPartChange();
-        }
-
-        public void NotifyPartChange()
-        {
-            isDirty = true;
         }
 
         public override string ToString()
@@ -163,7 +150,7 @@ namespace CentralizedClimateControl
             string.Join("\n",
                 $"NetworkId={NetworkId}",
                 $"FlowType={FlowType}",
-                $"#Parts (t/p/i/c/v)={parts.Count}/{pipes.Count}/{intakes.Count}/{tempControls.Count}/{vents.Count}",
+                $"#Parts (t/i/c/v)={parts.Count}/{intakes.Count}/{tempControls.Count}/{vents.Count}",
                 $"Intake (cur/total)={CurrentIntake}/{MaxIntake}",
                 $"Processing (cur/total)={CurrentProcessed}/{MaxProcessing}",
                 $"Exhaust (cur/total)={CurrentExhaust}/{MaxExhaust}"

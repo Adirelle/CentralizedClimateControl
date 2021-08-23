@@ -1,83 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <!-- @TRANSLATE: {0} at {1} -->
   <CentralizedClimateControl.AirFlow>{0} at {1}</CentralizedClimateControl.AirFlow>
-
-  <!-- @TRANSLATE: {0} m³/h -->
   <CentralizedClimateControl.Throughput>{0}&#160;m&#179;/h</CentralizedClimateControl.Throughput>
-
-  <!-- @TRANSLATE: Not connected to air grid -->
   <CentralizedClimateControl.Disconnected>Not connected to air network</CentralizedClimateControl.Disconnected>
-
-  <!-- @TRANSLATE: Blocked by nearby buildings -->
   <CentralizedClimateControl.Blocked>Blocked by nearby buildings</CentralizedClimateControl.Blocked>
-
-  <!-- @TRANSLATE: Performance is hindered by nearby buildings -->
   <CentralizedClimateControl.PartiallyBlocked>Partially blocked by nearby buildings</CentralizedClimateControl.PartiallyBlocked>
 
-  <!-- @TRANSLATE: None -->
   <CentralizedClimateControl.FlowType.None>None</CentralizedClimateControl.FlowType.None>
-
-  <!-- @TRANSLATE: Blue -->
   <CentralizedClimateControl.FlowType.Blue>Blue</CentralizedClimateControl.FlowType.Blue>
-
-  <!-- @TRANSLATE: Red -->
   <CentralizedClimateControl.FlowType.Red>Red</CentralizedClimateControl.FlowType.Red>
-
-  <!-- @TRANSLATE: Cyan -->
   <CentralizedClimateControl.FlowType.Cyan>Cyan</CentralizedClimateControl.FlowType.Cyan>
-
-  <!-- @TRANSLATE: Any -->
   <CentralizedClimateControl.FlowType.Any>Any</CentralizedClimateControl.FlowType.Any>
-
-  <!-- @TRANSLATE: Unknown -->
   <CentralizedClimateControl.FlowType.Unknown>Unknown</CentralizedClimateControl.FlowType.Unknown>
 
-  <!-- @TRANSLATE: Maximum intake: {0} -->
   <CentralizedClimateControl.Inspect.Intake.Maximum>Maximum intake: {0}</CentralizedClimateControl.Inspect.Intake.Maximum>
-
-  <!-- @TRANSLATE: Current intake: {0} -->
   <CentralizedClimateControl.Inspect.Intake.Current>Current intake: {0}</CentralizedClimateControl.Inspect.Intake.Current>
-
-  <!-- @TRANSLATE: Grid current / maximum intake: {0} / {1} -->
   <CentralizedClimateControl.Inspect.Intake.Network>Network current / maximum intake: {0} / {1}</CentralizedClimateControl.Inspect.Intake.Network>
 
   <CentralizedClimateControl.PlaceWorker.AreaBlocked>This would be blocked by nearby buildings here.</CentralizedClimateControl.PlaceWorker.AreaBlocked>
   <CentralizedClimateControl.PlaceWorker.NeedsWall>This must be built on a wall</CentralizedClimateControl.PlaceWorker.NeedsWall>
   <CentralizedClimateControl.PlaceWorker.NotOnPipe>This cannot be built over existing air pipe or climate buildings.</CentralizedClimateControl.PlaceWorker.NotOnPipe>
 
-  <!-- @TRANSLATE: Click to change color affinity -->
   <CentralizedClimateControl.PreferredGizmo.Description>The type of network to connect to. Click to cycle through possible values.</CentralizedClimateControl.PreferredGizmo.Description>
-
-  <!-- @TRANSLATE: Auto -->
+  <CentralizedClimateControl.PreferredGizmo.Label>Network: {0}</CentralizedClimateControl.PreferredGizmo.Label>
   <CentralizedClimateControl.PreferredGizmo.Label.Auto>Auto</CentralizedClimateControl.PreferredGizmo.Label.Auto>
-
-  <!-- @TRANSLATE: {0} only -->
   <CentralizedClimateControl.PreferredGizmo.Label.RestrictedTo>{0}</CentralizedClimateControl.PreferredGizmo.Label.RestrictedTo>
 
-  <!-- @TRANSLATE: Maximum throughput: {0} -->
   <CentralizedClimateControl.TempControl.Throughput.Maximum>Maximum throughput: {0}</CentralizedClimateControl.TempControl.Throughput.Maximum>
-
-  <!-- @TRANSLATE: Thermal capacity: +-{0} for {1} -->
-  <CentralizedClimateControl.TempControl.Capacity>Thermal capacity: &#177;{0} for {1}</CentralizedClimateControl.TempControl.Capacity>
-
-  <!-- @TRANSLATE: Current input => output: {0} => {1} -->
   <CentralizedClimateControl.TempControl.Processing.Current>Current input => output: {0} => {1}</CentralizedClimateControl.TempControl.Processing.Current>
-
-  <!-- @TRANSLATE: Current load: {0} -->
-  <CentralizedClimateControl.TempControl.Load>Current load: {0}</CentralizedClimateControl.TempControl.Load>
-
-  <!-- @TRANSLATE: Grid current / maximum processing: {0} / {1} -->
   <CentralizedClimateControl.TempControl.Processing.Network>Network current / maximum processing: {0} / {1}</CentralizedClimateControl.TempControl.Processing.Network>
 
-  <!-- @TRANSLATE: Maximum exhaust: {0} -->
   <CentralizedClimateControl.Vent.Exhaust.Maximum>Maximum exhaust: {0}</CentralizedClimateControl.Vent.Exhaust.Maximum>
-
-  <!-- @TRANSLATE: Current exhaust: {0} -->
   <CentralizedClimateControl.Vent.Exhaust.Current>Current exhaust: {0}</CentralizedClimateControl.Vent.Exhaust.Current>
-
-  <!-- @TRANSLATE: Grid current / maximum exhaust: {0} / {1} -->
   <CentralizedClimateControl.Vent.Exhaust.Network>Network current / maximum exhaust: {0} / {1}</CentralizedClimateControl.Vent.Exhaust.Network>
 
 </LanguageData>

@@ -33,18 +33,19 @@
       <Mass>20</Mass>
     </statBases>
     <costList>
-      <Steel>200</Steel>
+      <Steel>100</Steel>
       <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
+        <!-- Note: this will be multiplied by the size of the area -->
         <basePowerConsumption>200</basePowerConsumption>
       </li>
-      <li Class="CentralizedClimateControl.CompProperties_TempControl">
+      <li Class="CentralizedClimateControl.CompProperties_Powered">
+        <compClass>CentralizedClimateControl.CompTempControl</compClass>
         <shape>AdjacentSouth</shape>
-        <baseAirThroughput>900</baseAirThroughput>
-        <maxTempChange>10.0</maxTempChange>
+        <flowPerTile>1500</flowPerTile>
       </li>
     </comps>
     <researchPrerequisites>
@@ -68,18 +69,20 @@
       <Mass>80</Mass>
     </statBases>
     <costList>
-      <Steel>600</Steel>
+      <Steel>300</Steel>
       <ComponentIndustrial>9</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <basePowerConsumption>600</basePowerConsumption>
+        <!-- Note: this will be multiplied by the size of the area -->
+        <basePowerConsumption>250</basePowerConsumption>
       </li>
-      <li Class="CentralizedClimateControl.CompProperties_TempControl">
+      <li Class="CentralizedClimateControl.CompProperties_Powered">
+        <compClass>CentralizedClimateControl.CompTempControl</compClass>
         <shape>AdjacentSouth</shape>
-        <baseAirThroughput>4500</baseAirThroughput>
-        <maxTempChange>10.0</maxTempChange>
+        <flowPerTile>2250</flowPerTile>
+        <energyEfficiency>1.2</energyEfficiency>
       </li>
     </comps>
     <researchPrerequisites>

@@ -110,10 +110,7 @@ namespace CentralizedClimateControl
 
             if (!isDirty)
             {
-                foreach (var network in networks)
-                {
-                    network.Tick();
-                }
+                networks.ForEach(network => network.NetworkTick());
             }
         }
 
@@ -177,6 +174,7 @@ namespace CentralizedClimateControl
                     }
                 }
 
+                network.NetworkTick();
             }
         }
 
