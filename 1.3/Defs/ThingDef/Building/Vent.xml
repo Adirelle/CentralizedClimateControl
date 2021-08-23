@@ -37,7 +37,7 @@
   <ThingDef
     Name="CCC_SurroundVentBase"
     Abstract="True"
-    ParentName="CCC_BuildingBase"
+    ParentName="CCC_VentBase"
   >
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
@@ -55,8 +55,8 @@
       <texPath>Things/Building/Vent/Wall/Small</texPath>
     </graphicData>
     <statBases>
-      <WorkToBuild>175</WorkToBuild>
-      <MaxHitPoints>75</MaxHitPoints>
+      <WorkToBuild>150</WorkToBuild>
+      <MaxHitPoints>22</MaxHitPoints>
       <Mass>1</Mass>
     </statBases>
     <costList>
@@ -66,7 +66,7 @@
       <li Class="CentralizedClimateControl.CompProperties_Building">
         <compClass>CentralizedClimateControl.CompVent</compClass>
         <shape>AdjacentNorth</shape>
-        <flowPerTile>50.0</flowPerTile>
+        <baseThroughput>50</baseThroughput>
       </li>
     </comps>
   </ThingDef>
@@ -79,8 +79,8 @@
       <texPath>Things/Building/Vent/Wall/Regular</texPath>
     </graphicData>
     <statBases>
-      <WorkToBuild>350</WorkToBuild>
-      <MaxHitPoints>75</MaxHitPoints>
+      <WorkToBuild>300</WorkToBuild>
+      <MaxHitPoints>45</MaxHitPoints>
       <Mass>2</Mass>
     </statBases>
     <costList>
@@ -90,6 +90,7 @@
       <li Class="CentralizedClimateControl.CompProperties_Building">
         <compClass>CentralizedClimateControl.CompVent</compClass>
         <shape>AdjacentNorth</shape>
+        <baseThroughput>100</baseThroughput>
       </li>
     </comps>
   </ThingDef>
@@ -102,17 +103,18 @@
       <texPath>Things/Building/Vent/Surround/Regular</texPath>
     </graphicData>
     <statBases>
-      <WorkToBuild>1050</WorkToBuild>
-      <MaxHitPoints>100</MaxHitPoints>
-      <Mass>50</Mass>
+      <WorkToBuild>750</WorkToBuild>
+      <MaxHitPoints>112</MaxHitPoints>
+      <Mass>75</Mass>
     </statBases>
     <costList>
-      <Steel>120</Steel>
+      <Steel>75</Steel>
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Building">
         <compClass>CentralizedClimateControl.CompVent</compClass>
         <shape>AdjacentCardinal</shape>
+        <baseThroughput>400</baseThroughput>
       </li>
     </comps>
   </ThingDef>
@@ -127,17 +129,18 @@
       <texPath>Things/Building/Vent/Surround/Wide</texPath>
     </graphicData>
     <statBases>
-      <WorkToBuild>2100</WorkToBuild>
-      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>1500</WorkToBuild>
+      <MaxHitPoints>225</MaxHitPoints>
       <Mass>100</Mass>
     </statBases>
     <costList>
-      <Steel>240</Steel>
+      <Steel>150</Steel>
     </costList>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Building">
         <compClass>CentralizedClimateControl.CompVent</compClass>
         <shape>AdjacentCardinal</shape>
+        <baseThroughput>600</baseThroughput>
       </li>
     </comps>
   </ThingDef>

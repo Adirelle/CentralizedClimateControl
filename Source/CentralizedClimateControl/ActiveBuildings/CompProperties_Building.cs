@@ -8,7 +8,7 @@ namespace CentralizedClimateControl
     {
         public AreaShape shape;
 
-        public float flowPerTile = 100.0f;
+        public float baseThroughput;
 
         public override IEnumerable<string> ConfigErrors(ThingDef parentDef)
         {
@@ -17,9 +17,9 @@ namespace CentralizedClimateControl
                 yield return error;
             }
 
-            if (flowPerTile <= 0.0f)
+            if (baseThroughput <= 0.0f)
             {
-                yield return "flowPerTile must be strictly positive";
+                yield return "baseThroughput must be strictly positive";
             }
 
             if (!parentDef.HasComp(typeof(CompFlickable)))

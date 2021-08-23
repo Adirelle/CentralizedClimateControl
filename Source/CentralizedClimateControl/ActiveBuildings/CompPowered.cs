@@ -10,7 +10,7 @@ namespace CentralizedClimateControl
         protected CompPowerTrader powerTrader;
         protected CompBreakdownable breakdownable;
 
-        protected virtual float PowerCost => powerTrader.Props.basePowerConsumption * Area.Count;
+        protected virtual float PowerCost => powerTrader.Props.basePowerConsumption;
 
         protected new CompProperties_Powered Props => (CompProperties_Powered) props;
 
@@ -23,7 +23,7 @@ namespace CentralizedClimateControl
 
         public override void NetworkPostTick()
         {
-            powerTrader.PowerOutput = -5.0f * Mathf.Ceil(PowerCost / Props.energyEfficiency / 5.0f);
+            powerTrader.PowerOutput = PowerCost;
             base.NetworkPostTick();
         }
 

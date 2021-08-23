@@ -8,13 +8,6 @@
   >
     <designatorDropdown>CCC_Intakes</designatorDropdown>
     <designationHotKey>Misc3</designationHotKey>
-    <comps>
-      <li Class="CompProperties_Power">
-        <compClass>CompPowerTrader</compClass>
-        <!-- Note: this is the power consumption for one free tile -->
-        <basePowerConsumption>10</basePowerConsumption>
-      </li>
-    </comps>
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
     </placeWorkers>
@@ -32,18 +25,23 @@
       <canPlaceOverWall>true</canPlaceOverWall>
     </building>
     <statBases>
-      <WorkToBuild>1600</WorkToBuild>
-      <MaxHitPoints>100</MaxHitPoints>
-      <Mass>20</Mass>
+      <WorkToBuild>400</WorkToBuild>
+      <MaxHitPoints>45</MaxHitPoints>
+      <Mass>30</Mass>
     </statBases>
     <costList>
       <Steel>30</Steel>
       <ComponentIndustrial>1</ComponentIndustrial>
     </costList>
     <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>50</basePowerConsumption>
+      </li>
       <li Class="CentralizedClimateControl.CompProperties_Powered">
         <compClass>CentralizedClimateControl.CompIntake</compClass>
         <shape>AdjacentCardinalAndInside</shape>
+        <baseThroughput>500</baseThroughput>
       </li>
     </comps>
     <researchPrerequisites>
@@ -62,19 +60,23 @@
     </graphicData>
     <size>(2,2)</size>
     <statBases>
-      <WorkToBuild>4800</WorkToBuild>
-      <MaxHitPoints>400</MaxHitPoints>
-      <Mass>80</Mass>
+      <WorkToBuild>1200</WorkToBuild>
+      <MaxHitPoints>125</MaxHitPoints>
+      <Mass>90</Mass>
     </statBases>
     <costList>
-      <Steel>120</Steel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <Steel>90</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>130</basePowerConsumption>
+      </li>
       <li Class="CentralizedClimateControl.CompProperties_Powered">
         <compClass>CentralizedClimateControl.CompIntake</compClass>
         <shape>AroundAndInside</shape>
-        <energyEfficiency>1.2</energyEfficiency>
+        <baseThroughput>1600</baseThroughput>
       </li>
     </comps>
     <researchPrerequisites>

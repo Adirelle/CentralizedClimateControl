@@ -15,9 +15,9 @@ namespace CentralizedClimateControl
 
         public List<IntVec3> ClearArea { get; private set; }
 
-        public float ThroughputCapacity => Props.flowPerTile * Area.Count;
+        public float ThroughputCapacity => Props.baseThroughput;
 
-        public float AvailableThroughput => Props.flowPerTile * ClearArea.Count;
+        public float AvailableThroughput => Props.baseThroughput * ClearArea.Count / Area.Count;
 
         public bool IsBlocked => ClearArea?.Count == 0;
 
