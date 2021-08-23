@@ -44,9 +44,6 @@ jobs:
   check:
     name: Run dotnet checks
     runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: Source/CentralizedClimateControl
     steps:
 
     - name: Check out sources
