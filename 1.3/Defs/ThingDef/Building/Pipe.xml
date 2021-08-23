@@ -9,17 +9,20 @@
     <building>
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
+      <ai_chillDestination>false</ai_chillDestination>
     </building>
-    <drawerType>MapMeshOnly</drawerType>
     <altitudeLayer>Conduits</altitudeLayer>
     <passability>Standable</passability>
     <placingDraggableDimensions>1</placingDraggableDimensions>
-    <rotatable>false</rotatable>
+    <selectable>true</selectable>
     <neverMultiSelect>true</neverMultiSelect>
+    <rotatable>false</rotatable>
     <clearBuildingArea>false</clearBuildingArea>
+    <tradeability>None</tradeability>
     <designatorDropdown>CCC_Pipes</designatorDropdown>
     <designationHotKey>Misc2</designationHotKey>
-    <tickerType>Never</tickerType>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <resourcesFractionWhenDeconstructed>0</resourcesFractionWhenDeconstructed>
     <graphicData>
       <damageData>
         <rect>(0,0.35,1,0.3)</rect>
@@ -62,10 +65,12 @@
       <graphicClass>Graphic_Single</graphicClass>
       <texPath>Things/Building/PipeAtlas/Hidden</texPath>
     </graphicData>
+    <isAutoAttackableMapObject>false</isAutoAttackableMapObject>
     <statBases>
       <MaxHitPoints>120</MaxHitPoints>
       <WorkToBuild>55</WorkToBuild>
       <Beauty>0</Beauty>
+      <Flammability>0</Flammability>
     </statBases>
     <costList>
       <Steel>5</Steel>

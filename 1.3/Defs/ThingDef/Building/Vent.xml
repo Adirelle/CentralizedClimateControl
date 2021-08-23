@@ -21,8 +21,6 @@
     <altitudeLayer>BuildingOnTop</altitudeLayer>
     <building>
       <canPlaceOverWall>true</canPlaceOverWall>
-    </building>
-    <building>
       <isEdifice>false</isEdifice>
     </building>
     <fillPercent>0</fillPercent>

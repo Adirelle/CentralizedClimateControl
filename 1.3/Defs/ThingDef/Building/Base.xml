@@ -6,16 +6,9 @@
     Abstract="True"
     ParentName="BuildingBase"
   >
-    <category>Building</category>
-    <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
     <designationCategory>Temperature</designationCategory>
-    <tickerType>Rare</tickerType>
-    <thingClass>Building</thingClass>
+    <constructEffect>ConstructMetal</constructEffect>
+    <tickerType>Never</tickerType>
   </ThingDef>
 
   <ThingDef
