@@ -6,7 +6,7 @@ namespace CentralizedClimateControl
 {
     public class CompVent : CompBuilding
     {
-        private const float roomHeight = 2.4f;
+        private const float roomHeight = 2f;
 
         public AirFlow Exhaust => IsOperating ? (Network.CurrentExhaust * (MaxExhaust / Network.MaxExhaust)) : AirFlow.Zero;
 
@@ -21,12 +21,12 @@ namespace CentralizedClimateControl
                 return;
             }
 
-            var exhaustLoad = Exhaust.Throughput / MaxExhaust;
+            var baseEnergy = Exhaust.Throughput / roomHeight / Area.Count;
             foreach (var cell in ClearArea)
             {
                 var tempDelta = cell.GetTemperature(parent.Map) - Exhaust.Temperature;
                 var diminishingReturn = Mathf.Clamp01(1.0f / (0.5f + Mathf.Abs(tempDelta)));
-                var energyLimit = exhaustLoad * Props.flowPerTile * diminishingReturn / roomHeight;
+                var energyLimit = baseEnergy * diminishingReturn;
                 var tempChange = GenTemperature.ControlTemperatureTempChange(cell, parent.Map, energyLimit, Exhaust.Temperature);
                 cell.GetRoomOrAdjacent(parent.Map).Temperature += tempChange;
             }
