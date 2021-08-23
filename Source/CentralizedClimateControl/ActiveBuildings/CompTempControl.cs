@@ -34,9 +34,9 @@ namespace CentralizedClimateControl
                 powerTrader.PowerOutput *= tempControl.Props.lowPowerConsumptionFactor;
             }
 
-            var flowLoad = Input.Throughput / MaxInput;
-            var efficiency = Efficiency(tempDelta, PowerCost / 20.0f, flowLoad);
-            var tempChange = tempDelta * efficiency;
+            var energyDelta = Mathf.Abs(tempDelta) * Input.Throughput;
+            var energyCapacity = powerTrader.Props.basePowerConsumption * powerTrader.Props.basePowerConsumption;
+            var tempChange = tempDelta * Mathf.Clamp01(1.0f - energyDelta / energyCapacity);
 
             Output = AirFlow.Make(Input.Throughput, Input.Temperature + tempChange);
 
@@ -48,11 +48,6 @@ namespace CentralizedClimateControl
                     GenTemperature.PushHeat(cell, parent.Map, heatExhaust);
                 }
             }
-        }
-
-        private float Efficiency(float deltaTemp, float width, float drop)
-        {
-            return (0.5f + Mathf.Atan(width - Mathf.Abs(deltaTemp) * drop) / Mathf.PI);
         }
 
         protected override void BuildInspectString(StringBuilder builder)
@@ -84,13 +79,5 @@ namespace CentralizedClimateControl
                 $"Input={Input}",
                 $"Output={Output}"
             );
-
-        private const float e = 2.718281f;
-        private const float gdiv = 2.506628f;  // Mathf.Sqrt(Mathf.PI * 2.0f)
-
-        private static float Gaussian(float x, float stdDev, float mean)
-        {
-            return 1.0f / (stdDev * gdiv) * Mathf.Pow(e, -0.5f * Mathf.Pow((x - mean) / stdDev, 2.0f));
-        }
     }
 }
