@@ -1,3 +1,4 @@
+using RimWorld;
 using Verse;
 
 namespace CentralizedClimateControl
@@ -7,7 +8,7 @@ namespace CentralizedClimateControl
         public override AcceptanceReport AllowsPlacing(BuildableDef def, IntVec3 center, Rot4 rot, Map map,
             Thing thingToIgnore = null, Thing thing = null)
         {
-            return center.GetEdifice(map) is null
+            return center.GetFirstThing(map, ThingDefOf.Wall) is not null
                 ? AcceptanceReport.WasAccepted
                 : new AcceptanceReport("CentralizedClimateControl.PlaceWorker.NeedsWall".Translate());
         }
