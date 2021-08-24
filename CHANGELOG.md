@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Breaks
 
 -   Only support Rimworld 1.3+.
+-   Internals have been rewritten from scratch.
 -   Do not support buildings of CCC version 1.5 or previous.
 
 ## 1.0.20.0 - (2021-07-23)
