@@ -11,39 +11,40 @@ This a sequel to [ColdToad's mod](https://steamcommunity.com/sharedfiles/filedet
 An air network consists of several dedicated buildings linked together by air pipes.
 
 Air throughput in a given network is limited by both its intake and exhaust capacity.
-Ideally you want both to be equal.
+Ideally you want both to be equal to avoid underusing your intake fans or underventilating
+your rooms.
 
 ### Air pipes
 
-They carry the air between the different buildings of the network. They are several 
-seperate smaller pipes packed into one conduit to keep different air flows from mixing 
-with each other. This way you can place your building wherever you want. Air flows are 
+They carry the air between the different buildings of the network. They are several
+seperate smaller pipes packed into one conduit to keep different air flows from mixing
+with each other. This way you can place your building wherever you want. Air flows are
 always split evenly between available buildings.
 
-Air pipes are colored. There are three colors: red, blue and cyan. Air pipe of a given 
-color will not connect to pipes of the other colors. This allows to build up to three 
-seperate networks in thight spaces without any fuss.
+Air pipes are colored. There are three colors: red, blue and cyan. Air pipe of a given
+color will not connect to pipes of the other colors. This allows to build up to three
+seperate networks in tight spaces without any fuss.
 
-Covered variants of all air pipes also exist, so you can cool your nice looking rooms 
+Covered variants of air pipes also exist, so you can cool your nice looking rooms
 without ruining their beauty.
 
-By default, buildings connect to the first available air pipe but you can restrict them 
+By default, buildings connect to the first available air pipe but you can restrict them
 to connect only to pipes of a given color.
 
 ### Intake fans
 
-The intake fans suck ambiant air up and inject it in the air network. They need some 
-free space around them to work to
-their full capacity.
+The intake fans suck ambiant air up and inject it in the air network. They need some
+free space around them to work to their full capacity.
 
 ### Temperature control units
 
-The temperature control units (TCU) process air coming from the intake fans. They cool 
-or heat air to reach the target temperature. TCU are optional: a network without any 
-TCU just moves air from the intake fans to the vents.
+The temperature control units (TCU) process air coming from the intake fans. They cool
+or heat air to reach the target temperature. TCU are optional: a network without any
+TCU just moves air from the intake fans to the vents. When cooling they exhaust excess
+heat in the adjacent tiles.
 
-They have a limited throughput though, so you may need to add as many TCUs as needed. 
-If the throughput of all TCUs of a network is lower than this current throughput, 
+They have a limited throughput though, so you may need to add as many TCUs as needed.
+If the throughput of all TCUs of a network is lower than this current throughput,
 some unconditionned air will be mixed with the output of the TCUs.
 
 The efficiency of a TCU depends on two parameters:
@@ -55,7 +56,7 @@ If the TCUs of a given network fail to reach the target temperature, you can add
 
 ### Vents
 
-Vents push conditioned air from the air network into your rooms. They exist in different 
+Vents push conditioned air from the air network into your rooms. They exist in different
 shape and size.
 
 ## Source
