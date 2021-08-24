@@ -17,9 +17,6 @@
       <texPath>Things/Building/IntakeFan/Regular</texPath>
     </graphicData>
     <size>(1,1)</size>
-    <building>
-      <canPlaceOverWall>true</canPlaceOverWall>
-    </building>
     <statBases>
       <WorkToBuild>400</WorkToBuild>
       <MaxHitPoints>45</MaxHitPoints>
@@ -40,6 +37,51 @@
         <baseThroughput>500</baseThroughput>
       </li>
     </comps>
+    <researchPrerequisites>
+      <li>BasicClimateControl</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_IntakeBase">
+    <defName>CCC_WallIntakeFan</defName>
+    <label>Wall-mounted intake fan</label>
+    <description>An Wall-mounted intake fan.</description>
+    <graphicData>
+      <texPath>Things/Building/Vent/Wall/Regular</texPath>
+      <shaderType>Cutout</shaderType>
+      <color>(164, 164, 164)</color>
+    </graphicData>
+    <size>(1,1)</size>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+      <isEdifice>false</isEdifice>
+    </building>
+    <altitudeLayer>BuildingOnTop</altitudeLayer>
+    <fillPercent>0</fillPercent>
+    <statBases>
+      <WorkToBuild>200</WorkToBuild>
+      <MaxHitPoints>15</MaxHitPoints>
+      <Mass>10</Mass>
+    </statBases>
+    <costList>
+      <Steel>10</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>10</basePowerConsumption>
+      </li>
+      <li Class="CentralizedClimateControl.CompProperties_Powered">
+        <compClass>CentralizedClimateControl.CompIntake</compClass>
+        <shape>AdjacentNorth</shape>
+        <baseThroughput>100</baseThroughput>
+      </li>
+    </comps>
+    <placeWorkers Inherit="false">
+      <li>CentralizedClimateControl.PlaceWorker_NeedsWall</li>
+      <li>CentralizedClimateControl.PlaceWorker_NotBlockedArea</li>
+    </placeWorkers>
     <researchPrerequisites>
       <li>BasicClimateControl</li>
     </researchPrerequisites>

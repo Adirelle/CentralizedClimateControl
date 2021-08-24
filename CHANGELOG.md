@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### New
 
+- Wall-mounted intake fan.
+
 ### Changes
 
 - The global throughput of an air network is limited by both its intake fans and its vents.
