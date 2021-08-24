@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <BasicClimateControl.label>Basic climate control</BasicClimateControl.label>
+  <BasicClimateControl.description>Basic climate control desc</BasicClimateControl.description>
+
+  <IndustrialClimateControl.label>Industrial climate control</IndustrialClimateControl.label>
+  <IndustrialClimateControl.description>Industrial climate control desc</IndustrialClimateControl.description>
+
+</LanguageData>

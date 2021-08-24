@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <CCC_Pipes.label>Pipes</CCC_Pipes.label>
+  <CCC_Pipes.description>Pipes desc</CCC_Pipes.description>
+
+  <CCC_Intakes.label>Intake fans</CCC_Intakes.label>
+  <CCC_Intakes.description>Intake fans desc</CCC_Intakes.description>
+
+  <CCC_TempControls.label>Temperature control units</CCC_TempControls.label>
+  <CCC_TempControls.description>Temperature control units desc</CCC_TempControls.description>
+
+  <CCC_Vents.label>Vents</CCC_Vents.label>
+  <CCC_Vents.description>Vents desc</CCC_Vents.description>
+
+</LanguageData>

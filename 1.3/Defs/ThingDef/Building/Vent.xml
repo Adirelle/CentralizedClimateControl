@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef
+    Name="CCC_VentBase"
+    Abstract="True"
+    ParentName="CCC_BuildingBase"
+  >
+    <designatorDropdown>CCC_Vents</designatorDropdown>
+    <designationHotKey>Misc5</designationHotKey>
+    <placeWorkers>
+      <li>CentralizedClimateControl.PlaceWorker_HighlightsRooms</li>
+    </placeWorkers>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_WallVentBase"
+    Abstract="True"
+    ParentName="CCC_VentBase"
+  >
+    <altitudeLayer>BuildingOnTop</altitudeLayer>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+      <isEdifice>false</isEdifice>
+    </building>
+    <fillPercent>0</fillPercent>
+    <placeWorkers>
+      <li>CentralizedClimateControl.PlaceWorker_NeedsWall</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>BasicClimateControl</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_SurroundVentBase"
+    Abstract="True"
+    ParentName="CCC_VentBase"
+  >
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.5</fillPercent>
+    <researchPrerequisites>
+      <li>IndustrialClimateControl</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_WallVentBase">
+    <defName>CCC_SmallWallVent</defName>
+    <label>Small wall air vent</label>
+    <description>A small wall-mounted air vent.</description>
+    <graphicData>
+      <texPath>Things/Building/Vent/Wall/Small</texPath>
+    </graphicData>
+    <statBases>
+      <WorkToBuild>150</WorkToBuild>
+      <MaxHitPoints>22</MaxHitPoints>
+      <Mass>1</Mass>
+    </statBases>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Building">
+        <compClass>CentralizedClimateControl.CompVent</compClass>
+        <shape>AdjacentNorth</shape>
+        <baseThroughput>50</baseThroughput>
+      </li>
+    </comps>
+  </ThingDef>
+
+ <ThingDef ParentName="CCC_WallVentBase">
+    <defName>CCC_WallVent</defName>
+    <label>Wall air vent</label>
+    <description>A wall-mounted air vent.</description>
+    <graphicData>
+      <texPath>Things/Building/Vent/Wall/Regular</texPath>
+    </graphicData>
+    <statBases>
+      <WorkToBuild>300</WorkToBuild>
+      <MaxHitPoints>45</MaxHitPoints>
+      <Mass>2</Mass>
+    </statBases>
+    <costList>
+      <Steel>30</Steel>
+    </costList>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Building">
+        <compClass>CentralizedClimateControl.CompVent</compClass>
+        <shape>AdjacentNorth</shape>
+        <baseThroughput>100</baseThroughput>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_SurroundVentBase">
+    <defName>CCC_SurroundVent</defName>
+    <label>Surround air vent</label>
+    <description>A surround exhaust vent.</description>
+    <graphicData>
+      <texPath>Things/Building/Vent/Surround/Regular</texPath>
+    </graphicData>
+    <statBases>
+      <WorkToBuild>750</WorkToBuild>
+      <MaxHitPoints>112</MaxHitPoints>
+      <Mass>75</Mass>
+    </statBases>
+    <costList>
+      <Steel>75</Steel>
+    </costList>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Building">
+        <compClass>CentralizedClimateControl.CompVent</compClass>
+        <shape>AdjacentCardinal</shape>
+        <baseThroughput>400</baseThroughput>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_SurroundVentBase">
+    <defName>CCC_WideSurroundVent</defName>
+    <label>Wide surround air vent</label>
+    <description>A wide surround exhaust vent.</description>
+    <size>(2,1)</size>
+    <graphicData>
+      <drawSize>(2,1)</drawSize>
+      <texPath>Things/Building/Vent/Surround/Wide</texPath>
+    </graphicData>
+    <statBases>
+      <WorkToBuild>1500</WorkToBuild>
+      <MaxHitPoints>225</MaxHitPoints>
+      <Mass>100</Mass>
+    </statBases>
+    <costList>
+      <Steel>150</Steel>
+    </costList>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Building">
+        <compClass>CentralizedClimateControl.CompVent</compClass>
+        <shape>AdjacentCardinal</shape>
+        <baseThroughput>600</baseThroughput>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

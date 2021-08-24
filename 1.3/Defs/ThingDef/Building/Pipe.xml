@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef
+    Name="CCC_AirPipeBase"
+    Abstract="True"
+    ParentName="CCC_Base"
+  >
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+    <altitudeLayer>Conduits</altitudeLayer>
+    <passability>Standable</passability>
+    <placingDraggableDimensions>1</placingDraggableDimensions>
+    <selectable>true</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <rotatable>false</rotatable>
+    <clearBuildingArea>false</clearBuildingArea>
+    <tradeability>None</tradeability>
+    <designatorDropdown>CCC_Pipes</designatorDropdown>
+    <designationHotKey>Misc2</designationHotKey>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <resourcesFractionWhenDeconstructed>0</resourcesFractionWhenDeconstructed>
+    <graphicData>
+      <damageData>
+        <rect>(0,0.35,1,0.3)</rect>
+      </damageData>
+    </graphicData>
+    <placeWorkers>
+      <li>CentralizedClimateControl.PlaceWorker_NotOnPipe</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>BasicClimateControl</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_VisibleAirPipeBase"
+    Abstract="True"
+    ParentName="CCC_AirPipeBase"
+  >
+    <thingClass>CentralizedClimateControl.Building_VisiblePipe</thingClass>
+    <graphicData>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Transparent</shaderType>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>35</WorkToBuild>
+      <Beauty>-2</Beauty>
+    </statBases>
+    <costList>
+      <Steel>1</Steel>
+    </costList>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_HiddenAirPipeBase"
+    Abstract="True"
+    ParentName="CCC_AirPipeBase"
+  >
+    <graphicData>
+      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Things/Building/PipeAtlas/Hidden</texPath>
+    </graphicData>
+    <isAutoAttackableMapObject>false</isAutoAttackableMapObject>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>55</WorkToBuild>
+      <Beauty>0</Beauty>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>5</Steel>
+    </costList>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_VisibleAirPipeBase">
+    <defName>CCC_RedAirPipe</defName>
+    <label>Red air pipe</label>
+    <description>Red pipes for carrying air.</description>
+    <uiIconPath>UI/Pipe/Red</uiIconPath>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Pipe">
+        <flowType>Red</flowType>
+      </li>
+    </comps>
+    <graphicData>
+      <texPath>Things/Building/PipeAtlas/Red</texPath>
+    </graphicData>
+    <building>
+      <blueprintGraphicData>
+        <texPath>Things/Building/PipeAtlas/Blueprint/Red</texPath>
+      </blueprintGraphicData>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_HiddenAirPipeBase">
+    <defName>CCC_HiddenRedAirPipe</defName>
+    <label>Red covered air pipe</label>
+    <description>Red pipes for carrying air under floors.</description>
+    <uiIconPath>UI/Pipe/Hidden/Red</uiIconPath>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Pipe">
+        <flowType>Red</flowType>
+      </li>
+    </comps>
+    <building>
+      <blueprintGraphicData>
+        <texPath>Things/Building/PipeAtlas/Blueprint/Red</texPath>
+      </blueprintGraphicData>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_VisibleAirPipeBase">
+    <defName>CCC_BlueAirPipe</defName>
+    <label>Blue air pipe</label>
+    <description>Blue pipes for carrying air.</description>
+    <uiIconPath>UI/Pipe/Blue</uiIconPath>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Pipe">
+        <flowType>Blue</flowType>
+      </li>
+    </comps>
+    <graphicData>
+      <texPath>Things/Building/PipeAtlas/Blue</texPath>
+    </graphicData>
+    <building>
+      <blueprintGraphicData>
+        <texPath>Things/Building/PipeAtlas/Blueprint/Blue</texPath>
+      </blueprintGraphicData>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_HiddenAirPipeBase">
+    <defName>CCC_HiddenBlueAirPipe</defName>
+    <label>Blue covered air pipe</label>
+    <description>Blue pipes for carrying air under floors.</description>
+    <uiIconPath>UI/Pipe/Hidden/Blue</uiIconPath>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Pipe">
+        <flowType>Blue</flowType>
+      </li>
+    </comps>
+    <building>
+      <blueprintGraphicData>
+        <texPath>Things/Building/PipeAtlas/Blueprint/Blue</texPath>
+      </blueprintGraphicData>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_VisibleAirPipeBase">
+    <defName>CCC_CyanAirPipe</defName>
+    <label>Cyan air pipe</label>
+    <description>Cyan pipes for carrying air.</description>
+    <uiIconPath>UI/Pipe/Cyan</uiIconPath>
+    <graphicData>
+      <texPath>Things/Building/PipeAtlas/Cyan</texPath>
+    </graphicData>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Pipe">
+        <flowType>Cyan</flowType>
+      </li>
+    </comps>
+    <building>
+      <blueprintGraphicData>
+        <texPath>Things/Building/PipeAtlas/Blueprint/Cyan</texPath>
+      </blueprintGraphicData>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="CCC_HiddenAirPipeBase">
+    <defName>CCC_HiddenCyanAirPipe</defName>
+    <label>Cyan covered air pipe</label>
+    <description>Cyan pipes for carrying air under floors.</description>
+    <uiIconPath>UI/Pipe/Hidden/Cyan</uiIconPath>
+    <comps>
+      <li Class="CentralizedClimateControl.CompProperties_Pipe">
+        <flowType>Cyan</flowType>
+      </li>
+    </comps>
+    <building>
+      <blueprintGraphicData>
+        <texPath>Things/Building/PipeAtlas/Blueprint/Cyan</texPath>
+      </blueprintGraphicData>
+    </building>
+  </ThingDef>
+
+</Defs>

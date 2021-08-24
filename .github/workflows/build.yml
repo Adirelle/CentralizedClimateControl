@@ -1,0 +1,138 @@
+name: Build the mod
+
+on:
+  push:
+    branches:
+      - 2.*
+    tags:
+      - 2.*
+  pull_request: ~
+
+concurrency:
+  group: build-${{ github.head_ref }}
+  cancel-in-progress: true
+
+env:
+  MOD_NAME: CentralizedClimateControl
+
+jobs:
+  build:
+    name: Build assemblies
+    runs-on: windows-latest
+    steps:
+
+    - name: Check out sources
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build the assembly
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Upload the assemblies
+      uses: actions/upload-artifact@v2
+      with:
+        name: assemblies
+        path: '**/Assemblies/*.dll'
+
+  check:
+    name: Run dotnet checks
+    runs-on: windows-latest
+    steps:
+
+    - name: Check out sources
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
+
+    - name: Install dependencies and tools
+      run: |
+        dotnet restore
+        dotnet tool restore
+
+    - name: Add dotnet-format problem matcher
+      uses: xt0rted/dotnet-format-problem-matcher@v1
+
+    - name: Check code formatting
+      run: dotnet tool run dotnet-format --no-restore --check -wsa
+
+  package:
+    name: Package
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+
+    - name: Check out sources
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Extract the version string
+      id: version
+      run: |
+        VERSION="$(git describe --always)"
+        echo "::set-output name=version::${VERSION%-g*}"
+
+    - name: Download the assemblies
+      uses: actions/download-artifact@v2
+
+    - name: Create the distribution
+      run: |
+        mkdir -p "dist/$MOD_NAME"
+        cp -a assemblies/* *.md 1.3 About Textures "dist/$MOD_NAME/"
+        git log --format="* %s" $(git describe --tags --abbrev=0)..HEAD | grep -v '^CI:' > "dist/$MOD_NAME/About/Changelog.txt"
+        rm -rf "dist/$MOD_NAME/Textures/Things/Updates"
+        sed -i -e 's/2.0.0.0/${{ steps.version.outputs.version }}/' "dist/$MOD_NAME/About/"*.xml
+
+    - name: Upload the distribution
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: dist/
+
+  release:
+    name: Release to GitHub
+    needs: package
+    if: ${{ ! github.base_ref }}
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Download the distribution
+      uses: actions/download-artifact@v2
+
+    - name: Create the package
+      uses: thedoctor0/zip-release@master
+      with:
+        type: zip
+        directory: dist/
+        path: ${{ env.MOD_NAME }}/
+        filename: ${{ env.MOD_NAME }}.zip
+        exclusions: 'Source .git*'
+
+    - name: Create the release
+      uses: ncipollo/release-action@v1
+      with:
+        name: ${{ needs.package.outputs.version }}
+        tag: ${{ needs.package.outputs.version }}
+        commit: ${{ github.sha }}
+        prerelease: ${{ contains(needs.package.outputs.version, 'alpha') || contains(needs.package.outputs.version, 'beta') }}
+        bodyFile: dist/${{ env.MOD_NAME }}/About/Changelog.txt
+        artifacts: dist/${{ env.MOD_NAME }}.zip
+        artifactContentType: application/zip
+        token: ${{ github.token }}
+        allowUpdates: true
+        replacesArtifacts: true

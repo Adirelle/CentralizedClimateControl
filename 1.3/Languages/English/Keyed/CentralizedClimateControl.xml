@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <CentralizedClimateControl.AirFlow>{0} at {1}</CentralizedClimateControl.AirFlow>
+  <CentralizedClimateControl.Throughput>{0}&#160;m&#179;/h</CentralizedClimateControl.Throughput>
+  <CentralizedClimateControl.Disconnected>Not connected to air network</CentralizedClimateControl.Disconnected>
+  <CentralizedClimateControl.Blocked>Blocked by nearby buildings</CentralizedClimateControl.Blocked>
+  <CentralizedClimateControl.PartiallyBlocked>Partially blocked by nearby buildings</CentralizedClimateControl.PartiallyBlocked>
+
+  <CentralizedClimateControl.FlowType.None>None</CentralizedClimateControl.FlowType.None>
+  <CentralizedClimateControl.FlowType.Blue>Blue</CentralizedClimateControl.FlowType.Blue>
+  <CentralizedClimateControl.FlowType.Red>Red</CentralizedClimateControl.FlowType.Red>
+  <CentralizedClimateControl.FlowType.Cyan>Cyan</CentralizedClimateControl.FlowType.Cyan>
+  <CentralizedClimateControl.FlowType.Any>Any</CentralizedClimateControl.FlowType.Any>
+  <CentralizedClimateControl.FlowType.Unknown>Unknown</CentralizedClimateControl.FlowType.Unknown>
+
+  <CentralizedClimateControl.Inspect.Intake.Maximum>Maximum intake: {0}</CentralizedClimateControl.Inspect.Intake.Maximum>
+  <CentralizedClimateControl.Inspect.Intake.Current>Current intake: {0}</CentralizedClimateControl.Inspect.Intake.Current>
+  <CentralizedClimateControl.Inspect.Intake.Network>Network current / maximum intake: {0} / {1}</CentralizedClimateControl.Inspect.Intake.Network>
+
+  <CentralizedClimateControl.PlaceWorker.AreaBlocked>This would be blocked by nearby buildings here.</CentralizedClimateControl.PlaceWorker.AreaBlocked>
+  <CentralizedClimateControl.PlaceWorker.NeedsWall>This must be built on a wall</CentralizedClimateControl.PlaceWorker.NeedsWall>
+  <CentralizedClimateControl.PlaceWorker.NotOnPipe>This cannot be built over existing air pipe or climate buildings.</CentralizedClimateControl.PlaceWorker.NotOnPipe>
+
+  <CentralizedClimateControl.PreferredGizmo.Description>The type of network to connect to. Click to cycle through possible values.</CentralizedClimateControl.PreferredGizmo.Description>
+  <CentralizedClimateControl.PreferredGizmo.Label>Network: {0}</CentralizedClimateControl.PreferredGizmo.Label>
+  <CentralizedClimateControl.PreferredGizmo.Label.Auto>Auto</CentralizedClimateControl.PreferredGizmo.Label.Auto>
+  <CentralizedClimateControl.PreferredGizmo.Label.RestrictedTo>{0}</CentralizedClimateControl.PreferredGizmo.Label.RestrictedTo>
+
+  <CentralizedClimateControl.TempControl.Throughput.Maximum>Maximum throughput: {0}</CentralizedClimateControl.TempControl.Throughput.Maximum>
+  <CentralizedClimateControl.TempControl.Processing.Current>Current input => output: {0} => {1}</CentralizedClimateControl.TempControl.Processing.Current>
+  <CentralizedClimateControl.TempControl.Processing.Network>Network current / maximum processing: {0} / {1}</CentralizedClimateControl.TempControl.Processing.Network>
+
+  <CentralizedClimateControl.Vent.Exhaust.Maximum>Maximum exhaust: {0}</CentralizedClimateControl.Vent.Exhaust.Maximum>
+  <CentralizedClimateControl.Vent.Exhaust.Current>Current exhaust: {0}</CentralizedClimateControl.Vent.Exhaust.Current>
+  <CentralizedClimateControl.Vent.Exhaust.Network>Network current / maximum exhaust: {0} / {1}</CentralizedClimateControl.Vent.Exhaust.Network>
+
+</LanguageData>

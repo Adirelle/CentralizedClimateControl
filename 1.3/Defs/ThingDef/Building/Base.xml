@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef
+    Name="CCC_Base"
+    Abstract="True"
+    ParentName="BuildingBase"
+  >
+    <designationCategory>Temperature</designationCategory>
+    <constructEffect>ConstructMetal</constructEffect>
+    <tickerType>Never</tickerType>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_BuildingBase"
+    Abstract="True"
+    ParentName="CCC_Base"
+  >
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsClimate</li>
+    </thingCategories>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <comps>
+      <li Class="CompProperties_Flickable" />
+    </comps>
+    <statBases>
+      <Beauty>-10</Beauty>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <graphicData>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <placeWorkers>
+      <li>CentralizedClimateControl.PlaceWorker_NotBlockedArea</li>
+    </placeWorkers>
+  </ThingDef>
+
+  <ThingDef
+    Name="CCC_PoweredBase"
+    Abstract="True"
+    ParentName="CCC_BuildingBase"
+  >
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>1</fillPercent>
+    <comps>
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+  </ThingDef>
+
+</Defs>
