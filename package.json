@@ -4,8 +4,8 @@
         "@prettier/plugin-xml": "^1.0.2"
     },
     "scripts": {
-        "format": "prettier --write .",
-        "lint": "prettier --check .",
+        "format": "prettier --write . ; dotnet.exe tool run dotnet-format --no-restore -wsa info CentralizedClimateControl.sln",
+        "lint": "prettier --check . ; dotnet.exe tool run dotnet-format --check --no-restore -wsa error CentralizedClimateControl.sln",
         "genUpdateDefs": "pandoc -t .pandoc/UpdateFeatureDefs.lua CHANGELOG.md >1.3/Defs/UpdateFeatureDefs/UpdateFeatures.xml"
     },
     "prettier": {
