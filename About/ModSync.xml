@@ -7,8 +7,7 @@
   <Host name="Github">
     <Owner>Adirelle</Owner>
     <Project>CentralizedClimateControl</Project>
-    <AboutDir>About</AboutDir>
-    <DownloadFrom>ModSyncMainPage</DownloadFrom>
-    <Branch>2.x</Branch>
+    <DownloadFrom>ModSyncReleases</DownloadFrom>
+    <Branch>main</Branch>
   </Host>
 </ModSyncNinjaData>
