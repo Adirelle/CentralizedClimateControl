@@ -82,7 +82,7 @@ jobs:
       - name: Extract the version string
         id: version
         run: |
-          VERSION="$(git describe --tags --always)"
+          VERSION="$(git describe --always)"
           echo "::set-output name=version::${VERSION%-g*}"
           case "$VERSION" in
             *-*-g*|*alpha*|*beta*)
