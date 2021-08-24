@@ -11,16 +11,22 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Changes
 
--   The global throughput of an air network is limited by both its intake fans and its vents.
--   Building cost, power consumption and capacity of all buildinds have been reworked.
+- The global throughput of an air network is limited by both its intake fans and its vents.
+- Building cost, power consumption and capacity of all buildinds have been reworked.
+- Intake fans and temperature control units can be switched off.
+- Buildings can work with a partially blocked area, at the cost of lower performances.
+- Regular intake fans only needs 4 free tiles around them instead of 8.
 
 ### Fixes
 
+- Do not exhaust frozen air when a temperature control unit is broken.
+
 ### Breaks
 
--   Only support Rimworld 1.3+.
--   Internals have been rewritten from scratch.
--   Do not support buildings of CCC version 1.5 or previous.
+- Only support Rimworld 1.3+.
+- Internals have been rewritten from scratch.
+- Do not support buildings of CCC version 1.5 or previous.
+- Because of reworking, translations have been dropped, sorry.
 
 ## 1.0.20.0 - (2021-07-23)
 
