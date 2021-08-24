@@ -1,7 +1,13 @@
+# VS, VSCode and DotNet stuff
 .vs/
 .vscode/
 Backup/
 *.user
 /obj/
 /Properties
+
+# If you need to install prettier..
 /node_modules
+
+# Generated from the Changelog
+/1.3/Defs/UpdateFeatureDefs/UpdateFeatures.xml
