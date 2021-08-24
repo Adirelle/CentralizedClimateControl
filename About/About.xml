@@ -26,8 +26,6 @@
     <li>UnlimitedHugs.HugsLib</li>
   </loadAfter>
   <description>
-    Centralized Air Cooling/Heating System for RimWorld.
-
-    Build Large Piped Air Climate Systems away from your buildings.
+    Centralized air conditionning system for RimWorld.
   </description>
 </ModMetaData>

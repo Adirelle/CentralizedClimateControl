@@ -1,13 +1,17 @@
-# CentralizedClimateControl
+# Centralized Climate Control
 
-Centralized Air Cooling/Heating System for RimWorld. Build Large Piped Air Climate Systems away from your buildings.
+Centralized air conditioning system for RimWorld.
 
 Update of ColdToads mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=973091113
 
+## Source
+
+The source is available on [github](https://github.com/Adirelle/CentralizedClimateControl).
+
 ## Changelog
 
-See the [dedicated file](CHANGELOG.md).
+See the [dedicated file](https://github.com/Adirelle/CentralizedClimateControl/blob/main/CHANGELOG.md).
 
 ## Authors and contributors
 
