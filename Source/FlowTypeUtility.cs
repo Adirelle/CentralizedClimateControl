@@ -1,4 +1,4 @@
-﻿
+
 using Verse;
 
 namespace CentralizedClimateControl

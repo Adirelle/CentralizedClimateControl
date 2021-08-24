@@ -1,11 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
   <ThingDef
     Name="CCC_TempControlBase"
     Abstract="True"
-    ParentName="CCC_PoweredBase"
-  >
+    ParentName="CCC_PoweredBase">
     <designatorDropdown>CCC_TempControls</designatorDropdown>
     <designationHotKey>Misc4</designationHotKey>
     <building>

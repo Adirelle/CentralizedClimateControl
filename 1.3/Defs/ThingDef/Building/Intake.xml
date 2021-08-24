@@ -1,11 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef
-    Name="CCC_IntakeBase"
-    Abstract="True"
-    ParentName="CCC_PoweredBase"
-  >
+  <ThingDef Name="CCC_IntakeBase" Abstract="True" ParentName="CCC_PoweredBase">
     <designatorDropdown>CCC_Intakes</designatorDropdown>
     <designationHotKey>Misc3</designationHotKey>
     <placeWorkers>

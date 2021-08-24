@@ -4,3 +4,4 @@ Backup/
 *.user
 /obj/
 /Properties
+/node_modules

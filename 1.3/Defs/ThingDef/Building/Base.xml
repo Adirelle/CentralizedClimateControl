@@ -1,21 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef
-    Name="CCC_Base"
-    Abstract="True"
-    ParentName="BuildingBase"
-  >
+  <ThingDef Name="CCC_Base" Abstract="True" ParentName="BuildingBase">
     <designationCategory>Temperature</designationCategory>
     <constructEffect>ConstructMetal</constructEffect>
     <tickerType>Never</tickerType>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_BuildingBase"
-    Abstract="True"
-    ParentName="CCC_Base"
-  >
+  <ThingDef Name="CCC_BuildingBase" Abstract="True" ParentName="CCC_Base">
     <minifiedDef>MinifiedThing</minifiedDef>
     <thingCategories>
       <li>BuildingsClimate</li>
@@ -42,8 +34,7 @@
   <ThingDef
     Name="CCC_PoweredBase"
     Abstract="True"
-    ParentName="CCC_BuildingBase"
-  >
+    ParentName="CCC_BuildingBase">
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <fillPercent>1</fillPercent>

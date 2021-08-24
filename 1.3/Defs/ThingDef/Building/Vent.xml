@@ -1,11 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef
-    Name="CCC_VentBase"
-    Abstract="True"
-    ParentName="CCC_BuildingBase"
-  >
+  <ThingDef Name="CCC_VentBase" Abstract="True" ParentName="CCC_BuildingBase">
     <designatorDropdown>CCC_Vents</designatorDropdown>
     <designationHotKey>Misc5</designationHotKey>
     <comps>
@@ -20,11 +16,7 @@
     </placeWorkers>
   </ThingDef>
 
-  <ThingDef
-    Name="CCC_WallVentBase"
-    Abstract="True"
-    ParentName="CCC_VentBase"
-  >
+  <ThingDef Name="CCC_WallVentBase" Abstract="True" ParentName="CCC_VentBase">
     <altitudeLayer>BuildingOnTop</altitudeLayer>
     <building>
       <canPlaceOverWall>true</canPlaceOverWall>
@@ -42,8 +34,7 @@
   <ThingDef
     Name="CCC_SurroundVentBase"
     Abstract="True"
-    ParentName="CCC_VentBase"
-  >
+    ParentName="CCC_VentBase">
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <fillPercent>0.5</fillPercent>

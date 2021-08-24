@@ -1,0 +1,7 @@
+/Source
+/.config
+/obj
+/Properties
+/*.csproj*
+/package-lock.json
+/.vs*

@@ -1,11 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef
-    Name="CCC_AirPipeBase"
-    Abstract="True"
-    ParentName="CCC_Base"
-  >
+  <ThingDef Name="CCC_AirPipeBase" Abstract="True" ParentName="CCC_Base">
     <building>
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
@@ -39,8 +35,7 @@
   <ThingDef
     Name="CCC_VisibleAirPipeBase"
     Abstract="True"
-    ParentName="CCC_AirPipeBase"
-  >
+    ParentName="CCC_AirPipeBase">
     <thingClass>CentralizedClimateControl.Building_VisiblePipe</thingClass>
     <graphicData>
       <graphicClass>Graphic_Single</graphicClass>
@@ -59,8 +54,7 @@
   <ThingDef
     Name="CCC_HiddenAirPipeBase"
     Abstract="True"
-    ParentName="CCC_AirPipeBase"
-  >
+    ParentName="CCC_AirPipeBase">
     <graphicData>
       <graphicClass>Graphic_Single</graphicClass>
       <texPath>Things/Building/PipeAtlas/Hidden</texPath>
