@@ -1,37 +1,46 @@
 
+using System;
+using System.Collections.Generic;
 using Verse;
 
 namespace CentralizedClimateControl
 {
     public static class FlowTypeUtility
     {
-        public static string ToString(this FlowType type)
-        {
-            return type switch
-            {
-                FlowType.None => "None",
-                FlowType.Blue => "Blue",
-                FlowType.Red => "Red",
-                FlowType.Cyan => "Cyan",
-                FlowType.Any => "Any",
-                _ => "Unknown"
-            };
-        }
-
         public static TaggedString Translate(this FlowType type)
         {
             return $"CentralizedClimateControl.FlowType.{type}".Translate();
         }
 
+        public static UnityEngine.Color RedPipeColor = new(255f / 255, 120f / 255, 145f / 255);
+        public static UnityEngine.Color BluePipeColor = new(100f / 255, 115f / 255, 255f / 255);
+        public static UnityEngine.Color CyanPipeColor = new(92f / 255, 211f / 255, 255f / 255);
+
         public static UnityEngine.Color Color(this FlowType type)
         {
             return type switch
             {
-                FlowType.Blue => UnityEngine.Color.blue,
-                FlowType.Red => UnityEngine.Color.red,
-                FlowType.Cyan => UnityEngine.Color.cyan,
+                FlowType.Red => RedPipeColor,
+                FlowType.Blue => BluePipeColor,
+                FlowType.Cyan => CyanPipeColor,
                 _ => UnityEngine.Color.white
             };
+        }
+
+        public static IEnumerable<FlowType> All()
+        {
+            foreach (var color in Colors())
+            {
+                yield return color;
+            }
+            yield return FlowType.Any;
+        }
+
+        public static IEnumerable<FlowType> Colors()
+        {
+            yield return FlowType.Red;
+            yield return FlowType.Blue;
+            yield return FlowType.Cyan;
         }
 
         public static bool Accept(this FlowType selector, FlowType candidate)

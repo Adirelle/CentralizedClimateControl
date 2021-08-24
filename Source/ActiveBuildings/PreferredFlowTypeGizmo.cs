@@ -37,7 +37,7 @@ namespace CentralizedClimateControl
 
         protected override void DrawIcon(Rect rect, Material buttonMat, GizmoRenderParms parms)
         {
-            icon = Graphics.PreferredFlowTypeIcons(CurrentFlowType);
+            icon = CurrentFlowType.PreferredIcon();
             base.DrawIcon(rect, buttonMat, parms);
         }
 

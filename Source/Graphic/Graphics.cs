@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -9,51 +10,50 @@ namespace CentralizedClimateControl
     {
         private static readonly Dictionary<FlowType, Graphic> pipeOverlays = new();
 
-        private static readonly Dictionary<string, Graphic> pipeGraphics = new();
-
         private static readonly Dictionary<FlowType, Texture2D> preferredFlowTypeIcons = new();
+
+        private static readonly Dictionary<GraphicData, Graphic> linkedPipes = new();
 
         static Graphics()
         {
-            var overlayGraphic = GraphicDatabase.Get<Graphic_Single>("Things/Building/PipeAtlas/Overlay", ShaderDatabase.MetaOverlay);
+            var baseOverlay = GraphicDatabase.Get<Graphic_Single>("Things/Building/PipeAtlas/Overlay", ShaderDatabase.MetaOverlay);
 
-            void loadPipeOverlayGraphic(FlowType flowType)
+            _ = GraphicDatabase.Get<Graphic_Single>("Things/Building/PipeAtlas/Pipe", ShaderDatabase.CutoutComplex);
+
+            void addFlowType(FlowType flowType)
             {
-                var coloredGraphic = overlayGraphic.GetColoredVersion(overlayGraphic.Shader, flowType.Color(), overlayGraphic.colorTwo);
-                pipeOverlays.Add(flowType, new Graphic_LinkedPipeOverlay(coloredGraphic, flowType));
+                var overlayColor = flowType.Color();
+                overlayColor.a = 0.75f;
+                pipeOverlays[flowType] = new Graphic_LinkedPipeOverlay(baseOverlay.Colored(overlayColor), flowType);
+                preferredFlowTypeIcons[flowType] = ContentFinder<Texture2D>.Get($"UI/Preferred/{flowType}");
             }
 
-            loadPipeOverlayGraphic(FlowType.Any);
-            loadPipeOverlayGraphic(FlowType.Red);
-            loadPipeOverlayGraphic(FlowType.Blue);
-            loadPipeOverlayGraphic(FlowType.Cyan);
-
-            void loadPreferredFlowTypeIcon(FlowType flowType)
+            foreach (var flowType in FlowTypeUtility.All())
             {
-                var icon = ContentFinder<Texture2D>.Get($"UI/Preferred/{flowType}");
-                preferredFlowTypeIcons.Add(flowType, icon);
+                addFlowType(flowType);
             }
-
-            loadPreferredFlowTypeIcon(FlowType.Red);
-            loadPreferredFlowTypeIcon(FlowType.Blue);
-            loadPreferredFlowTypeIcon(FlowType.Cyan);
-            loadPreferredFlowTypeIcon(FlowType.Any);
         }
 
-        public static Graphic PipeOverlay(FlowType flowType) => pipeOverlays.GetValueOrDefault(flowType);
+        public static Graphic Colored(this Graphic graphic, FlowType flowType)
+            => graphic.Colored(flowType.Color());
 
-        public static Texture2D PreferredFlowTypeIcons(FlowType flowType) => preferredFlowTypeIcons.GetValueOrDefault(flowType);
+        public static Graphic Colored(this Graphic graphic, Color color, Color? colorTwo = null)
+            => graphic.GetColoredVersion(graphic.Shader, color, colorTwo ?? graphic.colorTwo);
 
-        public static Graphic PipeGraphic(Graphic graphic)
+        public static Graphic Overlay(this FlowType flowType)
+            => pipeOverlays[flowType];
+
+        public static Texture2D PreferredIcon(this FlowType flowType)
+            => preferredFlowTypeIcons[flowType];
+
+        public static Graphic LinkedPipe(this Graphic graphic)
         {
-            var key = graphic.data.texPath;
-            if (pipeGraphics.TryGetValue(key, out var value))
+            if (!linkedPipes.TryGetValue(graphic.data, out var linked))
             {
-                return value;
+                linked = new Graphic_LinkedPipe(graphic);
+                linkedPipes[graphic.data] = linked;
             }
-            value = new Graphic_LinkedPipe(graphic);
-            pipeGraphics.Add(key, value);
-            return value;
+            return linked;
         }
     }
 }
