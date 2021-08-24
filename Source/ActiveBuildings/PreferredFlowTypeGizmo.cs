@@ -35,7 +35,7 @@ namespace CentralizedClimateControl
             hotKey = KeyBindingDefOf.Misc4;
         }
 
-        protected override void DrawIcon(Rect rect, Material buttonMat, GizmoRenderParms parms)
+        public override void DrawIcon(Rect rect, Material buttonMat, GizmoRenderParms parms)
         {
             icon = CurrentFlowType.PreferredIcon();
             base.DrawIcon(rect, buttonMat, parms);
