@@ -21,9 +21,6 @@
       <li>BuildingsClimate</li>
     </thingCategories>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
-    <comps>
-      <li Class="CompProperties_Flickable" />
-    </comps>
     <statBases>
       <Beauty>-10</Beauty>
       <Flammability>1.0</Flammability>
@@ -51,6 +48,7 @@
     <passability>Impassable</passability>
     <fillPercent>1</fillPercent>
     <comps>
+      <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
     </comps>
   </ThingDef>

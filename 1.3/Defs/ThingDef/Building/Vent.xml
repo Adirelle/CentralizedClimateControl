@@ -8,6 +8,13 @@
   >
     <designatorDropdown>CCC_Vents</designatorDropdown>
     <designationHotKey>Misc5</designationHotKey>
+    <comps>
+      <li Class="CompProperties_Flickable">
+        <commandTexture>UI/Commands/Vent</commandTexture>
+        <commandLabelKey>CommandDesignateOpenCloseVentLabel</commandLabelKey>
+        <commandDescKey>CommandDesignateOpenCloseVentDesc</commandDescKey>
+      </li>
+    </comps>
     <placeWorkers>
       <li>CentralizedClimateControl.PlaceWorker_HighlightsRooms</li>
     </placeWorkers>
