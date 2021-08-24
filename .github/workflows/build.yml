@@ -3,7 +3,7 @@ name: Build the mod
 on:
   push:
     branches:
-      - 2.*
+      - main
     tags:
       - 2.*
   pull_request: ~
