@@ -4,32 +4,31 @@ Centralized air conditioning system for RimWorld.
 
 Build networks of pulsed air pipes and machines to keep your colonists cool.
 
-This a sequel to [ColdToad's mod](https://steamcommunity.com/sharedfiles/filedetails/?id=973091113)
+This a sequel to [ColdToad's mod](https://steamcommunity.com/sharedfiles/filedetails/?id=973091113).
 
 ## Air networks
 
 An air network consists of several dedicated buildings linked together by air pipes.
 
-Air throughput in a given network is limited by both its intake and exhaust capacity.
+Air throughput in a given network is limited by both its intake and exhaust capacities.
 Ideally you want both to be equal to avoid underusing your intake fans or underventilating
 your rooms.
 
 ### Air pipes
 
-They carry the air between the different buildings of the network. They are several
-seperate smaller pipes packed into one conduit to keep different air flows from mixing
-with each other. This way you can place your building wherever you want. Air flows are
-always split evenly between available buildings.
+They carry the air between the different buildings of the network. One pipe actually
+host smaller inner pipes to keep different air flows from mixing with each other.
+This way you can place your buildings wherever you want.
 
-Air pipes are colored. There are three colors: red, blue and cyan. Air pipe of a given
-color will not connect to pipes of the other colors. This allows to build up to three
-seperate networks in tight spaces without any fuss.
+Air pipes are colored. There are three colors: red, blue and cyan. Air pipes of a given
+color do not connect with pipes of other colors. This allows to build up to three
+separate networks in tight spaces without fuss.
 
 Covered variants of air pipes also exist, so you can cool your nice looking rooms
 without ruining their beauty.
 
-By default, buildings connect to the first available air pipe but you can restrict them
-to connect only to pipes of a given color.
+By default, buildings connect to any air pipe but you can restrict them to connect
+only to pipes of a given color.
 
 ### Intake fans
 
@@ -56,20 +55,20 @@ If the TCUs of a given network fail to reach the target temperature, you can add
 
 ### Vents
 
-Vents push conditioned air from the air network into your rooms. They exist in different
-shape and size.
+Vents push conditioned air from the air network into adjacent tiles. They exist in different
+shape and size. Bigger rooms needs bigger vents.
 
 ## Source
 
-The source is available on [github](https://github.com/Adirelle/CentralizedClimateControl).
+The source is available on [GitHub](https://github.com/Adirelle/CentralizedClimateControl).
 
 ## Error reporting
 
 - See if the the error persists if you just have this mod and its requirements active.
 - If not, try adding your other mods until it happens again.
-- Post your error-log using [HugsLib](https://steamcommunity.com/workshop/filedetails/?id=818773962) and command Ctrl+F12
+- Reports errors to the [GitHub repository](https://github.com/Adirelle/CentralizedClimateControl/issues).
+- Post your error-log using [HugsLib](https://steamcommunity.com/workshop/filedetails/?id=818773962) and command Ctrl+F12.
 - Do not report errors by making a discussion-thread, I get no notification of that.
-- If you have the solution for a problem, please post it to the GitHub repository.
 
 ## Changelog
 
