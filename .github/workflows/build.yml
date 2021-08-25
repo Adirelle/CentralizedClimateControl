@@ -19,9 +19,14 @@ jobs:
   build:
     name: Build assemblies
     runs-on: windows-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
     steps:
       - name: Check out sources
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
@@ -31,8 +36,25 @@ jobs:
       - name: Install dependencies
         run: dotnet restore --locked-mode
 
+      - name: Extract the version string
+        id: version
+        shell: bash
+        run: |
+          VERSION="$(git describe --always)"
+          echo "::set-output name=version::${VERSION%-g*}"
+          case "$VERSION" in
+            *-*-g*|*alpha*|*beta*)
+              echo "::set-output name=prerelease::true"
+              echo "::set-output name=changelog_section::Unreleased"
+            ;;
+            *)
+              echo "::set-output name=prerelease::false"
+              echo "::set-output name=changelog_section::${VERSION}"
+            ;;
+          esac
+
       - name: Build the assembly
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore "/p:Version=${{ steps.version.outputs.version }}"
 
       - name: Upload the assemblies
         uses: actions/upload-artifact@v2
@@ -70,30 +92,9 @@ jobs:
     defaults:
       run:
         shell: bash
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-      prerelease: ${{ steps.version.outputs.prerelease }}
     steps:
       - name: Check out sources
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Extract the version string
-        id: version
-        run: |
-          VERSION="$(git describe --always)"
-          echo "::set-output name=version::${VERSION%-g*}"
-          case "$VERSION" in
-            *-*-g*|*alpha*|*beta*)
-              echo "::set-output name=prerelease::true"
-              echo "::set-output name=changelog_section::Unreleased"
-            ;;
-            *)
-              echo "::set-output name=prerelease::false"
-              echo "::set-output name=changelog_section::${VERSION}"
-            ;;
-          esac
 
       - name: Download the assemblies
         uses: actions/download-artifact@v2
@@ -102,9 +103,9 @@ jobs:
         run: |
           mkdir -p "dist/$MOD_NAME"
           cp -a assemblies/* *.md 1.3 About Textures "dist/$MOD_NAME/"
-          sed -e '/^## ${{ steps.version.outputs.changelog_section }}/,/^## /!d;/^## /,+3d' CHANGELOG.md >"dist/$MOD_NAME/About/Changelog.txt"
+          sed -e '/^## ${{ needs.build.outputs.changelog_section }}/,/^## /!d;/^## /,+3d' CHANGELOG.md >"dist/$MOD_NAME/About/Changelog.txt"
           rm -rf "dist/$MOD_NAME/Textures/Things/Updates"
-          sed -i -e 's/2.0.0.0/${{ steps.version.outputs.version }}/' "dist/$MOD_NAME/About/"*.xml
+          sed -i -e 's/2.0.0.0/${{ needs.build.outputs.version }}/' "dist/$MOD_NAME/About/"*.xml
 
       - name: Upload the distribution
         uses: actions/upload-artifact@v2
@@ -114,7 +115,9 @@ jobs:
 
   release:
     name: Release to GitHub
-    needs: package
+    needs:
+      - build
+      - package
     if: ${{ ! github.base_ref }}
     runs-on: ubuntu-latest
     steps:
@@ -133,10 +136,10 @@ jobs:
       - name: Create the release
         uses: ncipollo/release-action@v1
         with:
-          name: ${{ needs.package.outputs.version }}
-          tag: ${{ needs.package.outputs.version }}
+          name: ${{ needs.build.outputs.version }}
+          tag: ${{ needs.build.outputs.version }}
           commit: ${{ github.sha }}
-          prerelease: ${{ needs.package.outputs.prerelease }}
+          prerelease: ${{ needs.build.outputs.prerelease }}
           bodyFile: dist/${{ env.MOD_NAME }}/About/Changelog.txt
           artifacts: dist/${{ env.MOD_NAME }}.zip
           artifactContentType: application/zip
