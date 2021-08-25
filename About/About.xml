@@ -26,6 +26,94 @@
     <li>UnlimitedHugs.HugsLib</li>
   </loadAfter>
   <description>
-    Centralized air conditionning system for RimWorld.
+<[CDATA[
+[h1]Centralized Climate Control[/h1]
+
+Centralized air conditioning system for RimWorld.
+
+Build networks of pulsed air pipes and machines to keep your colonists cool.
+
+This a sequel to [url=https://steamcommunity.com/sharedfiles/filedetails/?id=973091113]ColdToad’s mod[/url].
+
+[h2]Air networks[/h2]
+
+An air network consists of several dedicated buildings linked together by air pipes.
+
+Air throughput in a given network is limited by both its intake and exhaust capacities.Ideally you want both to be equal to avoid underusing your intake fans or underventilatingyour rooms.
+
+[h3]Air pipes[/h3]
+
+They carry the air between the different buildings of the network. One pipe actuallyhost smaller inner pipes to keep different air flows from mixing with each other.This way you can place your buildings wherever you want.
+
+Air pipes are colored. There are three colors: red, blue and cyan. Air pipes of a givencolor do not connect with pipes of other colors. This allows to build up to threeseparate networks in tight spaces without fuss.
+
+Covered variants of air pipes also exist, so you can cool your nice looking roomswithout ruining their beauty.
+
+By default, buildings connect to any air pipe but you can restrict them to connectonly to pipes of a given color.
+
+[h3]Intake fans[/h3]
+
+The intake fans suck ambiant air up and inject it in the air network. They need somefree space around them to work to their full capacity.
+
+[h3]Temperature control units[/h3]
+
+The temperature control units (TCU) process air coming from the intake fans. They coolor heat air to reach the target temperature. TCU are optional: a network without anyTCU just moves air from the intake fans to the vents. When cooling they exhaust excessheat in the adjacent tiles.
+
+They have a limited throughput though, so you may need to add as many TCUs as needed.If the throughput of all TCUs of a network is lower than this current throughput,some unconditionned air will be mixed with the output of the TCUs.
+
+The efficiency of a TCU depends on two parameters:
+
+[list]
+[*]throughput load: a TCU at full capacity is less efficient than a TCU at half capacity, for example.
+[*]temperature gap: TCU are less efficient when the target temperature is much lower/higher than the temperature of the incoming air.
+[/list]
+
+If the TCUs of a given network fail to reach the target temperature, you can add more of them to split the load amongst them.
+
+[h3]Vents[/h3]
+
+Vents push conditioned air from the air network into adjacent tiles. They exist in differentshape and size. Bigger rooms needs bigger vents.
+
+[h2]Source[/h2]
+
+The source is available on [url=https://github.com/Adirelle/CentralizedClimateControl]GitHub[/url].
+
+[h2]Error reporting[/h2]
+
+[list]
+[*]See if the the error persists if you just have this mod and its requirements active.
+[*]If not, try adding your other mods until it happens again.
+[*]Reports errors to the [url=https://github.com/Adirelle/CentralizedClimateControl/issues]GitHub repository[/url].
+[*]Post your error-log using [url=https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib[/url] and command Ctrl+F12.
+[*]Do not report errors by making a discussion-thread, I get no notification of that.
+[/list]
+
+[h2]Changelog[/h2]
+
+See the [url=https://github.com/Adirelle/CentralizedClimateControl/blob/main/CHANGELOG.md]dedicated file[/url].
+
+[h2]Authors and contributors[/h2]
+
+[list]
+[*][url=https://steamcommunity.com/id/vasumahesh]vasumahesh[/url]
+[*][url=https://steamcommunity.com/id/Mlie]Mlie[/url]
+[*][url=https://github.com/Adirelle]Adirelle[/url]
+[*][url=https://github.com/Jdalt40]Jdalt40[/url] [B19 changes]
+[*][url=https://github.com/spoden]spoden[/url]
+[*][url=https://github.com/BrainInBlack]BrainInBlack[/url]
+[/list]
+
+[h2]Credits[/h2]
+
+[list]
+[*][url=https://ludeon.com/forums/index.php?action=profile;u=19514]carlgraves[/url] for "Central Heating"
+[*][url=https://ludeon.com/forums/index.php?topic=21770.0]Redist Heat[/url]
+[*][url=https://ludeon.com/forums/index.php?topic=29043.msg341113#msg341113]Dubs Hygiene Mod[/url]
+[/list]
+
+[h2]License[/h2]
+
+MIT License
+]]>
   </description>
 </ModMetaData>
