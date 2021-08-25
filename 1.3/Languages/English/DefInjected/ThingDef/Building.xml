@@ -2,45 +2,48 @@
 <LanguageData>
 
   <CCC_IntakeFan.label>Intake fan</CCC_IntakeFan.label>
-  <CCC_IntakeFan.description>An intake fan</CCC_IntakeFan.description>
+  <CCC_IntakeFan.description>The intake fan sucks ambiant air up and injects it in its connected network.</CCC_IntakeFan.description>
 
   <CCC_LargeIntakeFan.label>Large intake fan</CCC_LargeIntakeFan.label>
-  <CCC_LargeIntakeFan.description>A large intake fan</CCC_LargeIntakeFan.description>
+  <CCC_LargeIntakeFan.description>As this name states, this is a larger version of the regular intake fan. It is also more efficient power-wise.</CCC_LargeIntakeFan.description>
+
+  <CCC_WallIntakeFan.label>Wall-mounted intake fan</CCC_WallIntakeFan.label>
+  <CCC_WallIntakeFan.description>This intake fan mounted into a wall has a lower througput but also a lower footprint.</CCC_WallIntakeFan.description>
 
   <CCC_RedAirPipe.label>Red Air Pipe</CCC_RedAirPipe.label>
-  <CCC_RedAirPipe.description>A red air pipe</CCC_RedAirPipe.description>
+  <CCC_RedAirPipe.description>This air pipe only connects to red pipes and buildings.</CCC_RedAirPipe.description>
 
   <CCC_HiddenRedAirPipe.label>Covered Red Air Pipe</CCC_HiddenRedAirPipe.label>
-  <CCC_HiddenRedAirPipe.description>A covered red air pipe</CCC_HiddenRedAirPipe.description>
+  <CCC_HiddenRedAirPipe.description>This air pipe built in the floor only connects to red pipes and buildings.</CCC_HiddenRedAirPipe.description>
 
   <CCC_BlueAirPipe.label>Blue Air Pipe</CCC_BlueAirPipe.label>
-  <CCC_BlueAirPipe.description>A blue air pipe</CCC_BlueAirPipe.description>
+  <CCC_BlueAirPipe.description>This air pipe only connects to blue pipes and buildings.</CCC_BlueAirPipe.description>
 
   <CCC_HiddenBlueAirPipe.label>Covered Blue Air Pipe</CCC_HiddenBlueAirPipe.label>
-  <CCC_HiddenBlueAirPipe.description>A covered blue air pipe</CCC_HiddenBlueAirPipe.description>
+  <CCC_HiddenBlueAirPipe.description>This air pipe built in the floor only connects to blue pipes and buildings.</CCC_HiddenBlueAirPipe.description>
 
   <CCC_CyanAirPipe.label>Cyan air pipe</CCC_CyanAirPipe.label>
-  <CCC_CyanAirPipe.description>A cyan air pipe</CCC_CyanAirPipe.description>
+  <CCC_CyanAirPipe.description>This air pipe built in the floor only connects to cyan pipes and buildings.</CCC_CyanAirPipe.description>
 
   <CCC_HiddenCyanAirPipe.label>Covered cyan air pipe</CCC_HiddenCyanAirPipe.label>
-  <CCC_HiddenCyanAirPipe.description>A covered cyan air pipe</CCC_HiddenCyanAirPipe.description>
+  <CCC_HiddenCyanAirPipe.description>This air pipe built in the floor only connects to cyan pipes and buildings.</CCC_HiddenCyanAirPipe.description>
 
-  <CCC_TempControl.label>Temperature control unit</CCC_TempControl.label>
-  <CCC_TempControl.description>A temperature control unit</CCC_TempControl.description>
+  <CCC_TempControl.label>Basic temperature control unit</CCC_TempControl.label>
+  <CCC_TempControl.description>The temperature control unit cools or heats air from its connected network according to its target temperature. It is less efficient at full throughput and high temperature difference.</CCC_TempControl.description>
 
-  <CCC_LargeTempControl.label>Large temperature control unit</CCC_LargeTempControl.label>
-  <CCC_LargeTempControl.description>A large temperature control unit</CCC_LargeTempControl.description>
+  <CCC_LargeTempControl.label>Industrial temperature control unit</CCC_LargeTempControl.label>
+  <CCC_LargeTempControl.description>A larger and more efficient version of the basic temperature control unit.</CCC_LargeTempControl.description>
 
-  <CCC_SmallWallVent.label>Small wall-mounted vent</CCC_SmallWallVent.label>
-  <CCC_SmallWallVent.description>A small wall-mounted vent</CCC_SmallWallVent.description>
+  <CCC_WallVent.label>Wall vent</CCC_WallVent.label>
+  <CCC_WallVent.description>This vent built into a wall pushes conditioned air from its connected network.</CCC_WallVent.description>
 
-  <CCC_WallVent.label>Wall-mounted vent</CCC_WallVent.label>
-  <CCC_WallVent.description>A wall-mounted vent</CCC_WallVent.description>
+  <CCC_SmallWallVent.label>Small wall vent</CCC_SmallWallVent.label>
+  <CCC_SmallWallVent.description>A smalller version of the wall vent.</CCC_SmallWallVent.description>
 
-  <CCC_SurroundVent.label>CCC_SurroundVent</CCC_SurroundVent.label>
-  <CCC_SurroundVent.description>A CCC_SurroundVent</CCC_SurroundVent.description>
+  <CCC_SurroundVent.label>Surround vent</CCC_SurroundVent.label>
+  <CCC_SurroundVent.description>This standalone vent pushes conditioned air in four directions.</CCC_SurroundVent.description>
 
-  <CCC_WideSurroundVent.label>CCC_WideSurroundVent</CCC_WideSurroundVent.label>
-  <CCC_WideSurroundVent.description>A CCC_WideSurroundVent</CCC_WideSurroundVent.description>
+  <CCC_WideSurroundVent.label>Wide surround vent</CCC_WideSurroundVent.label>
+  <CCC_WideSurroundVent.description>A wider version of the surround vent.</CCC_WideSurroundVent.description>
 
 </LanguageData>
