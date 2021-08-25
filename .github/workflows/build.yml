@@ -114,6 +114,7 @@ jobs:
           sed -e '/^## ${{ needs.build.outputs.changelog_section }}/,/^## /!d;/^## /,+3d' CHANGELOG.md >"dist/$MOD_NAME/About/Changelog.txt"
           rm -rf "dist/$MOD_NAME/Textures/Things/Updates"
           sed -i -e 's/2.0.0.0/${{ needs.build.outputs.version }}/' "dist/$MOD_NAME/About/"*.xml
+          find dist -name .gitignore -delete
 
       - name: Upload the distribution
         uses: actions/upload-artifact@v2
