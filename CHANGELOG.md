@@ -9,6 +9,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### New
 
+### Changes
+
+### Fixes
+
+### Breaks
+
+## 2.0.0 - (2021-08-29)
+
+---
+
+### New
+
 - The power consumption of industrial buildings depends on their load.
 - Intake fans and temperature control units now have a dynamic load, that takes some times to adjust to the needs.
 - Wall-mounted intake fan.
