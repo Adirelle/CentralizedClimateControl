@@ -7,11 +7,11 @@ namespace CentralizedClimateControl
 {
     public class CompIntake : CompPowered
     {
-        public AirFlow Intake => IsOperating ? AirFlow.Make(MaxIntake * Mathf.Min(currentRate, networkIntakeLoad), AverageTemperature) : AirFlow.Zero;
+        public AirFlow Intake => IsOperating ? AirFlow.Make(MaxIntake * Mathf.Min(CurrentRate, NetworkIntakeLoad), AverageTemperature) : AirFlow.Zero;
 
         public float MaxIntake => IsOperating ? AvailableThroughput : 0.0f;
 
-        protected float networkIntakeLoad => IsConnected ? Network.CurrentThroughput / Network.MaxIntake : 0.0f;
+        protected float NetworkIntakeLoad => IsConnected ? Network.CurrentThroughput / Network.MaxIntake : 0.0f;
 
         public float AverageTemperature { get; private set; }
 
@@ -19,7 +19,7 @@ namespace CentralizedClimateControl
         {
             base.NetworkPreTick();
             AverageTemperature = !IsBlocked ? ClearArea.Average(cell => cell.GetTemperature(parent.Map)) : 0.0f;
-            neededRate = networkIntakeLoad;
+            NeededRate = NetworkIntakeLoad;
         }
 
         protected override void BuildInspectString(StringBuilder builder)

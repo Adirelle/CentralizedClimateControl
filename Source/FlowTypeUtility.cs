@@ -12,17 +12,17 @@ namespace CentralizedClimateControl
             return $"CentralizedClimateControl.FlowType.{type}".Translate();
         }
 
-        public static UnityEngine.Color RedPipeColor = new(255f / 255, 120f / 255, 145f / 255);
-        public static UnityEngine.Color BluePipeColor = new(100f / 255, 115f / 255, 255f / 255);
-        public static UnityEngine.Color CyanPipeColor = new(92f / 255, 211f / 255, 255f / 255);
+        private static UnityEngine.Color redPipeColor = new(255f / 255, 120f / 255, 145f / 255);
+        private static UnityEngine.Color bluePipeColor = new(100f / 255, 115f / 255, 255f / 255);
+        private static UnityEngine.Color cyanPipeColor = new(92f / 255, 211f / 255, 255f / 255);
 
         public static UnityEngine.Color Color(this FlowType type)
         {
             return type switch
             {
-                FlowType.Red => RedPipeColor,
-                FlowType.Blue => BluePipeColor,
-                FlowType.Cyan => CyanPipeColor,
+                FlowType.Red => redPipeColor,
+                FlowType.Blue => bluePipeColor,
+                FlowType.Cyan => cyanPipeColor,
                 _ => UnityEngine.Color.white
             };
         }

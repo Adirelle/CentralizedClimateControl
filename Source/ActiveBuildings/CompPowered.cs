@@ -14,14 +14,14 @@ namespace CentralizedClimateControl
 
         protected bool IsPowered => flickable.SwitchIsOn && powerTrader.PowerOn && !breakdownable.BrokenDown;
 
-        protected virtual float targetRate => IsPowered ? Mathf.Clamp(neededRate, 0.01f, 1.0f) : 0.0f;
+        protected virtual float TargetRate => IsPowered ? Mathf.Clamp(NeededRate, 0.01f, 1.0f) : 0.0f;
 
-        protected float currentRate = 0.0f;
+        protected float CurrentRate = 0.0f;
 
-        protected float neededRate = 1.0f;
+        protected float NeededRate = 1.0f;
 
         protected virtual float PowerCost => powerTrader.Props.basePowerConsumption
-            * (Props.adaptivePowerConsumption ? currentRate : 1.0f);
+            * (Props.adaptivePowerConsumption ? CurrentRate : 1.0f);
 
         protected new CompProperties_Powered Props => (CompProperties_Powered) props;
 
@@ -35,27 +35,27 @@ namespace CentralizedClimateControl
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref currentRate, "currentRate", 0.0f);
-            Scribe_Values.Look(ref neededRate, "neededRate", 1.0f);
-            if (float.IsNaN(currentRate))
+            Scribe_Values.Look(ref CurrentRate, "currentRate", 0.0f);
+            Scribe_Values.Look(ref NeededRate, "neededRate", 1.0f);
+            if (float.IsNaN(CurrentRate))
             {
-                currentRate = 0.0f;
+                CurrentRate = 0.0f;
             }
-            if (float.IsNaN(neededRate))
+            if (float.IsNaN(NeededRate))
             {
-                neededRate = 1.0f;
+                NeededRate = 1.0f;
             }
         }
 
         public override void NetworkPostTick()
         {
-            if (targetRate > currentRate)
+            if (TargetRate > CurrentRate)
             {
-                currentRate = Mathf.Min(currentRate + Props.maxRateChange, targetRate);
+                CurrentRate = Mathf.Min(CurrentRate + Props.maxRateChange, TargetRate);
             }
             else
             {
-                currentRate = Mathf.Max(currentRate - Props.maxRateChange, targetRate);
+                CurrentRate = Mathf.Max(CurrentRate - Props.maxRateChange, TargetRate);
             }
 
             powerTrader.PowerOutput = -PowerCost;
@@ -66,7 +66,7 @@ namespace CentralizedClimateControl
             base.BuildInspectString(builder);
 
             // @TODO: translate
-            builder.AppendInNewLine("CentralizedClimateControl.Powered.Load".Translate(currentRate.ToStringPercent()));
+            builder.AppendInNewLine("CentralizedClimateControl.Powered.Load".Translate(CurrentRate.ToStringPercent()));
         }
 
         public override string DebugString() =>
@@ -76,9 +76,9 @@ namespace CentralizedClimateControl
                     $"PowerNet={powerTrader.PowerNet is not null}",
                     $"PowerOn={powerTrader.PowerOn}",
                     $"PowerOutput={powerTrader.PowerOutput}",
-                    $"neededRate={neededRate}",
-                    $"targetRate={targetRate}",
-                    $"currentRate={currentRate}"
+                    $"neededRate={NeededRate}",
+                    $"targetRate={TargetRate}",
+                    $"currentRate={CurrentRate}"
                 );
     }
 }
