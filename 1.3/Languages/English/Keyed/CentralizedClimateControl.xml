@@ -27,6 +27,8 @@
   <CentralizedClimateControl.PreferredGizmo.Label.Auto>Auto</CentralizedClimateControl.PreferredGizmo.Label.Auto>
   <CentralizedClimateControl.PreferredGizmo.Label.RestrictedTo>{0}</CentralizedClimateControl.PreferredGizmo.Label.RestrictedTo>
 
+  <CentralizedClimateControl.Powered.Load>Current load: {0}</CentralizedClimateControl.Powered.Load>
+
   <CentralizedClimateControl.TempControl.Throughput.Maximum>Maximum throughput: {0}</CentralizedClimateControl.TempControl.Throughput.Maximum>
   <CentralizedClimateControl.TempControl.Processing.Current>Current input => output: {0} => {1}</CentralizedClimateControl.TempControl.Processing.Current>
   <CentralizedClimateControl.TempControl.Processing.Network>Network current / maximum processing: {0} / {1}</CentralizedClimateControl.TempControl.Processing.Network>

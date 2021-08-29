@@ -6,6 +6,10 @@ namespace CentralizedClimateControl
 {
     public class CompProperties_Powered : CompProperties_Building
     {
+        public bool adaptivePowerConsumption = false;
+
+        public float maxRateChange = 0.05f;
+
         public override IEnumerable<string> ConfigErrors(ThingDef parentDef)
         {
             foreach (var error in base.ConfigErrors(parentDef))

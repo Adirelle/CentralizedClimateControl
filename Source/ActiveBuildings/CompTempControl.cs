@@ -24,23 +24,22 @@ namespace CentralizedClimateControl
 
         public override void NetworkPostTick()
         {
+            var tempDelta = tempControl.targetTemperature - Input.Temperature;
+            var tempFactor = Mathf.Max(1.0f, Mathf.Pow(Mathf.Abs(tempDelta), 0.3f));
+            var weightedThroughput = tempFactor * Input.Throughput;
+            var energyDelta = Mathf.Abs(tempDelta) * weightedThroughput;
+            var energyCapacity = Mathf.Pow(powerTrader.Props.basePowerConsumption, 2f);
+            neededRate = Mathf.Clamp01(energyDelta / energyCapacity);
+
             base.NetworkPostTick();
 
-            var tempDelta = tempControl.targetTemperature - Input.Temperature;
-
-            tempControl.operatingAtHighPower = Mathf.Abs(tempDelta) > 0.5f;
-            if (!tempControl.operatingAtHighPower)
-            {
-                powerTrader.PowerOutput *= tempControl.Props.lowPowerConsumptionFactor;
-            }
-
-            var energyDelta = Mathf.Abs(tempDelta) * Input.Throughput;
-            var energyCapacity = powerTrader.Props.basePowerConsumption * powerTrader.Props.basePowerConsumption;
-            var tempChange = tempDelta * Mathf.Clamp01(1.0f - energyDelta / energyCapacity);
+            tempControl.operatingAtHighPower = currentRate > 0.5f;
+            var energyChange = Mathf.Sign(tempDelta) * energyCapacity * currentRate;
+            var tempChange = Input.Throughput > 0.0f ? energyChange / weightedThroughput : 0.0f;
 
             Output = AirFlow.Make(Input.Throughput, Input.Temperature + tempChange);
 
-            if (tempChange < 0.0f)
+            if (IsOperating && tempChange < 0.0f)
             {
                 var heatExhaust = heatExhaustFactor * tempChange / ClearArea.Count;
                 foreach (var cell in ClearArea)
