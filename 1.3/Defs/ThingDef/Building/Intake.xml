@@ -114,6 +114,7 @@
       <li Class="CentralizedClimateControl.CompProperties_Powered">
         <compClass>CentralizedClimateControl.CompIntake</compClass>
         <shape>AroundAndInside</shape>
+        <adaptivePowerConsumption>true</adaptivePowerConsumption>
         <baseThroughput>1600</baseThroughput>
       </li>
     </comps>

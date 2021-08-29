@@ -79,6 +79,7 @@
         <compClass>CentralizedClimateControl.CompTempControl</compClass>
         <shape>AdjacentSouth</shape>
         <baseThroughput>4500</baseThroughput>
+        <adaptivePowerConsumption>true</adaptivePowerConsumption>
       </li>
     </comps>
     <researchPrerequisites>
