@@ -27,21 +27,21 @@
   </loadAfter>
   <description>
 <![CDATA[
-[h1]Centralized Climate Control[/h1]
+<b><size=22>Centralized Climate Control</size></b>
 
 Centralized air conditioning system for RimWorld.
 
 Build networks of pulsed air pipes and machines to keep your colonists cool.
 
-This a sequel to [url=https://steamcommunity.com/sharedfiles/filedetails/?id=973091113]ColdToad’s mod[/url].
+This a sequel to ColdToad’s mod (https://steamcommunity.com/sharedfiles/filedetails/?id=973091113).
 
-[h2]Air networks[/h2]
+<b><size=20>Air networks</size></b>
 
 An air network consists of several dedicated buildings linked together by air pipes.
 
 Air throughput in a given network is limited by both its intake and exhaust capacities.Ideally you want both to be equal to avoid underusing your intake fans or underventilatingyour rooms.
 
-[h3]Air pipes[/h3]
+<b><size=18>Air pipes</size></b>
 
 They carry the air between the different buildings of the network. One pipe actuallyhost smaller inner pipes to keep different air flows from mixing with each other.This way you can place your buildings wherever you want.
 
@@ -51,11 +51,11 @@ Covered variants of air pipes also exist, so you can cool your nice looking room
 
 By default, buildings connect to any air pipe but you can restrict them to connectonly to pipes of a given color.
 
-[h3]Intake fans[/h3]
+<b><size=18>Intake fans</size></b>
 
 The intake fans suck ambiant air up and inject it in the air network. They need somefree space around them to work to their full capacity.
 
-[h3]Temperature control units[/h3]
+<b><size=18>Temperature control units</size></b>
 
 The temperature control units (TCU) process air coming from the intake fans. They coolor heat air to reach the target temperature. TCU are optional: a network without anyTCU just moves air from the intake fans to the vents. When cooling they exhaust excessheat in the adjacent tiles.
 
@@ -63,55 +63,47 @@ They have a limited throughput though, so you may need to add as many TCUs as ne
 
 The efficiency of a TCU depends on two parameters:
 
-[list]
-[*]throughput load: a TCU at full capacity is less efficient than a TCU at half capacity, for example.
-[*]temperature gap: TCU are less efficient when the target temperature is much lower/higher than the temperature of the incoming air.
-[/list]
+* throughput load: a TCU at full capacity is less efficient than a TCU at half capacity, for example.
+* temperature gap: TCU are less efficient when the target temperature is much lower/higher than the temperature of the incoming air.
 
 If the TCUs of a given network fail to reach the target temperature, you can add more of them to split the load amongst them.
 
-[h3]Vents[/h3]
+<b><size=18>Vents</size></b>
 
 Vents push conditioned air from the air network into adjacent tiles. They exist in differentshape and size. Bigger rooms needs bigger vents.
 
-[h2]Source[/h2]
+<b><size=20>Source</size></b>
 
-The source is available on [url=https://github.com/Adirelle/CentralizedClimateControl]GitHub[/url].
+The source is available on GitHub (https://github.com/Adirelle/CentralizedClimateControl).
 
-[h2]Error reporting[/h2]
+<b><size=20>Error reporting</size></b>
 
-[list]
-[*]See if the the error persists if you just have this mod and its requirements active.
-[*]If not, try adding your other mods until it happens again.
-[*]Reports errors to the [url=https://github.com/Adirelle/CentralizedClimateControl/issues]GitHub repository[/url].
-[*]Post your error-log using [url=https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib[/url] and command Ctrl+F12.
-[*]Do not report errors by making a discussion-thread, I get no notification of that.
-[/list]
+* See if the the error persists if you just have this mod and its requirements active.
+* If not, try adding your other mods until it happens again.
+* Reports errors to the GitHub repository (https://github.com/Adirelle/CentralizedClimateControl/issues).
+* Post your error-log using HugsLib (https://steamcommunity.com/workshop/filedetails/?id=818773962) and command Ctrl+F12.
+* Do not report errors by making a discussion-thread, I get no notification of that.
 
-[h2]Changelog[/h2]
+<b><size=20>Changelog</size></b>
 
-See the [url=https://github.com/Adirelle/CentralizedClimateControl/blob/main/CHANGELOG.md]dedicated file[/url].
+See the dedicated file (https://github.com/Adirelle/CentralizedClimateControl/blob/main/CHANGELOG.md).
 
-[h2]Authors and contributors[/h2]
+<b><size=20>Authors and contributors</size></b>
 
-[list]
-[*][url=https://steamcommunity.com/id/vasumahesh]vasumahesh[/url]
-[*][url=https://steamcommunity.com/id/Mlie]Mlie[/url]
-[*][url=https://github.com/Adirelle]Adirelle[/url]
-[*][url=https://github.com/Jdalt40]Jdalt40[/url] [B19 changes]
-[*][url=https://github.com/spoden]spoden[/url]
-[*][url=https://github.com/BrainInBlack]BrainInBlack[/url]
-[/list]
+* vasumahesh (https://steamcommunity.com/id/vasumahesh)
+* Mlie (https://steamcommunity.com/id/Mlie)
+* Adirelle (https://github.com/Adirelle)
+* Jdalt40 (https://github.com/Jdalt40) [B19 changes]
+* spoden (https://github.com/spoden)
+* BrainInBlack (https://github.com/BrainInBlack)
 
-[h2]Credits[/h2]
+<b><size=20>Credits</size></b>
 
-[list]
-[*][url=https://ludeon.com/forums/index.php?action=profile;u=19514]carlgraves[/url] for "Central Heating"
-[*][url=https://ludeon.com/forums/index.php?topic=21770.0]Redist Heat[/url]
-[*][url=https://ludeon.com/forums/index.php?topic=29043.msg341113#msg341113]Dubs Hygiene Mod[/url]
-[/list]
+* carlgraves (https://ludeon.com/forums/index.php?action=profile;u=19514) for "Central Heating"
+* Redist Heat (https://ludeon.com/forums/index.php?topic=21770.0)
+* Dubs Hygiene Mod (https://ludeon.com/forums/index.php?topic=29043.msg341113#msg341113)
 
-[h2]License[/h2]
+<b><size=20>License</size></b>
 
 MIT License
 ]]>

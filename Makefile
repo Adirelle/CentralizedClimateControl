@@ -1,20 +1,19 @@
 STEAM_APP_ID ?= 294100
 
-VERSION ?= $(shell git describe --always)
+VERSION ?= $(shell git describe --always | sed -e 's/-g.*//')
 MOD_NAME ?= CentralizedClimateControl
 RELEASE_TYPE ?= Release
 DIST_DIR ?= dist
 OUTPUT_DIR ?= $(DIST_DIR)/$(MOD_NAME)
 
 MD_CHANGELOG = CHANGELOG.md
-TXT_CHANGELOG = About/Changelog.txt
 ABOUT = About/About.xml
 MANIFEST = About/Manifest.xml
 MODSYNC = About/ModSync.xml
 UPDATEDEFS = 1.3/Defs/UpdateFeatureDefs/UpdateFeatures.xml
 
 PACKAGE = $(DIST_DIR)/$(MOD_NAME).zip
-WORKSHOP_META = $(DIST_DIR)/$(MOD_NAME).vdf
+WORKSHOP_META = $(DIST_DIR)/metadata.vdf
 
 SLN_FILE = $(MOD_NAME).sln
 CS_SOURCES = $(shell find Source -name "*.cs*")
@@ -52,9 +51,9 @@ VERSION_MARKER=$(DIST_DIR)/.version
 
 .PRECIOUS: $(ABOUT) $(MANIFEST) $(MODSYNC)
 
-.PHONY: all clean cleaner package distrib build version lint format release quicktest
+.PHONY: all clean cleaner package distrib build version lint format release quicktest publish
 
-all: package
+all: build
 
 clean:
 	rm -rf $(DIST_DIR) $(ASSEMBLY) $(PACKAGE) $(TXT_CHANGELOG) $(UPDATEDEFS) $(WORKSHOP_META)
@@ -64,21 +63,21 @@ cleaner: clean
 
 package: distrib $(PACKAGE)
 
+publish: $(WORKSHOP_META) distrib
+	steamcmd '+login $(STEAM_USERNAME) $(STEAM_PASSWORD)' "+workshop_build_item `pwd -L`/$(WORKSHOP_META)" '+quit'
+
 distrib: build $(DIST_DESTS)
 
 build: version $(ASSEMBLY) $(ABOUT)
 
-version: $(MANIFEST) $(MODSYNC) $(TXT_CHANGELOG) $(UPDATEDEFS) $(WORKSHOP_META) | $(VERSION_MARKER)
+version: $(MANIFEST) $(MODSYNC) $(TXT_CHANGELOG) $(UPDATEDEFS) | $(VERSION_MARKER)
 
 $(MANIFEST) $(MODSYNC): $(VERSION_MARKER) | node_modules
 	sed -i -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $@
 	$(PRETTIER) --write $@
 
-$(WORKSHOP_META): $(TXT_CHANGELOG) .pandoc/SteamBBCode.lua | $(DIST_DIR)
-	.scripts/generate-workshop-meta.sh >"$@" "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(abspath $(OUTPUT_DIR))" "$(TXT_CHANGELOG)"
-
-$(TXT_CHANGELOG): $(MD_CHANGELOG) $(VERSION_MARKER)
-	sed -e '/^## $(VERSION)/,/^## /!d;/^## /,+3d' $< >$@
+$(WORKSHOP_META): $(VERSION_MARKER) .scripts/workshop-meta .scripts/bbcode .pandoc/SteamBBCode.lua | $(DIST_DIR)
+	.scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(OUTPUT_DIR)" "$(VERSION)" >$@
 
 $(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) $(VERSION_MARKER) | obj
 	mkdir -p $(@D)
@@ -92,7 +91,7 @@ $(VERSION_MARKER): | $(DIST_DIR)
 	echo -n "$(VERSION)" > $@
 
 $(ABOUT): README.md | node_modules
-	.scripts/generate-About.sh > $@
+	.scripts/generate-about > $@.2 && mv $@.2 $@ || rm $@.2
 	$(PRETTIER) --write $@
 
 obj:
@@ -101,7 +100,6 @@ obj:
 $(UPDATEDEFS): $(MD_CHANGELOG) .pandoc/UpdateFeatureDefs.lua | node_modules
 	mkdir -p $(@D)
 	$(PANDOC) -t .pandoc/UpdateFeatureDefs.lua $< -o $@
-	$(PRETTIER) --write $@
 
 $(PACKAGE): $(DIST_DESTS)
 	cd $(DIST_DIR) ; $(ZIPTOOL) $(ZIPFLAGS) ../$(PACKAGE) $(patsubst dist/%,%,$?)

@@ -1,7 +1,5 @@
-local pipe = pandoc.pipe
-local stringify = (require "pandoc.utils").stringify
-
-local meta = PANDOC_DOCUMENT.meta
+-- Preload UnityRichTextFormat
+dofile ".pandoc/UnityRichTextFormat.lua"
 
 local MOD_ID = "CentralizedClimateControl"
 local MOD_NAME = "Centralized climate control 2.0"
@@ -45,57 +43,9 @@ function Doc(body, metadata, variables)
   return table.concat(buffer,'')
 end
 
-local function enclose(tag)
-  return function(s)
-    return "<" .. tag .. ">" .. s .. "</" .. tag .. ">"
-  end
-end
-
-local function const(s)
-  return function()
-    return s
-  end
-end
-
-local function noop(s)
-  return s
-end
-
-Plain = noop
-Str = noop
-Blocksep = const("")
-Space = const(" ")
-SoftBreak = const("")
-LineBreak = const("")
-Emph = enclose("i")
-Strong = enclose("b")
-Subscript = noop
-Superscript = noop
-SmallCaps = noop
-Strikeout = noop
-Link = noop
-
 function Image(_, src)
   return "\n|img:" .. src
 end
-
-Code = noop
-InlineMath = noop
-DisplayMath = noop
-
-function SingleQuoted(s)
-  return "'" .. s .. "'"
-end
-
-function DoubleQuoted(s)
-  return '"' .. s .. '"'
-end
-
-Note = noop
-Span = noop
-RawInline = noop
-Cite = noop
-noop = noop
 
 function Para(s)
   return "|" .. s
@@ -131,11 +81,6 @@ function Header(lev, s, attr)
   return '\n|' .. s
 end
 
-BlockQuote = noop
-HorizontalRule = const("")
-LineBlock = noop
-CodeBlock = noop
-
 function BulletList(items)
   local buffer = {}
   for _, item in pairs(items) do
@@ -164,19 +109,3 @@ end
 function CaptionedImage(src, _, caption)
   return Image("", src) .. "|caption:" .. caption
 end
-
-function Table(caption, aligns, widths, headers, rows)
-  io.stderr:write("Table are no supported")
-end
-
-RawBlock = noop
-Div = noop
-
-local meta = {}
-meta.__index =
-  function(_, key)
-    io.stderr:write(string.format("WARNING: Undefined function '%s'\n",key))
-    return noop
-  end
-setmetatable(_G, meta)
-

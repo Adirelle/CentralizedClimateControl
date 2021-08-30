@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -eu
+APP_ID=${1:-${STEAM_APP_ID}}
+FILE_ID=${2:-${STEAM_FILE_ID}}
+DIST_DIR=${3}
+VERSION=${4:-${VERSION}}
+
+escape() {
+  head -c 1021 | sed -z -e 's/\(["{}]\)/\\$1/g'
+}
+
+DESC=`.scripts/bbcode README.md | escape`
+CHANGELOG=`.scripts/changelog "$VERSION" | .scripts/bbcode - | escape`
+
+THERE=`pwd -L`
+
+cat << EOF
+"workshopitem"
+{
+    "appid"            "${APP_ID}"
+    "publishedfileid"  "${FILE_ID}"
+    "visibility"       "0"
+    "title"            "Centralized Climate Control 2.0"
+    "contentfolder"    "${THERE}/${DIST_DIR}"
+    "previewfile"      "${THERE}/${DIST_DIR}/About/preview.png"
+    "description"      "${DESC}"
+    "changenote"       "${CHANGELOG}"
+}
+EOF
