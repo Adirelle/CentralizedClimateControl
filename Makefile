@@ -1,3 +1,5 @@
+STEAM_APP_ID ?= 294100
+
 VERSION ?= $(shell git describe --always)
 MOD_NAME ?= CentralizedClimateControl
 RELEASE_TYPE ?= Release
@@ -12,6 +14,7 @@ MODSYNC = About/ModSync.xml
 UPDATEDEFS = 1.3/Defs/UpdateFeatureDefs/UpdateFeatures.xml
 
 PACKAGE = $(DIST_DIR)/$(MOD_NAME).zip
+WORKSHOP_META = $(DIST_DIR)/$(MOD_NAME).vdf
 
 SLN_FILE = $(MOD_NAME).sln
 CS_SOURCES = $(shell find Source -name "*.cs*")
@@ -71,6 +74,8 @@ $(MANIFEST) $(MODSYNC): $(VERSION_MARKER) | node_modules
 	sed -i -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $@
 	$(PRETTIER) --write $@
 
+$(WORKSHOP_META): $(TXT_CHANGELOG) .pandoc/SteamBBCode.lua | $(DIST_DIR)
+	.scripts/generate-workshop-meta.sh >"$@" "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(abspath $(OUTPUT_DIR))" "$(TXT_CHANGELOG)"
 
 $(TXT_CHANGELOG): $(MD_CHANGELOG) $(VERSION_MARKER)
 	sed -e '/^## $(VERSION)/,/^## /!d;/^## /,+3d' $< >$@
