@@ -31,7 +31,7 @@ DOTNET_FORMAT_ARGS = --no-restore -wsa info $(SLN_FILE)
 
 PANDOC = pandoc
 
-ZIPTOOL := $(shell which zip)
+ZIPTOOL := $(shell which zip 2>/dev/null)
 ifeq ($(ZIPTOOL),)
 override ZIPTOOL := 7z.exe
 ZIPFLAGS = a -r -mx9
@@ -40,7 +40,7 @@ ZIPFLAGS = -r -9
 endif
 
 PRETTIER = node_modules/.bin/prettier
-NPM = $(shell which npm)
+NPM = npm
 
 -include Makefile.local
 
