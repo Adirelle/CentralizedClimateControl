@@ -116,6 +116,7 @@ lint: $(PRETTIER)
 
 $(PRETTIER): package-lock.json
 	$(NPM) install
+	ls -la
 	@touch $@
 
 release: VERSION = $(shell cl suggest)
