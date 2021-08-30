@@ -25,7 +25,7 @@ DIST_DESTS = $(addprefix $(OUTPUT_DIR)/,$(DIST_SOURCES))
 DIST_DIRS = $(sort $(foreach dest,$(DIST_DESTS),$(dir $(dest))))
 
 DOTNET = dotnet.exe
-DOTNET_BUILD_ARGS = --nologo --no-restore --configuration=$(RELEASE_TYPE) /p:"Version=$(VERSION)" $(SLN_FILE)
+DOTNET_BUILD_ARGS = --nologo --no-restore --configuration=$(RELEASE_TYPE) "/p:Version=$(VERSION)" $(SLN_FILE)
 DOTNET_FORMAT_ARGS = --no-restore -wsa info $(SLN_FILE)
 
 PANDOC = pandoc
@@ -51,7 +51,7 @@ dist: build $(DIST_DESTS)
 
 build: $(MANIFEST) $(MODSYNC) $(ASSEMBLY) $(TXT_CHANGELOG) $(UPDATEDEFS) $(ABOUT)
 
- $(MANIFEST) $(MODSYNC): .git/HEAD
+$(MANIFEST) $(MODSYNC): .git/HEAD
 	sed -i -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $@
 
 $(ABOUT): README.md
