@@ -30,6 +30,14 @@ DOTNET_FORMAT_ARGS = --no-restore -wsa info $(SLN_FILE)
 
 PANDOC = pandoc
 
+ZIPTOOL := $(shell which zip)
+ifeq ($(ZIPTOOL),)
+override ZIPTOOL := 7z.exe
+ZIPFLAGS = a -r -mx9
+else
+ZIPFLAGS = -r -9
+endif
+
 PRETTIER = node_modules/.bin/prettier
 NPM = $(shell which npm)
 
@@ -75,7 +83,7 @@ $(UPDATEDEFS): CHANGELOG.md .pandoc/UpdateFeatureDefs.lua | $(PRETTIER)
 	$(PRETTIER) --write $@
 
 $(PACKAGE): $(DIST_DESTS)
-	cd $(dir $(OUTPUT_DIR)) ; zip -r -9 ../$(PACKAGE) $(patsubst dist/%,%,$?)
+	cd $(dir $(OUTPUT_DIR)) ; $(ZIPTOOL) $(ZIPFLAGS) ../$(PACKAGE) $(patsubst dist/%,%,$?)
 
 define CP_template =
 $(2): $(1) | $(dir $(2))
