@@ -119,7 +119,7 @@ node_modules: package-lock.json
 	@touch $@
 
 release: VERSION = $(shell cl suggest)
-release: | $(PRETTIER)
+release: | node_modules
 	cl release --suggest --yes
 	$(PRETTIER) --write $(MD_CHANGELOG)
 	$(MAKE) version VERSION=$(VERSION)
