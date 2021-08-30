@@ -118,7 +118,7 @@ $(PRETTIER): package-lock.json
 	$(NPM) install
 	@touch $@
 
-release: VERSION := $(shell cl suggest)
+release: VERSION = $(shell cl suggest)
 release: | $(PRETTIER)
 	cl release --suggest --yes
 	$(PRETTIER) --write $(MD_CHANGELOG)
