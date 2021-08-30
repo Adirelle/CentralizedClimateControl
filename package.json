@@ -3,11 +3,6 @@
         "prettier": "^2.3.2",
         "@prettier/plugin-xml": "^1.0.2"
     },
-    "scripts": {
-        "format": "prettier --write . ; .scripts/dotnet-format.sh",
-        "lint": "prettier --check . ; .scripts/dotnet-lint.sh",
-        "genUpdateDefs": ".scripts/generate-UpdateDefs.sh"
-    },
     "prettier": {
         "bracketSameLine": true
     }
