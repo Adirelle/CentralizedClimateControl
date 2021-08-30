@@ -3,9 +3,7 @@
   <identifier>CentralizedClimateControl</identifier>
   <version>2.0.0</version>
   <dependencies />
-  <incompatibleWith>
-    <li>CentralizedClimateControl &lt; 2.0.0</li>
-  </incompatibleWith>
+  <incompatibleWith />
   <loadBefore />
   <loadAfter />
   <manifestUri>https://raw.githubusercontent.com/Adirelle/CentralizedClimateControl/main/About/Manifest.xml</manifestUri>
