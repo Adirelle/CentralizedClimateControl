@@ -39,7 +39,7 @@ else
 ZIPFLAGS = -r -9
 endif
 
-PRETTIER = node_modules/.bin/prettier
+PRETTIER = npx -q prettier
 NPM = npm
 
 -include Makefile.local
@@ -64,11 +64,11 @@ build: version $(ASSEMBLY) $(TXT_CHANGELOG) $(UPDATEDEFS) $(ABOUT)
 
 version: $(MANIFEST) $(MODSYNC) $(TXT_CHANGELOG) $(UPDATEDEFS)
 
-$(MANIFEST) $(MODSYNC): | $(PRETTIER)
+$(MANIFEST) $(MODSYNC): | node_modules
 	sed -i -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $@
 	$(PRETTIER) --write $@
 
-$(ABOUT): README.md | $(PRETTIER)
+$(ABOUT): README.md | node_modules
 	.scripts/generate-About.sh > $@
 	$(PRETTIER) --write $@
 
@@ -82,7 +82,7 @@ $(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) | obj
 obj:
 	"$(DOTNET)" restore --locked-mode
 
-$(UPDATEDEFS): $(MD_CHANGELOG) .pandoc/UpdateFeatureDefs.lua | $(PRETTIER)
+$(UPDATEDEFS): $(MD_CHANGELOG) .pandoc/UpdateFeatureDefs.lua | node_modules
 	mkdir -p $(@D)
 	$(PANDOC) -t .pandoc/UpdateFeatureDefs.lua $< -o $@
 	$(PRETTIER) --write $@
@@ -106,17 +106,16 @@ endef
 
 $(foreach dir,$(DIST_DIRS),$(eval $(call MKDIR_template,$(dir))))
 
-format: $(PRETTIER)
+format: | node_modules
 	$(PRETTIER) --write .
 	"$(DOTNET)" tool run dotnet-format $(DOTNET_FORMAT_ARGS)
 
-lint: $(PRETTIER)
+lint: | node_modules
 	$(PRETTIER) --check .
 	"$(DOTNET)" tool run dotnet-format --check $(DOTNET_FORMAT_ARGS)
 
-$(PRETTIER): package-lock.json
+node_modules: package-lock.json
 	$(NPM) install
-	ls -la
 	@touch $@
 
 release: VERSION = $(shell cl suggest)
