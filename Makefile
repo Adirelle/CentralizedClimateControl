@@ -51,11 +51,13 @@ dist: build $(DIST_DESTS)
 
 build: $(MANIFEST) $(MODSYNC) $(ASSEMBLY) $(TXT_CHANGELOG) $(UPDATEDEFS) $(ABOUT)
 
-$(MANIFEST) $(MODSYNC): .git/HEAD
+$(MANIFEST) $(MODSYNC): .git/HEAD | $(PRETTIER)
 	sed -i -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $@
+	$(PRETTIER) --write $@
 
-$(ABOUT): README.md
+$(ABOUT): README.md | $(PRETTIER)
 	.scripts/generate-About.sh > $@
+	$(PRETTIER) --write $@
 
 $(TXT_CHANGELOG): CHANGELOG.md
 	sed -e '/^## $(VERSION)/,/^## /!d;/^## /,+3d' $< >$@
@@ -67,9 +69,10 @@ $(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) | obj
 obj:
 	"$(DOTNET)" restore --locked-mode
 
-$(UPDATEDEFS): CHANGELOG.md .pandoc/UpdateFeatureDefs.lua
+$(UPDATEDEFS): CHANGELOG.md .pandoc/UpdateFeatureDefs.lua | $(PRETTIER)
 	mkdir -p $(@D)
 	$(PANDOC) -t .pandoc/UpdateFeatureDefs.lua $< -o $@
+	$(PRETTIER) --write $@
 
 $(PACKAGE): $(DIST_DESTS)
 	cd $(dir $(OUTPUT_DIR)) ; zip -r -9 ../$(PACKAGE) $(patsubst dist/%,%,$?)
@@ -100,4 +103,4 @@ lint: $(PRETTIER)
 
 $(PRETTIER): package-lock.json
 	$(NPM) install
-	touch -r $< $@
+	@touch $@
