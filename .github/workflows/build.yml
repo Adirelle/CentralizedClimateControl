@@ -34,7 +34,7 @@ jobs:
         run: dotnet restore --locked-mode
 
       - name: Install pandoc
-        run: choco install pandoc
+        run: choco install -r pandoc
 
       - name: Extract the version string
         id: version
