@@ -3,6 +3,7 @@ MOD_NAME ?= CentralizedClimateControl
 RELEASE_TYPE ?= Release
 OUTPUT_DIR ?= dist/$(MOD_NAME)
 
+MD_CHANGELOG = CHANGELOG.md
 TXT_CHANGELOG = About/Changelog.txt
 ABOUT = About/About.xml
 MANIFEST = About/Manifest.xml
@@ -43,7 +44,9 @@ NPM = $(shell which npm)
 
 -include Makefile.local
 
-.PHONY: all clean cleaner package dist build version lint format
+.PRECIOUS: $(ABOUT) $(MANIFEST) $(MODSYNC)
+
+.PHONY: all clean cleaner package dist build version lint format release $(MANIFEST) $(MODSYNC)
 
 all: package
 
@@ -57,9 +60,11 @@ package: dist $(PACKAGE)
 
 dist: build $(DIST_DESTS)
 
-build: $(MANIFEST) $(MODSYNC) $(ASSEMBLY) $(TXT_CHANGELOG) $(UPDATEDEFS) $(ABOUT)
+build: version $(ASSEMBLY) $(TXT_CHANGELOG) $(UPDATEDEFS) $(ABOUT)
 
-$(MANIFEST) $(MODSYNC): .git/HEAD | $(PRETTIER)
+version: $(MANIFEST) $(MODSYNC) $(TXT_CHANGELOG) $(UPDATEDEFS)
+
+$(MANIFEST) $(MODSYNC): | $(PRETTIER)
 	sed -i -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $@
 	$(PRETTIER) --write $@
 
@@ -67,7 +72,7 @@ $(ABOUT): README.md | $(PRETTIER)
 	.scripts/generate-About.sh > $@
 	$(PRETTIER) --write $@
 
-$(TXT_CHANGELOG): CHANGELOG.md
+$(TXT_CHANGELOG): $(MD_CHANGELOG)
 	sed -e '/^## $(VERSION)/,/^## /!d;/^## /,+3d' $< >$@
 
 $(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) | obj
@@ -77,7 +82,7 @@ $(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) | obj
 obj:
 	"$(DOTNET)" restore --locked-mode
 
-$(UPDATEDEFS): CHANGELOG.md .pandoc/UpdateFeatureDefs.lua | $(PRETTIER)
+$(UPDATEDEFS): $(MD_CHANGELOG) .pandoc/UpdateFeatureDefs.lua | $(PRETTIER)
 	mkdir -p $(@D)
 	$(PANDOC) -t .pandoc/UpdateFeatureDefs.lua $< -o $@
 	$(PRETTIER) --write $@
@@ -112,3 +117,12 @@ lint: $(PRETTIER)
 $(PRETTIER): package-lock.json
 	$(NPM) install
 	@touch $@
+
+release: VERSION := $(shell cl suggest)
+release: | $(PRETTIER)
+	cl release --suggest --yes
+	$(PRETTIER) --write $(MD_CHANGELOG)
+	$(MAKE) version VERSION=$(VERSION)
+	git add $(MD_CHANGELOG) $(MANIFEST) $(MODSYNC)
+	git commit -m "Release $(VERSION)"
+	git tag $(VERSION) -m "Release $(VERSION)"
