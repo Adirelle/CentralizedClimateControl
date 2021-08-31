@@ -28,7 +28,7 @@ DIST_SOURCES = $(sort \
 DIST_DESTS = $(addprefix $(OUTPUT_DIR)/,$(DIST_SOURCES))
 DIST_DIRS = $(sort $(foreach dest,$(DIST_DESTS),$(dir $(dest))))
 
-DOTNET = $(DOTNET_ROOT)dotnet.exe
+DOTNET = dotnet.exe
 DOTNET_BUILD_ARGS = --nologo --no-restore --configuration=$(RELEASE_TYPE) "-p:Version=$(VERSION)" "./$(SLN_FILE)"
 DOTNET_FORMAT_ARGS = --no-restore -wsa info $(SLN_FILE)
 
