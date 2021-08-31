@@ -1,5 +1,6 @@
 HERE ?= $(shell pwd -L)
 STEAM_APP_ID ?= 294100
+STEAM_FILE_ID ?= 2589526141
 
 MOD_NAME ?= CentralizedClimateControl
 VERSION ?= $(shell git describe --always | sed -e 's/-g.*//')
@@ -53,7 +54,7 @@ VERSION_MARKER=$(DIST_DIR)/.version
 
 .PRECIOUS: $(ABOUT) $(MANIFEST) $(MODSYNC)
 
-.PHONY: all clean cleaner package distrib build version lint format release quicktest publish
+.PHONY: all clean cleaner package distrib build version lint format release quicktest publish prepare-publish
 
 all: build
 
@@ -63,10 +64,12 @@ clean:
 cleaner: clean
 	rm -rf node_modules obj
 
-package: distrib $(PACKAGE)
-
-publish: $(WORKSHOP_META) distrib
+publish: prepare-publish
 	steamcmd '+login $(STEAM_USERNAME) $(STEAM_PASSWORD)' "+workshop_build_item `pwd -L`/$(WORKSHOP_META)" '+quit'
+
+prepare-publish: distrib $(WORKSHOP_META)
+
+package: distrib $(PACKAGE)
 
 distrib: build $(DIST_DESTS)
 
