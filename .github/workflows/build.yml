@@ -70,7 +70,7 @@ jobs:
           tag: ${{ steps.version.outputs.version }}
           commit: ${{ github.sha }}
           prerelease: ${{ steps.version.outputs.prerelease }}
-          bodyFile: dist/${{ env.MOD_NAME }}/About/Changelog.txt
+          bodyFile: dist/CHANGELOG.md
           artifacts: dist/${{ env.MOD_NAME }}.zip
           artifactContentType: application/zip
           token: ${{ github.token }}

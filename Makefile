@@ -7,6 +7,7 @@ DIST_DIR ?= dist
 OUTPUT_DIR ?= $(DIST_DIR)/$(MOD_NAME)
 
 MD_CHANGELOG = CHANGELOG.md
+RELEASE_CHANGELOG = dist/CHANGELOG.md
 ABOUT = About/About.xml
 MANIFEST = About/Manifest.xml
 MODSYNC = About/ModSync.xml
@@ -20,7 +21,7 @@ CS_SOURCES = $(shell find Source -name "*.cs*")
 ASSEMBLY = 1.3/Assemblies/CentralizedClimateControl.dll
 
 DIST_SOURCES = $(sort \
-	$(ASSEMBLY) $(TXT_CHANGELOG) $(UPDATEDEFS) \
+	$(ASSEMBLY) $(UPDATEDEFS) \
 	$(shell find 1.3 About Textures -type f) \
 	$(wildcard *.md) \
 )
@@ -70,7 +71,7 @@ distrib: build $(DIST_DESTS)
 
 build: version $(ASSEMBLY) $(ABOUT)
 
-version: $(MANIFEST) $(MODSYNC) $(TXT_CHANGELOG) $(UPDATEDEFS) | $(VERSION_MARKER)
+version: $(MANIFEST) $(MODSYNC) $(RELEASE_CHANGELOG) $(UPDATEDEFS) | $(VERSION_MARKER)
 
 $(MANIFEST) $(MODSYNC): $(VERSION_MARKER) | node_modules
 	sed -i -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $@
@@ -82,6 +83,9 @@ $(WORKSHOP_META): $(VERSION_MARKER) .scripts/workshop-meta | $(DIST_DIR)
 $(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) $(VERSION_MARKER) | obj
 	mkdir -p $(@D)
 	"$(DOTNET)" build $(DOTNET_BUILD_ARGS)
+
+$(RELEASE_CHANGELOG): $(MD_CHANGELOG) $(VERSION_MARKER) .scripts/changelog | $(DIST_DIR)
+	.scripts/changelog $(VERSION) > $@
 
 ifneq "$(file <$(VERSION_MARKER))" "$(VERSION)"
 .PHONY: $(VERSION_MARKER)
