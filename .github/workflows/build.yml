@@ -87,8 +87,8 @@ jobs:
       - name: Download the distribution
         uses: actions/download-artifact@v2
         with:
-            name: distribution
-            path: dist
+          name: distribution
+          path: dist
 
       - name: Publish to steam
         uses: docker://steamcmd/steamcmd:ubuntu
