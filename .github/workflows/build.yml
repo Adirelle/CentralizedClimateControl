@@ -76,3 +76,12 @@ jobs:
           token: ${{ github.token }}
           allowUpdates: true
           replacesArtifacts: true
+
+      - name: Publish to steam
+        if: ${{ ! github.base_ref }}
+        uses: docker://steamcmd/steamcmd:ubuntu
+        with:
+          args: >-
+            +login ${{ secrets.STEAM_USERNAME }} ${{ secrets.STEAM_PASSWORD }}
+            +workshop_build_item ${{ github.workspace }}/dist/metadata.vdf
+            +quit
