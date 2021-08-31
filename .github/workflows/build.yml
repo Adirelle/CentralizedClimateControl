@@ -77,11 +77,22 @@ jobs:
           allowUpdates: true
           replacesArtifacts: true
 
+  publish:
+    name: Publish the mod to the Steam workshop
+    if: ${{ ! github.base_ref }}
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download the distribution
+        uses: actions/download-artifact@v2
+
+      - run: ls -lR
+
       - name: Publish to steam
-        if: ${{ ! github.base_ref }}
         uses: docker://steamcmd/steamcmd:ubuntu
         with:
           args: >-
-            +login ${{ secrets.STEAM_USERNAME }} ${{ secrets.STEAM_PASSWORD }}
-            +workshop_build_item ${{ github.workspace }}/dist/metadata.vdf
-            +quit
+            '+login ${{ secrets.STEAM_USERNAME }} ${{ secrets.STEAM_PASSWORD }}'
+            '+workshop_build_item ${{ github.workspace }}/dist/metadata.vdf'
+            '+quit'
