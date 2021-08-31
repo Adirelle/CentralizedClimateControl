@@ -2,7 +2,7 @@
 <ModSyncNinjaData>
   <ID>7dcb42da-0362-4022-af1c-15fd54f1d765</ID>
   <ModName>Centralized Climate Control 2.0</ModName>
-  <Version>2.0.0</Version>
+  <Version>2.0.1</Version>
   <SaveBreaking>True</SaveBreaking>
   <Host name="Github">
     <Owner>Adirelle</Owner>

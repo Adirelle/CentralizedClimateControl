@@ -11,6 +11,16 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Changes
 
+### Fixes
+
+### Breaks
+
+## 2.0.1 - (2021-09-01)
+
+---
+
+### Changes
+
 - Display blueprints and frames on air pipe overlays. (#4)
 - Show the air pipe overlay when a building is selected. (#3)
 
@@ -18,8 +28,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 - The pipe blueprints are properly displayed. (#1)
 - Buildings are not blocked by furniture anymore. (#2)
-
-### Breaks
 
 ## 2.0.0 - (2021-08-29)
 
