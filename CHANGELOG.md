@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixes
 
+- The pipe blueprints are properly displayed. (#1)
 - Buildings are not blocked by furniture anymore. (#2)
 
 ### Breaks
