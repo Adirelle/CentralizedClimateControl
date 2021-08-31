@@ -6,7 +6,14 @@
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
       <ai_chillDestination>false</ai_chillDestination>
+      <blueprintClass>CentralizedClimateControl.Blueprint_VisiblePipe</blueprintClass>
+      <blueprintGraphicData>
+        <texPath>Things/Building/PipeAtlas/Blueprint</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+        <shaderType>CutoutComplex</shaderType>
+      </blueprintGraphicData>
     </building>
+    <drawerType>MapMeshOnly</drawerType>
     <altitudeLayer>Conduits</altitudeLayer>
     <passability>Standable</passability>
     <placingDraggableDimensions>1</placingDraggableDimensions>
@@ -80,6 +87,11 @@
     <graphicData>
       <color>(255, 120, 145)</color>
     </graphicData>
+    <building>
+      <blueprintGraphicData>
+        <color>(255, 120, 145)</color>
+      </blueprintGraphicData>
+    </building>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
         <flowType>Red</flowType>
@@ -92,6 +104,11 @@
     <label>Red covered air pipe</label>
     <description>Red pipes for carrying air under floors.</description>
     <uiIconPath>UI/Pipe/Hidden/Red</uiIconPath>
+    <building>
+      <blueprintGraphicData>
+        <color>(255, 120, 145)</color>
+      </blueprintGraphicData>
+    </building>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
         <flowType>Red</flowType>
@@ -107,6 +124,11 @@
     <graphicData>
       <color>(100, 115, 255)</color>
     </graphicData>
+    <building>
+      <blueprintGraphicData>
+        <color>(100, 115, 255)</color>
+      </blueprintGraphicData>
+    </building>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
         <flowType>Blue</flowType>
@@ -119,6 +141,11 @@
     <label>Blue covered air pipe</label>
     <description>Blue pipes for carrying air under floors.</description>
     <uiIconPath>UI/Pipe/Hidden/Blue</uiIconPath>
+    <building>
+      <blueprintGraphicData>
+        <color>(100, 115, 255)</color>
+      </blueprintGraphicData>
+    </building>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
         <flowType>Blue</flowType>
@@ -134,6 +161,11 @@
     <graphicData>
       <color>(92, 211, 255)</color>
     </graphicData>
+    <building>
+      <blueprintGraphicData>
+        <color>(92, 211, 255)</color>
+      </blueprintGraphicData>
+    </building>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
         <flowType>Cyan</flowType>
@@ -146,6 +178,11 @@
     <label>Cyan covered air pipe</label>
     <description>Cyan pipes for carrying air under floors.</description>
     <uiIconPath>UI/Pipe/Hidden/Cyan</uiIconPath>
+    <building>
+      <blueprintGraphicData>
+        <color>(92, 211, 255)</color>
+      </blueprintGraphicData>
+    </building>
     <comps>
       <li Class="CentralizedClimateControl.CompProperties_Pipe">
         <flowType>Cyan</flowType>

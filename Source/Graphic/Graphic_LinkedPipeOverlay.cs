@@ -30,7 +30,7 @@ namespace CentralizedClimateControl
 
         public override bool ShouldLinkWith(IntVec3 loc, Thing parent)
         {
-            return loc.GetThingList(parent.Map).Any(thing => flowType.Accept(thing.GetFlowType()));
+            return parent.Map.NetworkManager().HasPartAt(loc, flowType);
         }
     }
 }

@@ -8,19 +8,13 @@ namespace CentralizedClimateControl
     {
         private readonly FlowType flowType;
 
+        public override bool Visible => shouldDraw();
+
         protected SectionLayer_Pipe(FlowType flowType, Section section) : base(section)
         {
             this.flowType = flowType;
             requireAddToMapMesh = false;
             relevantChangeTypes = MapMeshFlag.Buildings | MapMeshFlag.Things;
-        }
-
-        public override void DrawLayer()
-        {
-            if (shouldDraw())
-            {
-                base.DrawLayer();
-            }
         }
 
         private bool shouldDraw()
@@ -52,6 +46,12 @@ namespace CentralizedClimateControl
             {
                 thingFlowType.Overlay().Print(this, thing, 0);
             }
+        }
+
+        public override void Regenerate()
+        {
+            section.map.NetworkManager().ClearCache(section.CellRect);
+            base.Regenerate();
         }
     }
 }

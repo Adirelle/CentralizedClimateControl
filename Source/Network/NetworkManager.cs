@@ -83,9 +83,9 @@ namespace CentralizedClimateControl
             if (cellType is dirtyCell)
             {
                 cellType = FlowType.None;
-                foreach (var part in GetAllPartsAt(loc))
+                foreach (var thing in map.thingGrid.ThingsListAtFast(loc))
                 {
-                    cellType |= part.FlowType;
+                    cellType |= thing.GetFlowType();
                 }
                 typeCacheGrid[index] = cellType;
             }
@@ -96,12 +96,24 @@ namespace CentralizedClimateControl
         {
             if (part is not null)
             {
-                foreach (var loc in part.parent.OccupiedRect())
-                {
-                    typeCacheGrid[map.cellIndices.CellToIndex(loc)] = dirtyCell;
-                }
+                ClearCache(part.parent.OccupiedRect());
             }
             isDirty = true;
+        }
+
+        public void ClearCache(IEnumerable<IntVec3> locs)
+        {
+            foreach (var loc in locs)
+            {
+                typeCacheGrid[map.cellIndices.CellToIndex(loc)] = dirtyCell;
+                map.mapDrawer.MapMeshDirty(loc, MapMeshFlag.Things, regenAdjacentCells: true, regenAdjacentSections: false);
+            }
+        }
+
+        public void ClearCache(IntVec3 loc)
+        {
+            typeCacheGrid[map.cellIndices.CellToIndex(loc)] = dirtyCell;
+            map.mapDrawer.MapMeshDirty(loc, MapMeshFlag.Things, regenAdjacentCells: true, regenAdjacentSections: false);
         }
 
         public override void MapComponentTick()
