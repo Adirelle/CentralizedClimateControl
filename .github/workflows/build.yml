@@ -71,7 +71,7 @@ jobs:
           commit: ${{ github.sha }}
           prerelease: ${{ steps.version.outputs.prerelease }}
           bodyFile: dist/${{ env.MOD_NAME }}/About/Changelog.txt
-          artifacts: ${{ env.MOD_NAME }}.zip
+          artifacts: dist/${{ env.MOD_NAME }}.zip
           artifactContentType: application/zip
           token: ${{ github.token }}
           allowUpdates: true
