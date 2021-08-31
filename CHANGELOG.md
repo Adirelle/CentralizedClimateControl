@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Changes
 
+- Display blueprints and frames on air pipe overlays. (#4)
 - Show the air pipe overlay when a building is selected. (#3)
 
 ### Fixes

@@ -1,4 +1,5 @@
 
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using Verse;
@@ -48,25 +49,36 @@ namespace CentralizedClimateControl
             return (selector & candidate) != FlowType.None;
         }
 
+        public static FlowType? TryGetFlowType(this Thing thing)
+        {
+            return thing?.TryGetComp<CompBase>()?.FlowType
+                ?? thing?.def.TryGetFlowType();
+        }
+
+        public static FlowType? TryGetFlowType(this ThingDef def)
+        {
+            return def?.GetCompProperties<CompProperties_Pipe>()?.flowType
+                ?? def?.TryAssignableComp()
+                ?? def?.entityDefToBuild?.TryGetFlowType();
+        }
+
+        private static FlowType? TryAssignableComp(this ThingDef def)
+        {
+            return def.HasAssignableCompFrom(typeof(CompBase)) ? FlowType.Any : null;
+        }
+
+        public static FlowType? TryGetFlowType(this Def def)
+        {
+            return (def as ThingDef)?.TryGetFlowType();
+        }
+
         public static FlowType GetFlowType(this Thing thing)
         {
-            var part = thing.TryGetComp<CompBase>();
-            return part is not null ? part.FlowType : FlowType.None;
+            return thing.TryGetFlowType() ?? FlowType.None;
         }
-
-        public static FlowType GetFlowType(this ThingDef def)
-        {
-            var pipeProps = def.GetCompProperties<CompProperties_Pipe>();
-            if (pipeProps is not null)
-            {
-                return pipeProps.flowType;
-            }
-            return def.HasAssignableCompFrom(typeof(CompBuilding)) ? FlowType.Any : FlowType.None;
-        }
-
         public static FlowType GetFlowType(this Def def)
         {
-            return (def is ThingDef t) ? t.GetFlowType() : FlowType.None;
+            return def.TryGetFlowType() ?? FlowType.None;
         }
 
     }

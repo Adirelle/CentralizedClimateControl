@@ -12,7 +12,7 @@ namespace CentralizedClimateControl
         {
             this.flowType = flowType;
             requireAddToMapMesh = false;
-            relevantChangeTypes = MapMeshFlag.Buildings;
+            relevantChangeTypes = MapMeshFlag.Buildings | MapMeshFlag.Things;
         }
 
         public override void DrawLayer()
