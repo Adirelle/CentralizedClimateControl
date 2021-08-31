@@ -5,8 +5,6 @@ FILE_ID=${2:-${STEAM_FILE_ID}}
 DIST_DIR=${3}
 VERSION=${4:-${VERSION}}
 
-THERE=`pwd -L`
-
 cat << EOF
 "workshopitem"
 {
@@ -14,8 +12,8 @@ cat << EOF
     "publishedfileid"  "${FILE_ID}"
     "visibility"       "0"
     "title"            "Centralized Climate Control 2.0"
-    "contentfolder"    "${THERE}/${DIST_DIR}"
-    "previewfile"      "${THERE}/${DIST_DIR}/About/preview.png"
+    "contentfolder"    "${DIST_DIR}"
+    "previewfile"      "${DIST_DIR}/About/preview.png"
     "changenote"       "See the [url=https://github.com/Adirelle/CentralizedClimateControl/releases/tag/${VERSION}]release on Github[/url]."
 }
 EOF

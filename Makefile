@@ -1,3 +1,4 @@
+HERE ?= $(shell pwd -L)
 STEAM_APP_ID ?= 294100
 
 MOD_NAME ?= CentralizedClimateControl
@@ -78,7 +79,7 @@ $(MANIFEST) $(MODSYNC): $(VERSION_MARKER) | node_modules
 	$(PRETTIER) --write $@
 
 $(WORKSHOP_META): $(VERSION_MARKER) .scripts/workshop-meta | $(DIST_DIR)
-	.scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(OUTPUT_DIR)" "$(VERSION)" >$@
+	.scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(HERE)/$(OUTPUT_DIR)" "$(VERSION)" >$@
 
 $(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) $(VERSION_MARKER) | obj
 	mkdir -p $(@D)
