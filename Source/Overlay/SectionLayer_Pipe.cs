@@ -1,4 +1,5 @@
 using RimWorld;
+using System.Linq;
 using Verse;
 
 namespace CentralizedClimateControl
@@ -16,14 +17,32 @@ namespace CentralizedClimateControl
 
         public override void DrawLayer()
         {
+            if (shouldDraw())
+            {
+                base.DrawLayer();
+            }
+        }
+
+        private bool shouldDraw()
+        {
             if (
                 Find.DesignatorManager.SelectedDesignator is Designator_Build designator
                 && designator.PlacingDef is ThingDef def
                 && flowType.Accept(def.GetFlowType())
             )
             {
-                base.DrawLayer();
+                return true;
             }
+
+            if (
+                Find.Selector.SelectedObjects.OfType<Thing>()
+                .Any(thing => flowType.Accept(thing.GetFlowType()))
+            )
+            {
+                return true;
+            }
+
+            return false;
         }
 
         protected override void TakePrintFrom(Thing thing)

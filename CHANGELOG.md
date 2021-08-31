@@ -11,6 +11,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Changes
 
+- Show the air pipe overlay when a building is selected. (#3)
+
 ### Fixes
 
 - Buildings are not blocked by furniture anymore. (#2)
