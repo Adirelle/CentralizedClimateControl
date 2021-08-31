@@ -39,7 +39,7 @@ namespace CentralizedClimateControl
             foreach (var cell in area)
             {
                 var edifice = cell.GetEdifice(map);
-                if (edifice is null || edifice == thingToIgnore)
+                if (edifice is null || edifice == thingToIgnore || edifice.def.passability != Traversability.Impassable)
                 {
                     yield return cell;
                 }

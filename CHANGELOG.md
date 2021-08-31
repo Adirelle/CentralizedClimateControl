@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixes
 
+- Buildings are not blocked by furniture anymore. (#2)
+
 ### Breaks
 
 ## 2.0.0 - (2021-08-29)
