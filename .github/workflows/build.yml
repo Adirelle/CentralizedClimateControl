@@ -86,8 +86,9 @@ jobs:
     steps:
       - name: Download the distribution
         uses: actions/download-artifact@v2
-
-      - run: ls -lR
+        with:
+            name: distribution
+            path: dist
 
       - name: Publish to steam
         uses: docker://steamcmd/steamcmd:ubuntu
