@@ -1,7 +1,7 @@
 STEAM_APP_ID ?= 294100
 
-VERSION ?= $(shell git describe --always | sed -e 's/-g.*//')
 MOD_NAME ?= CentralizedClimateControl
+VERSION ?= $(shell git describe --always | sed -e 's/-g.*//')
 RELEASE_TYPE ?= Release
 DIST_DIR ?= dist
 OUTPUT_DIR ?= $(DIST_DIR)/$(MOD_NAME)
@@ -76,7 +76,7 @@ $(MANIFEST) $(MODSYNC): $(VERSION_MARKER) | node_modules
 	sed -i -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $@
 	$(PRETTIER) --write $@
 
-$(WORKSHOP_META): $(VERSION_MARKER) .scripts/workshop-meta .scripts/bbcode .pandoc/SteamBBCode.lua | $(DIST_DIR)
+$(WORKSHOP_META): $(VERSION_MARKER) .scripts/workshop-meta | $(DIST_DIR)
 	.scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(OUTPUT_DIR)" "$(VERSION)" >$@
 
 $(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) $(VERSION_MARKER) | obj
@@ -90,16 +90,22 @@ endif
 $(VERSION_MARKER): | $(DIST_DIR)
 	echo -n "$(VERSION)" > $@
 
-$(ABOUT): README.md | node_modules
-	.scripts/generate-about > $@.2 && mv $@.2 $@ || rm $@.2
+$(ABOUT): docs/description.md .scripts/generate-about | node_modules
+	.scripts/generate-about $< > $@.2 && mv $@.2 $@ || rm $@.2
 	$(PRETTIER) --write $@
 
 obj:
 	"$(DOTNET)" restore --locked-mode
 
-$(UPDATEDEFS): $(MD_CHANGELOG) .pandoc/UpdateFeatureDefs.lua | node_modules
+$(UPDATEDEFS): $(MD_CHANGELOG) .pandoc/UpdateFeatureDefs.lua $(VERSION_MARKER) | node_modules
 	mkdir -p $(@D)
 	$(PANDOC) -t .pandoc/UpdateFeatureDefs.lua $< -o $@
+
+.scripts/generate-about: .scripts/unityrtf $(ABOUT)
+.scripts/workshop-meta: .scripts/bbcode
+.scripts/unityrtf: .pandoc/UnityRichTextFormat.lua
+.scripts/bbcode: .pandoc/SteamBBCode.lua
+	touch $@
 
 $(PACKAGE): $(DIST_DESTS)
 	cd $(DIST_DIR) ; $(ZIPTOOL) $(ZIPFLAGS) ../$(PACKAGE) $(patsubst dist/%,%,$?)

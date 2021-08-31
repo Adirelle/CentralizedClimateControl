@@ -9,8 +9,7 @@ escape() {
   head -c 1021 | sed -z -e 's/\(["{}]\)/\\$1/g'
 }
 
-DESC=`.scripts/bbcode README.md | escape`
-CHANGELOG=`.scripts/changelog "$VERSION" | .scripts/bbcode - | escape`
+DESC=`.scripts/bbcode docs/description.md | escape`
 
 THERE=`pwd -L`
 
@@ -24,6 +23,6 @@ cat << EOF
     "contentfolder"    "${THERE}/${DIST_DIR}"
     "previewfile"      "${THERE}/${DIST_DIR}/About/preview.png"
     "description"      "${DESC}"
-    "changenote"       "${CHANGELOG}"
+    "changenote"       "See the [url=https://github.com/Adirelle/CentralizedClimateControl/releases/tag/${VERSION}]release on Github[/url]."
 }
 EOF

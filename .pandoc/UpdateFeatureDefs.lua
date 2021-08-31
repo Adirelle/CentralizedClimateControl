@@ -74,11 +74,7 @@ function Header(lev, s, attr)
     return table.concat(buffer, '\n')
   end
 
-  if lev == 3 then
-    return '\n|<b><size=18>' .. s .. '</size></b>'
-  end
-
-  return '\n|' .. s
+  return '\n|<b><size=' .. (24 - 2 * lev) .. '>' .. s .. '</size></b>'
 end
 
 function BulletList(items)
