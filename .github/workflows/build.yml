@@ -84,16 +84,22 @@ jobs:
       - build
     runs-on: ubuntu-latest
     steps:
+      - name: Check out sources
+        uses: actions/checkout@v2
+
       - name: Download the distribution
         uses: actions/download-artifact@v2
         with:
           name: distribution
           path: dist
 
-      - name: Publish to steam
-        uses: docker://steamcmd/steamcmd:ubuntu
-        with:
-          args: >-
-            '+login ${{ secrets.STEAM_USERNAME }} ${{ secrets.STEAM_PASSWORD }}'
-            '+workshop_build_item ${{ github.workspace }}/dist/metadata.vdf'
-            '+quit'
+      - name: Prepare publishing
+        run: make prepare-publish HERE=${{ github.workspace }} STEAM_USERNAME=${{ secrets.STEAM_USERNAME }} STEAM_PASSWORD=${{ secrets.STEAM_PASSWORD }}
+
+      - name: Publish
+        container:
+          image: steamcmd/steamcmd:ubuntu
+          volumes:
+            - "${{ github.workspace }}:${{ github.workspace }}"
+        run: +runscript ${{ github.workspace }}/dist/publish
+        timeout-minutes: 10

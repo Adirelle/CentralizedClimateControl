@@ -16,7 +16,9 @@ MODSYNC = About/ModSync.xml
 UPDATEDEFS = 1.3/Defs/UpdateFeatureDefs/UpdateFeatures.xml
 
 PACKAGE = $(DIST_DIR)/$(MOD_NAME).zip
-WORKSHOP_META = $(DIST_DIR)/metadata.vdf
+
+PUBLISH_METADATA = $(DIST_DIR)/metadata.vdf
+PUBLISH_SCRIPT = $(DIST_DIR)/publish
 
 SLN_FILE = $(MOD_NAME).sln
 CS_SOURCES = $(shell find Source -name "*.cs*")
@@ -59,15 +61,17 @@ VERSION_MARKER=$(DIST_DIR)/.version
 all: build
 
 clean:
-	rm -rf $(DIST_DIR) $(ASSEMBLY) $(PACKAGE) $(TXT_CHANGELOG) $(UPDATEDEFS) $(WORKSHOP_META)
+	rm -rf $(DIST_DIR) $(ASSEMBLY) $(PACKAGE) $(TXT_CHANGELOG) $(UPDATEDEFS) $(PUBLISH_METADATA) $(PUBLISH_SCRIPT)
 
 cleaner: clean
 	rm -rf node_modules obj
 
 publish: prepare-publish
-	steamcmd '+login $(STEAM_USERNAME) $(STEAM_PASSWORD)' "+workshop_build_item `pwd -L`/$(WORKSHOP_META)" '+quit'
+	steamcmd +runscript $(HERE)/$(PUBLISH_SCRIPT)
+	cat $(HOME)/.steam/logs/stderr.txt
+	rm $(PUBLISH_SCRIPT)
 
-prepare-publish: distrib $(WORKSHOP_META)
+prepare-publish: distrib $(PUBLISH_METADATA) $(PUBLISH_SCRIPT)
 
 package: distrib $(PACKAGE)
 
@@ -81,8 +85,15 @@ $(MANIFEST) $(MODSYNC): $(VERSION_MARKER) | node_modules
 	sed -i -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $@
 	$(PRETTIER) --write $@
 
-$(WORKSHOP_META): $(VERSION_MARKER) .scripts/workshop-meta | $(DIST_DIR)
+$(PUBLISH_METADATA): $(VERSION_MARKER) .scripts/workshop-meta | $(DIST_DIR)
 	.scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(HERE)/$(OUTPUT_DIR)" "$(VERSION)" >$@
+
+$(PUBLISH_SCRIPT): | $(DIST_DIR)
+	@echo '@ShutdownOnFailedCommand 1' > $@
+	@echo '@NoPromptForPassword 1' >> $@
+	@echo 'login $(STEAM_USERNAME) $(STEAM_PASSWORD)' >> $@
+	@echo 'workshop_build_item $(HERE)/$(PUBLISH_METADATA)' >> $@
+	@echo 'quit' >> $@
 
 $(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) $(VERSION_MARKER) | obj
 	mkdir -p $(@D)
