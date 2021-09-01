@@ -12,13 +12,13 @@ concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  MOD_NAME: CentralizedClimateControl
-
 jobs:
   build:
     name: Build the mod
     runs-on: windows-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
     steps:
       - name: Check out sources
         uses: actions/checkout@v2
@@ -54,7 +54,7 @@ jobs:
       - name: Build all
         shell: bash
         run: |
-          make package VERSION="${{ steps.version.outputs.version }}" RELEASE_TYPE="Release"
+          make distrib VERSION="${{ steps.version.outputs.version }}" RELEASE_TYPE="Release"
 
       - name: Upload the distribution
         uses: actions/upload-artifact@v2
@@ -62,16 +62,35 @@ jobs:
           name: distribution
           path: "dist/**"
 
+  release:
+    name: Create a Github release
+    if: ${{ ! github.base_ref }}
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v2
+
+      - name: Download the distribution
+        uses: actions/download-artifact@v2
+        with:
+          name: distribution
+          path: dist
+
+      - name: Build the package
+        run: make package
+
       - name: Create the release
         if: ${{ ! github.base_ref }}
         uses: ncipollo/release-action@v1
         with:
-          name: ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
+          name: ${{ needs.build.outputs.version }}
+          tag: ${{ needs.build.outputs.version }}
           commit: ${{ github.sha }}
-          prerelease: ${{ steps.version.outputs.prerelease }}
+          prerelease: ${{ needs.build.outputs.prerelease }}
           bodyFile: dist/CHANGELOG.md
-          artifacts: dist/${{ env.MOD_NAME }}.zip
+          artifacts: dist/CentralizedClimateControl.zip
           artifactContentType: application/zip
           token: ${{ github.token }}
           allowUpdates: true
