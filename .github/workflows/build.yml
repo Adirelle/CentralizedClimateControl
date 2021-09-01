@@ -97,7 +97,7 @@ jobs:
           replacesArtifacts: true
 
   publish:
-    name: Publish the mod to the Steam workshop
+    name: Publish to Steam workshop
     if: ${{ ! github.base_ref }}
     needs:
       - build
@@ -115,7 +115,7 @@ jobs:
       - name: Prepare publishing
         run: make prepare-publish HERE=${{ github.workspace }} STEAM_USERNAME=${{ secrets.STEAM_USERNAME }} STEAM_PASSWORD=${{ secrets.STEAM_PASSWORD }}
 
-      - name: Publish to Steam workshop
+      - name: Publish using SteamCMD
         uses: docker://steamcmd/steamcmd:ubuntu
         with:
           args: +runscript ${{ github.workspace }}/dist/publish
