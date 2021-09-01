@@ -13,9 +13,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixes
 
-- Fixed excessive map updates.
-
 ### Breaks
+
+## 2.0.2 - (2021-09-01)
+
+---
+
+### Fixes
+
+- Fixed excessive map updates.
 
 ## 2.0.1 - (2021-09-01)
 
