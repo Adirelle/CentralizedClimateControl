@@ -12,7 +12,13 @@ namespace CentralizedClimateControl
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            map.NetworkManager().ClearCache(Position);
+            map.NetworkManager().ClearCache(this, regenMapMesh: true);
+        }
+
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
+        {
+            Map.NetworkManager().ClearCache(this, regenMapMesh: true);
+            base.DeSpawn(mode);
         }
     }
 }

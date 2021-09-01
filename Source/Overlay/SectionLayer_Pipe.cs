@@ -50,7 +50,7 @@ namespace CentralizedClimateControl
 
         public override void Regenerate()
         {
-            section.map.NetworkManager().ClearCache(section.CellRect);
+            section.map.NetworkManager().ClearCache(section.CellRect, regenMapMesh: false);
             base.Regenerate();
         }
     }

@@ -96,24 +96,26 @@ namespace CentralizedClimateControl
         {
             if (part is not null)
             {
-                ClearCache(part.parent.OccupiedRect());
+                ClearCache(part.parent, regenMapMesh: true);
             }
             isDirty = true;
         }
 
-        public void ClearCache(IEnumerable<IntVec3> locs)
+        public void ClearCache(Thing thing, bool regenMapMesh = false)
+        {
+            ClearCache(thing.OccupiedRect(), regenMapMesh);
+        }
+
+        public void ClearCache(IEnumerable<IntVec3> locs, bool regenMapMesh = false)
         {
             foreach (var loc in locs)
             {
                 typeCacheGrid[map.cellIndices.CellToIndex(loc)] = dirtyCell;
-                map.mapDrawer.MapMeshDirty(loc, MapMeshFlag.Things, regenAdjacentCells: true, regenAdjacentSections: false);
+                if (regenMapMesh)
+                {
+                    map.mapDrawer.MapMeshDirty(loc, MapMeshFlag.Things, regenAdjacentCells: true, regenAdjacentSections: false);
+                }
             }
-        }
-
-        public void ClearCache(IntVec3 loc)
-        {
-            typeCacheGrid[map.cellIndices.CellToIndex(loc)] = dirtyCell;
-            map.mapDrawer.MapMeshDirty(loc, MapMeshFlag.Things, regenAdjacentCells: true, regenAdjacentSections: false);
         }
 
         public override void MapComponentTick()

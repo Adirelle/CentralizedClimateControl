@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixes
 
+- Fixed excessive map updates.
+
 ### Breaks
 
 ## 2.0.1 - (2021-09-01)
