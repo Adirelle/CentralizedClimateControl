@@ -79,7 +79,7 @@ jobs:
           path: dist
 
       - name: Build the package
-        run: make package
+        run: make package VERSION="${{ needs.build.outputs.version }}"
 
       - name: Create the release
         if: ${{ ! github.base_ref }}
@@ -113,7 +113,7 @@ jobs:
           path: dist
 
       - name: Prepare publishing
-        run: make prepare-publish HERE=${{ github.workspace }} STEAM_USERNAME=${{ secrets.STEAM_USERNAME }} STEAM_PASSWORD=${{ secrets.STEAM_PASSWORD }}
+        run: make prepare-publish VERSION="${{ needs.build.outputs.version }}" HERE=${{ github.workspace }} STEAM_USERNAME=${{ secrets.STEAM_USERNAME }} STEAM_PASSWORD=${{ secrets.STEAM_PASSWORD }}
 
       - name: Publish using SteamCMD
         uses: docker://steamcmd/steamcmd:ubuntu
