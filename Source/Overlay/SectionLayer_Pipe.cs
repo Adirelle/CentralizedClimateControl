@@ -4,7 +4,7 @@ using Verse;
 
 namespace CentralizedClimateControl
 {
-    internal abstract class SectionLayer_Pipe : SectionLayer_Things
+    internal abstract class SectionLayer_Pipe : SectionLayer
     {
         private readonly FlowType flowType;
 
@@ -13,7 +13,6 @@ namespace CentralizedClimateControl
         protected SectionLayer_Pipe(FlowType flowType, Section section) : base(section)
         {
             this.flowType = flowType;
-            requireAddToMapMesh = false;
             relevantChangeTypes = MapMeshFlag.Buildings | MapMeshFlag.Things;
         }
 
@@ -39,19 +38,24 @@ namespace CentralizedClimateControl
             return false;
         }
 
-        protected override void TakePrintFrom(Thing thing)
-        {
-            var thingFlowType = thing.GetFlowType();
-            if (flowType.Accept(thingFlowType))
-            {
-                thingFlowType.Overlay().Print(this, thing, 0);
-            }
-        }
-
         public override void Regenerate()
         {
-            section.map.NetworkManager().ClearCache(section.CellRect, regenMapMesh: false);
-            base.Regenerate();
+            var map = section.map;
+            var manager = map.NetworkManager();
+            var rect = section.CellRect;
+            manager.ClearCache(rect, regenMapMesh: false);
+            ClearSubMeshes(MeshParts.All);
+            foreach (IntVec3 loc in rect)
+            {
+                foreach (var thing in map.thingGrid.ThingsListAtFast(loc))
+                {
+                    if (flowType.Accept(thing.GetFlowType()))
+                    {
+                        thing.GetFlowType().Overlay().Print(this, thing, 0);
+                    }
+                }
+            }
+            FinalizeMesh(MeshParts.All);
         }
     }
 }
