@@ -5,12 +5,9 @@ SRC_DIR ?= .
 BUILD_DIR ?= .
 VERSION ?= $(shell git describe --always | sed -e 's/-g.*//')
 
-STEAM_APP_ID ?= 294100
-STEAM_FILE_ID ?= 2589526141
-
 export SRC_DIR BUILD_DIR HERE VERSION
 
-.PHONY: all clean cleaner package build lint format quicktest
+.PHONY: all clean cleaner build package publish prepare-publish lint format quicktest
 
 all: build
 
@@ -19,6 +16,9 @@ build clean cleaner::
 
 package clean::
 	$(MAKE) -f .build/Makefile.package $@
+
+clean publish prepare-publish::
+	$(MAKE) -f .build/Makefile.publish $@
 
 quicktest:: build
 lint format quicktest cleaner::

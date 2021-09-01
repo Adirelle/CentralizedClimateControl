@@ -1,149 +1,39 @@
-HERE ?= $(shell pwd -L)
+SRC_DIR ?= .
+BUILD_DIR ?= .
+CONTENT_DIR ?= $(BUILD_DIR)/CentralizedClimateControl
+
 STEAM_APP_ID ?= 294100
 STEAM_FILE_ID ?= 2589526141
 
-MOD_NAME ?= CentralizedClimateControl
-VERSION ?= $(shell git describe --always | sed -e 's/-g.*//')
-RELEASE_TYPE ?= Release
-
-SRC_DIR ?= .
-BUILD_DIR ?= .
-CONTENT_DIR ?= $(MOD_NAME)
-
-CHANGELOG = CHANGELOG.md
-ABOUT = About/About.xml
-MANIFEST = About/Manifest.xml
-MODSYNC = About/ModSync.xml
-UPDATEDEFS = 1.3/Defs/UpdateFeatureDefs/UpdateFeatures.xml
-ASSEMBLY = 1.3/Assemblies/CentralizedClimateControl.dll
-ASSETS = $(sort \
-	$(shell find 1.3 About Textures -type f) \
-	$(wildcard *.md) \
-)
-
-PACKAGE = $(CONTENT_DIR).zip
 PUBLISH_METADATA = $(BUILD_DIR)/metadata.vdf
 PUBLISH_SCRIPT = $(BUILD_DIR)/publish
-RELEASE_CHANGELOG = $(BUILD_DIR)/RELEASE-CHANGELOG.md
-VERSION_MARKER = $(BUILD_DIR)/.version
 
-SLN_FILE = $(SRC_DIR)/$(MOD_NAME).sln
-CS_SOURCES = $(shell find $(SRC_DIR)/Source -name "*.cs*")
+.PHONY: all clean content publish prepare-publish
 
-DOTNET = dotnet.exe
-DOTNET_BUILD_ARGS = --nologo --no-restore --configuration=$(RELEASE_TYPE) "-p:Version=$(VERSION)" "$(SLN_FILE)"
-DOTNET_FORMAT_ARGS = --no-restore -wsa info $(SLN_FILE)
-
-PANDOC = pandoc
-
-ZIPTOOL := $(shell which zip 2>/dev/null)
-ifeq "$(ZIPTOOL)" ""
-override ZIPTOOL := 7z.exe
-ZIPFLAGS = a -r -mx9
-else
-ZIPFLAGS = -r -9
-endif
-
-PRETTIER = npx -q prettier
-NPM = npm
-
--include Makefile.local
-
-.PHONY: all clean cleaner package distrib build version lint format release quicktest publish prepare-publish
-
-all: build
+all: publish
 
 clean:
-	$(MAKE) -f Makefile.Build $@
-
-cleaner: clean
-	rm -rf node_modules obj
-	$(MAKE) -f Makefile.Build $@
+	rm -f $(PUBLISH_METADATA) $(PUBLISH_METADATA)
 
 publish: prepare-publish
 	steamcmd +runscript $(HERE)/$(PUBLISH_SCRIPT)
 	cat $(HOME)/.steam/logs/stderr.txt
 	rm $(PUBLISH_SCRIPT)
 
-prepare-publish: $(PUBLISH_METADATA) $(PUBLISH_SCRIPT)
+prepare-publish: content $(PUBLISH_METADATA) $(PUBLISH_SCRIPT)
 
-build:
-	$(MAKE) -f Makefile.Build build
-$(BUILD_DIR)/$(ASSEMBLY)
+content:
+	$(MAKE) -f .build/Makefile.package content CONTENT_DIR=$(CONTENT_DIR)
 
-$(BUILD_DIR)/$(ASSEMBLY) $(CONTENT_DIR)/$(ASSEMBLY): $(SLN_FILE) $(CS_SOURCES) $(VERSION_MARKER) | obj
+$(PUBLISH_METADATA):
 	@mkdir -p $(@D)
-	"$(DOTNET)" build $(DOTNET_BUILD_ARGS) -o $(@D)
-
-package: $(PACKAGE)
-
-$(PACKAGE): $(addprefix $(CONTENT_DIR)/,$(ASSETS) $(ASSEMBLY) $(MANIFEST) $(MODSYNC) $(ABOUT) $(UPDATEDEFS))
-	cd $(dir CONTENT_DIR) ; $(ZIPTOOL) $(ZIPFLAGS) $(PACKAGE) $(patsubst dist/%,%,$?)
-
-$(CONTENT_DIR)/$(MANIFEST): $(SRC_DIR)/$(MANIFEST)
-$(CONTENT_DIR)/$(MODSYNC): $(SRC_DIR)/$(MODSYNC)
-
-$(CONTENT_DIR)/$(MANIFEST) $(CONTENT_DIR)/$(MODSYNC): $(VERSION_MARKER) | node_modules
-	@mkdir -p $(@D)
-	sed -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $< > $@.2 && mv $@.2 $@
-	$(PRETTIER) --write $@
-
-$(CONTENT_DIR)/$(ABOUT): $(SRC_DIR)/docs/description.md $(SRC_DIR)/$(ABOUT) | node_modules
-	@mkdir -p $(@D)
-	.scripts/generate-about $< > $@.2 && mv $@.2 $@
-	$(PRETTIER) --write $@
-
-$(CONTENT_DIR)/$(UPDATEDEFS): $(SRC_DIR)/$(CHANGELOG) $(VERSION_MARKER)
-	@mkdir -p $(@D)
-	$(PANDOC) -t .pandoc/UpdateFeatureDefs.lua $< -o $@.2 && mv $@.2 $@
-
-$(PUBLISH_METADATA): $(VERSION_MARKER)
-	@mkdir -p $(@D)
-	.scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(HERE)/$(CONTENT_DIR)" "$(VERSION)" >$@
+	.build/scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(HERE)/$(CONTENT_DIR)" "$(VERSION)" >$@
 
 $(PUBLISH_SCRIPT):
 	@mkdir -p $(@D)
-	@echo '@ShutdownOnFailedCommand 1' > $@
-	@echo '@NoPromptForPassword 1' >> $@
-	@echo 'login $(STEAM_USERNAME) $(STEAM_PASSWORD)' >> $@
-	@echo 'workshop_build_item $(HERE)/$(PUBLISH_METADATA)' >> $@
-	@echo 'quit' >> $@
-
-$(RELEASE_CHANGELOG): $(CHANGELOG) $(VERSION_MARKER)
-	mkdir -p $(@D)
-	.scripts/changelog $(VERSION) > $@
-
-ifneq "$(file <$(VERSION_MARKER))" "$(VERSION)"
-.PHONY: $(VERSION_MARKER)
-endif
-
-$(VERSION_MARKER):
-	@mkdir -p $(@D)
-	echo -n "$(VERSION)" > $@
-
-format: | node_modules
-	$(PRETTIER) --write .
-	"$(DOTNET)" tool run dotnet-format $(DOTNET_FORMAT_ARGS)
-
-lint: | node_modules
-	$(PRETTIER) --check .
-	"$(DOTNET)" tool run dotnet-format --check $(DOTNET_FORMAT_ARGS)
-
-node_modules: $(SRC_DIR)/package-lock.json
-	$(NPM) install
-	@touch $@
-
-obj:
-	"$(DOTNET)" restore --locked-mode
-
-release: VERSION = $(shell cl suggest)
-release: | node_modules
-	cl release --suggest --yes
-	$(PRETTIER) --write $(CHANGELOG)
-	$(MAKE) version VERSION=$(VERSION)
-	git add $(CHANGELOG) $(MANIFEST) $(MODSYNC)
-	git commit -m "Release $(VERSION)"
-	git tag $(VERSION) -m "Release $(VERSION)"
-
-quicktest: build
-	cd "$(RIMWORLD_PATH)"; exec ./RimWorldWin64.exe -savedatafolder=QuickTestSaveData
+	echo '@ShutdownOnFailedCommand 1' > $@
+	echo '@NoPromptForPassword 1' >> $@
+	echo 'login $(STEAM_USERNAME) $(STEAM_PASSWORD)' >> $@
+	echo 'workshop_build_item $(HERE)/$(PUBLISH_METADATA)' >> $@
+	echo 'quit' >> $@
+	chmod 0400 $@
