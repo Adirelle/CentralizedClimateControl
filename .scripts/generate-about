@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -eu
-
-sed -e '0,/<description>/!d' About/About.xml
-echo '<![CDATA['
-.scripts/unityrtf "$1"
-echo ']]>'
-sed -e '\x</description>x,$!d' About/About.xml

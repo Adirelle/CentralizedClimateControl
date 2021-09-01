@@ -1,0 +1,33 @@
+SRC_DIR ?= .
+BUILD_DIR ?= .
+
+PACKAGE = $(BUILD_DIR)/CentralizedClimateControl-$(VERSION).zip
+CONTENT_DIR = $(BUILD_DIR)/CentralizedClimateControl
+
+ZIPTOOL := $(shell which zip 2>/dev/null)
+ifeq "$(ZIPTOOL)" ""
+override ZIPTOOL := 7z.exe
+ZIPFLAGS = a -r -mx9
+else
+ZIPFLAGS = -r -9
+endif
+
+.PHONY: all clean package build metadata
+
+all: package
+
+clean:
+	rm -rf $(PACKAGE) $(CONTENT_DIR)
+
+package: $(PACKAGE)
+
+$(PACKAGE): $(CONTENT_DIR) build metadata
+	cd "$(dir $<)"; $(ZIPTOOL) $(ZIPFLAGS) "$(HERE)/$(PACKAGE)" "$(notdir $<)"
+
+build metadata: | $(CONTENT_DIR)
+	make -f $(SRC_DIR)/.build/Makefile.$@ BUILD_DIR=$(CONTENT_DIR)
+
+$(CONTENT_DIR): $(shell find $(SRC_DIR)/1.3/Defs $(SRC_DIR)/1.3/Languages $(SRC_DIR)/Textures) $(SRC_DIR)/About/preview.png
+	mkdir -p $@
+	cp -a --parent $? $@
+	@touch $@

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -eu
-APP_ID=${1:-${STEAM_APP_ID}}
-FILE_ID=${2:-${STEAM_FILE_ID}}
-DIST_DIR=${3}
-VERSION=${4:-${VERSION}}
+APP_ID="$1"
+FILE_ID="$2"
+CONTENT_DIR="$3"
+VERSION="$4"
 
 cat << EOF
 "workshopitem"
@@ -12,8 +12,8 @@ cat << EOF
     "publishedfileid"  "${FILE_ID}"
     "visibility"       "0"
     "title"            "Centralized Climate Control 2.0"
-    "contentfolder"    "${DIST_DIR}"
-    "previewfile"      "${DIST_DIR}/About/preview.png"
+    "contentfolder"    "${CONTENT_DIR}"
+    "previewfile"      "${CONTENT_DIR}/About/preview.png"
     "changenote"       "See the [url=https://github.com/Adirelle/CentralizedClimateControl/releases/tag/${VERSION}]release on Github[/url]."
 }
 EOF

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -eu
+DESC="$1"
+ABOUT="$2"
+
+sed -e '0,/<description>/!d' "$ABOUT"
+echo '<![CDATA['
+`dirname $0`/unityrtf "$DESC"
+echo ']]>'
+sed -e '\x</description>x,$!d' "$ABOUT"

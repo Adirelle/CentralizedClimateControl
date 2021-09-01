@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -eu
+VERSION="${1:-Unreleased}"
+CHANGELOG="$2"
+
+if ! egrep "^## ${VERSION}" "${CHANGELOG}" >/dev/null; then
+    VERSION=Unreleased
+fi
+
+echo -e "## Version ${VERSION}\n"
+
+exec sed -e "/^## ${VERSION}/,/^## /!d;/^## /,+3d" "${CHANGELOG}"

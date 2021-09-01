@@ -1,4 +1,5 @@
 *          text=auto eol=crlf
 *.sh       text eol=lf
-.scripts/* text eol=lf
-Makefile   text eol=lf
+.build/*   text eol=lf
+.build/*/* text eol=lf
+Makefile*  text eol=lf

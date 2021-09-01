@@ -1,0 +1,31 @@
+SRC_DIR ?= .
+
+SLN_FILE = $(SRC_DIR)/CentralizedClimateControl.sln
+
+DOTNET = dotnet.exe
+DOTNET_FORMAT_ARGS = --no-restore -wsa info $(SLN_FILE)
+
+PRETTIER = npx -q prettier
+NPM = npm
+
+.PHONY: all cleaner format lint quicktest
+
+all: format
+
+cleaner:
+	rm -rf node_modules
+
+format: | node_modules
+	"$(DOTNET)" tool run dotnet-format $(DOTNET_FORMAT_ARGS)
+	$(PRETTIER) --write "$(SRC_DIR)"
+
+lint: | node_modules
+	"$(DOTNET)" tool run dotnet-format --check $(DOTNET_FORMAT_ARGS)
+	$(PRETTIER) --check "$(SRC_DIR)"
+
+quicktest:
+	cd "$(RIMWORLD_PATH)"; exec ./RimWorldWin64.exe -savedatafolder=QuickTestSaveData
+
+node_modules: package-lock.json
+	$(NPM) install
+	@touch $@
