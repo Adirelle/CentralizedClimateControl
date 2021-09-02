@@ -14,6 +14,6 @@ cat << EOF
     "title"            "Centralized Climate Control 2.0"
     "contentfolder"    "${CONTENT_DIR}"
     "previewfile"      "${CONTENT_DIR}/About/preview.png"
-    "changenote"       "See the [url=https://github.com/Adirelle/CentralizedClimateControl/releases/tag/${VERSION}]release on Github[/url]."
+    "changenote"       "Version $(VERSION). See the [url=https://github.com/Adirelle/CentralizedClimateControl/releases/tag/${VERSION}]full changelog on Github[/url]."
 }
 EOF
