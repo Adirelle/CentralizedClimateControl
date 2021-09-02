@@ -1,11 +1,9 @@
 -include Makefile.local
 
-HERE ?= $(shell pwd -L)
-SRC_DIR ?= .
 BUILD_DIR ?= .
 VERSION ?= $(shell git describe --always | sed -e 's/-g.*//')
 
-export SRC_DIR BUILD_DIR HERE VERSION
+export BUILD_DIR VERSION
 
 .PHONY: all clean cleaner build package publish prepare-publish lint format quicktest
 
