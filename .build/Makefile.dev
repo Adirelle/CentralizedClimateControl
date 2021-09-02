@@ -6,7 +6,7 @@ DOTNET_FORMAT_ARGS = --no-restore -wsa info $(SLN_FILE)
 PRETTIER = npx -q prettier
 NPM = npm
 
-.PHONY: all cleaner format lint quicktest
+.PHONY: all cleaner format lint quicktest release
 
 all: format
 
@@ -20,6 +20,15 @@ format: | node_modules
 lint: | node_modules
 	"$(DOTNET)" tool run dotnet-format --check $(DOTNET_FORMAT_ARGS)
 	$(PRETTIER) --check .
+
+release: VERSION=$(shell changelog suggest)
+release:
+	changelog release
+	$(MAKE) -f .build/Makefile.metadata VERSION="$(VERSION)"
+	$(PRETTIER) --write CHANGELOG.md About
+	git add CHANGELOG.md About
+	git commit -m "Release $(VERSION)"
+	git tag "$(VERSION)" -m "Release $(VERSION)"
 
 quicktest:
 	cd "$(RIMWORLD_PATH)"; exec ./RimWorldWin64.exe -savedatafolder=QuickTestSaveData

@@ -8,7 +8,7 @@ VERSION ?= $(shell git describe --always | sed -e 's/-g.*//')
 
 export SHELL BUILD_DIR VERSION
 
-.PHONY: all clean cleaner build package publish prepare-publish lint format quicktest
+.PHONY: all clean cleaner build package publish prepare-publish lint format quicktest release
 
 all: build
 
@@ -22,7 +22,7 @@ clean publish prepare-publish::
 	$(MAKE) -f .build/Makefile.publish "BUILD_DIR=$(BUILD_DIR)/dist" $@
 
 quicktest:: build
-lint format quicktest cleaner::
+lint format quicktest cleaner release::
 	$(MAKE) -f .build/Makefile.dev $@
 
 clean::
