@@ -22,7 +22,7 @@ clean:
 package: $(PACKAGE) $(BUILD_DIR)/RELEASE_CHANGELOG.md
 
 $(PACKAGE): content
-	cd "$(dir $<)"; $(ZIPTOOL) $(ZIPFLAGS) "$(HERE)/$(PACKAGE)" "$(notdir $<)"
+	cd "$(dir $(CONTENT_DIR))"; $(ZIPTOOL) $(ZIPFLAGS) "$(abspath $(PACKAGE))" "$(notdir $(CONTENT_DIR))"
 
 content: $(CONTENT_DIR) build metadata
 
