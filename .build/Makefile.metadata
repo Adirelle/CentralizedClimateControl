@@ -8,16 +8,15 @@ MODSYNC = About/ModSync.xml
 
 all: build
 
-build: $(BUILD_DIR)/$(MANIFEST) $(BUILD_DIR)/$(MODSYNC) $(BUILD_DIR)/$(MANIFEST)
+build: $(BUILD_DIR)/$(MANIFEST) $(BUILD_DIR)/$(MODSYNC) $(BUILD_DIR)/$(ABOUT)
 
 $(BUILD_DIR)/$(MANIFEST): $(MANIFEST)
 $(BUILD_DIR)/$(MODSYNC): $(MODSYNC)
-$(BUILD_DIR)/$(ABOUT): $(ABOUT)
 
 $(BUILD_DIR)/$(MANIFEST) $(BUILD_DIR)/$(MODSYNC):
-	@mkdir -p $(@D)
-	sed -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $< > $@.2 && mv $@.2 $@
+	@mkdir -p "$(@D)"
+	sed -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' "$<" > "$@"
 
-$(BUILD_DIR)/$(ABOUT): docs/description.metadata
-	@mkdir -p $(@D)
-	.build/scripts/generate-about docs/description.metadata $(ABOUT) > $@.2 && mv $@.2 $@
+$(BUILD_DIR)/$(ABOUT): $(ABOUT) docs/description.md
+	@mkdir -p "$(@D)"
+	.build/scripts/generate-about docs/description.md "$(ABOUT)" > "$@"
