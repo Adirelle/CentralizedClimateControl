@@ -43,7 +43,7 @@
       <li Class="CentralizedClimateControl.CompProperties_Powered">
         <compClass>CentralizedClimateControl.CompTempControl</compClass>
         <shape>AdjacentSouth</shape>
-        <baseThroughput>1500</baseThroughput>
+        <baseThroughput>1000</baseThroughput>
       </li>
     </comps>
     <researchPrerequisites>
@@ -78,7 +78,7 @@
       <li Class="CentralizedClimateControl.CompProperties_Powered">
         <compClass>CentralizedClimateControl.CompTempControl</compClass>
         <shape>AdjacentSouth</shape>
-        <baseThroughput>4500</baseThroughput>
+        <baseThroughput>3000</baseThroughput>
         <adaptivePowerConsumption>true</adaptivePowerConsumption>
       </li>
     </comps>
