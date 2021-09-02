@@ -16,22 +16,22 @@ endif
 all: package
 
 clean:
-	rm -rf $(PACKAGE) $(CONTENT_DIR) $(BUILD_DIR)/RELEASE_CHANGELOG.md
+	rm -rf "$(PACKAGE)" "$(CONTENT_DIR)" "$(BUILD_DIR)/RELEASE_CHANGELOG.md"
 
 package: $(PACKAGE) $(BUILD_DIR)/RELEASE_CHANGELOG.md
 
 $(PACKAGE): content
-	cd "$(dir $(CONTENT_DIR))"; $(ZIPTOOL) $(ZIPFLAGS) "$(abspath $(PACKAGE))" "$(notdir $(CONTENT_DIR))"
+	cd "$(dir $(CONTENT_DIR))"; "$(ZIPTOOL)" $(ZIPFLAGS) "$(abspath $(PACKAGE))" "$(notdir $(CONTENT_DIR))"
 
 content: $(CONTENT_DIR) build metadata
 
 build metadata: | $(CONTENT_DIR)
-	make -f .build/Makefile.$@ BUILD_DIR=$(CONTENT_DIR)
+	make -f .build/Makefile.$@ "BUILD_DIR=$(CONTENT_DIR)"
 
-$(CONTENT_DIR): $(shell find 1.3/Defs 1.3/Languages Textures) About/preview.png
-	mkdir -p $@
-	cp -a --parent $? $@
-	@touch $@
+$(CONTENT_DIR): $(shell find 1.3/Defs 1.3/Languages Textures -type f) About/preview.png
+	mkdir -p "$@"
+	cp -pv --parent $? "$@"
+	@touch "$@"
 
 $(BUILD_DIR)/RELEASE_CHANGELOG.md: CHANGELOG.md
-	.build/scripts/changelog "$(VERSIOn)" $< > $@
+	.build/scripts/changelog "$(VERSION)" "$<" > "$@"

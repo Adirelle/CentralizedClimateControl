@@ -1,39 +1,38 @@
-SRC_DIR ?= .
-BUILD_DIR ?= .
-CONTENT_DIR ?= $(BUILD_DIR)/CentralizedClimateControl
-
 STEAM_APP_ID ?= 294100
 STEAM_FILE_ID ?= 2589526141
 
+BUILD_DIR ?= .
+
+PUBLISH_SCRIPT = $(BUILD_DIR)/publish.cmd
 PUBLISH_METADATA = $(BUILD_DIR)/metadata.vdf
-PUBLISH_SCRIPT = $(BUILD_DIR)/publish
+CONTENT_DIR ?= $(BUILD_DIR)/CentralizedClimateControl
 
 .PHONY: all clean content publish prepare-publish
 
 all: publish
 
 clean:
-	rm -f $(PUBLISH_METADATA) $(PUBLISH_METADATA)
+	rm -f "$(PUBLISH_METADATA)" "$(PUBLISH_METADATA)"
 
 publish: prepare-publish
-	steamcmd +runscript $(HERE)/$(PUBLISH_SCRIPT)
-	cat $(HOME)/.steam/logs/stderr.txt
-	rm $(PUBLISH_SCRIPT)
+	steamcmd '+runscript "$(abspath $(PUBLISH_SCRIPT))"'
+	cat "$(HOME)/.steam/logs/stderr.txt"
+	rm "$(PUBLISH_SCRIPT)"
 
 prepare-publish: content $(PUBLISH_METADATA) $(PUBLISH_SCRIPT)
 
 content:
 	$(MAKE) -f .build/Makefile.package content CONTENT_DIR=$(CONTENT_DIR)
 
-$(PUBLISH_METADATA):
-	@mkdir -p $(@D)
-	.build/scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(HERE)/$(CONTENT_DIR)" "$(VERSION)" >$@
+$(PUBLISH_SCRIPT): | $(PUBLISH_METADATA)
+	@mkdir -p "$(@D)"
+	echo '@ShutdownOnFailedCommand 1' > "$@"
+	echo '@NoPromptForPassword 1' >> "$@"
+	echo 'login $(STEAM_USERNAME) $(STEAM_PASSWORD)' >> "$@"
+	echo 'workshop_build_item "$(abspath $(PUBLISH_METADATA))"' >> "$@"
+	echo 'quit' >> "$@"
+	chmod 0400 "$@"
 
-$(PUBLISH_SCRIPT):
-	@mkdir -p $(@D)
-	echo '@ShutdownOnFailedCommand 1' > $@
-	echo '@NoPromptForPassword 1' >> $@
-	echo 'login $(STEAM_USERNAME) $(STEAM_PASSWORD)' >> $@
-	echo 'workshop_build_item $(HERE)/$(PUBLISH_METADATA)' >> $@
-	echo 'quit' >> $@
-	chmod 0400 $@
+$(PUBLISH_METADATA):
+	@mkdir -p "$(@D)"
+	.build/scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(abspath $(CONTENT_DIR))" "$(VERSION)" >"$@"

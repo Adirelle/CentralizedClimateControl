@@ -9,7 +9,7 @@ SLN_FILE = CentralizedClimateControl.sln
 SOURCES = $(shell find Source -name "*.cs*") $(SLN_FILE) CentralizedClimateControl.csproj
 
 DOTNET = dotnet.exe
-DOTNET_BUILD_ARGS = --nologo --no-restore --configuration=$(RELEASE_TYPE) "-p:Version=$(VERSION)" "$(SLN_FILE)"
+DOTNET_BUILD_ARGS = --nologo --no-restore "--configuration=$(RELEASE_TYPE)" "-p:Version=$(VERSION)" "$(SLN_FILE)"
 
 PANDOC = pandoc
 
@@ -20,18 +20,18 @@ all: build
 build: $(UPDATEDEFS) $(ASSEMBLY)
 
 clean:
-	rm -rf $(UPDATEDEFS) $(ASSEMBLY)
+	rm -rf "$(UPDATEDEFS)" "$(ASSEMBLY)"
 
 cleaner: clean
 	rm -rf obj
 
 $(ASSEMBLY): $(SOURCES) | obj
-	@mkdir -p $(@D)
-	"$(DOTNET)" build $(DOTNET_BUILD_ARGS) -o $(@D)
+	@mkdir -p "$(@D)"
+	"$(DOTNET)" build $(DOTNET_BUILD_ARGS) -o "$(@D)"
 
 $(UPDATEDEFS): CHANGELOG.md
-	@mkdir -p $(@D)
-	$(PANDOC) -t .build/pandoc/UpdateFeatureDefs.lua $< -o $@
+	@mkdir -p "$(@D)"
+	$(PANDOC) -t .build/pandoc/UpdateFeatureDefs.lua "$<" -o "$@"
 
 obj: packages.lock.json
 	"$(DOTNET)" restore --locked-mode
