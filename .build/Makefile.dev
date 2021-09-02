@@ -23,9 +23,11 @@ lint: | node_modules
 
 release: VERSION=$(shell changelog suggest)
 release:
-	changelog release
-	$(MAKE) -f .build/Makefile.metadata VERSION="$(VERSION)"
-	$(PRETTIER) --write CHANGELOG.md About
+	changelog release --suggest --yes
+	$(MAKE) -f .build/Makefile.metadata BUILD_DIR=.release VERSION="$(VERSION)"
+	$(PRETTIER) --write .release
+	cd .release; cp -prv * ..
+	rm -rf .release
 	git add CHANGELOG.md About
 	git commit -m "Release $(VERSION)"
 	git tag "$(VERSION)" -m "Release $(VERSION)"
