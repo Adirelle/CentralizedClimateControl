@@ -1,25 +1,23 @@
+BUILD_DIR ?= .
+
 ABOUT = About/About.xml
 MANIFEST = About/Manifest.xml
 MODSYNC = About/ModSync.xml
 
-TARGETS = $(addprefix $(BUILD_DIR)/,$(ABOUT) $(MANIFEST) $(MODSYNC))
-
-.PHONY: all clean
+.PHONY: all build
 
 all: build
 
-build: $(TARGETS)
-
-clean:
-	rm -rf $(TARGETS)
+build: $(BUILD_DIR)/$(MANIFEST) $(BUILD_DIR)/$(MODSYNC) $(BUILD_DIR)/$(MANIFEST)
 
 $(BUILD_DIR)/$(MANIFEST): $(MANIFEST)
 $(BUILD_DIR)/$(MODSYNC): $(MODSYNC)
+$(BUILD_DIR)/$(ABOUT): $(ABOUT)
 
 $(BUILD_DIR)/$(MANIFEST) $(BUILD_DIR)/$(MODSYNC):
 	@mkdir -p $(@D)
 	sed -e '/<[vV]ersion>/s/>.*</>$(VERSION)</' $< > $@.2 && mv $@.2 $@
 
-$(BUILD_DIR)/$(ABOUT): docs/description.md $(ABOUT)
+$(BUILD_DIR)/$(ABOUT): docs/description.metadata
 	@mkdir -p $(@D)
-	.build/scripts/generate-about $^ > $@.2 && mv $@.2 $@
+	.build/scripts/generate-about docs/description.metadata $(ABOUT) > $@.2 && mv $@.2 $@
