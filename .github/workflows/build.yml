@@ -70,7 +70,7 @@ jobs:
           tag: ${{ steps.version.outputs.version }}
           commit: ${{ github.sha }}
           prerelease: ${{ steps.version.outputs.prerelease }}
-          bodyFile: dist/RELEASE-CHANGELOG.md
+          bodyFile: dist/RELEASE_CHANGELOG.md
           artifacts: dist/CentralizedClimateControl-${{ steps.version.outputs.version }}.zip
           artifactContentType: application/zip
           token: ${{ github.token }}
