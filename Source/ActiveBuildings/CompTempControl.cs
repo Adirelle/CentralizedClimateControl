@@ -34,17 +34,14 @@ namespace CentralizedClimateControl
                 base.NetworkPostTick();
                 return;
             }
-            var tempFactor = Mathf.Max(1.0f, Mathf.Pow(Mathf.Abs(tempDelta), 0.3f));
-            var weightedThroughput = tempFactor * Input.Throughput;
-            var energyDelta = Mathf.Abs(tempDelta) * weightedThroughput;
-            var energyCapacity = Mathf.Pow(powerTrader.Props.basePowerConsumption, 2f);
-            NeededRate = Mathf.Clamp01(energyDelta / energyCapacity);
+
+            var flowFactor = Input.Throughput * Mathf.Pow(1.0f + tempAmount, 0.3f);
+            var energyCapacity = Props.baseThroughput * powerTrader.Props.basePowerConsumption / 10f;
+            NeededRate = Mathf.Clamp01(tempAmount * flowFactor / energyCapacity);
 
             base.NetworkPostTick();
 
-            var energyChange = Mathf.Sign(tempDelta) * energyCapacity * CurrentRate;
-            var tempChange = Input.Throughput > 0.0f ? energyChange / weightedThroughput : 0.0f;
-
+            var tempChange = Mathf.Sign(tempDelta) * energyCapacity * CurrentRate / flowFactor;
             Output = AirFlow.Make(Input.Throughput, Input.Temperature + tempChange);
 
             if (tempChange < 0.0f)
