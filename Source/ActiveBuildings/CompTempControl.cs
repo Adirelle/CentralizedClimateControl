@@ -47,9 +47,9 @@ namespace CentralizedClimateControl
 
             Output = AirFlow.Make(Input.Throughput, Input.Temperature + tempChange);
 
-            if (IsOperating && tempChange < 0.0f)
+            if (tempChange < 0.0f)
             {
-                var heatExhaust = heatExhaustFactor * tempChange / ClearArea.Count;
+                var heatExhaust = - heatExhaustFactor * tempChange / ClearArea.Count;
                 foreach (var cell in ClearArea)
                 {
                     GenTemperature.PushHeat(cell, parent.Map, heatExhaust);
