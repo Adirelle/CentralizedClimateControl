@@ -17,6 +17,7 @@ namespace CentralizedClimateControl
 
         public override void NetworkPreTick()
         {
+            IsActive = !Mathf.Approximately(NetworkIntakeLoad, 0.0f);
             base.NetworkPreTick();
             AverageTemperature = !IsBlocked ? ClearArea.Average(cell => cell.GetTemperature(parent.Map)) : 0.0f;
             NeededRate = NetworkIntakeLoad;

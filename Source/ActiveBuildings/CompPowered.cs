@@ -14,14 +14,19 @@ namespace CentralizedClimateControl
 
         protected bool IsPowered => flickable.SwitchIsOn && powerTrader.PowerOn && !breakdownable.BrokenDown;
 
-        protected virtual float TargetRate => IsPowered ? Mathf.Clamp(NeededRate, 0.01f, 1.0f) : 0.0f;
+        protected virtual float TargetRate => IsPowered && IsActive ? NeededRate : 0.0f;
 
         protected float CurrentRate = 0.0f;
 
         protected float NeededRate = 1.0f;
 
-        protected virtual float PowerCost => powerTrader.Props.basePowerConsumption
-            * (Props.adaptivePowerConsumption ? CurrentRate : 1.0f);
+        protected bool IsActive = true;
+
+        protected virtual float PowerCost =>
+            powerTrader.Props.basePowerConsumption * (IsActive ? PowerLoad : 0.1f);
+
+        protected virtual float PowerLoad =>
+            Props.adaptivePowerConsumption ? (0.4f + 0.6f * CurrentRate) : 1.0f;
 
         protected new CompProperties_Powered Props => (CompProperties_Powered) props;
 

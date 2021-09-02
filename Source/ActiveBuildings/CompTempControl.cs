@@ -25,6 +25,15 @@ namespace CentralizedClimateControl
         public override void NetworkPostTick()
         {
             var tempDelta = tempControl.targetTemperature - Input.Temperature;
+            var tempAmount = Mathf.Abs(tempDelta);
+            IsActive = !Mathf.Approximately(Input.Throughput, 0.0f) && tempAmount >= 0.25f;
+            tempControl.operatingAtHighPower = IsActive;
+
+            if (!IsActive) {
+                Output = Input;
+                base.NetworkPostTick();
+                return;
+            }
             var tempFactor = Mathf.Max(1.0f, Mathf.Pow(Mathf.Abs(tempDelta), 0.3f));
             var weightedThroughput = tempFactor * Input.Throughput;
             var energyDelta = Mathf.Abs(tempDelta) * weightedThroughput;
@@ -33,7 +42,6 @@ namespace CentralizedClimateControl
 
             base.NetworkPostTick();
 
-            tempControl.operatingAtHighPower = CurrentRate > 0.5f;
             var energyChange = Mathf.Sign(tempDelta) * energyCapacity * CurrentRate;
             var tempChange = Input.Throughput > 0.0f ? energyChange / weightedThroughput : 0.0f;
 
