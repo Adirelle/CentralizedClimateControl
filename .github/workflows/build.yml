@@ -51,10 +51,10 @@ jobs:
             ;;
           esac
 
-      - name: Build all
+      - name: Build the package
         shell: bash
         run: |
-          make package BUILD_DIR=dist VERSION="${{ steps.version.outputs.version }}" RELEASE_TYPE="Release"
+          make package VERSION="${{ steps.version.outputs.version }}" RELEASE_TYPE="Release"
 
       - name: Upload the distribution
         uses: actions/upload-artifact@v2
@@ -62,29 +62,16 @@ jobs:
           name: distribution
           path: "dist/**"
 
-  release:
-    name: Create a Github release
-    if: ${{ ! github.base_ref }}
-    needs:
-      - build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download the distribution
-        uses: actions/download-artifact@v2
-        with:
-          name: distribution
-          path: dist
-
       - name: Create the release
-        if: ${{ ! github.base_ref }}
+        if: ${{ github.ref == "refs/heads/main" || startsWith(github.ref, "refs/tags/") }}
         uses: ncipollo/release-action@v1
         with:
-          name: ${{ needs.build.outputs.version }}
-          tag: ${{ needs.build.outputs.version }}
+          name: ${{ steps.version.outputs.version }}
+          tag: ${{ steps.version.outputs.version }}
           commit: ${{ github.sha }}
-          prerelease: ${{ needs.build.outputs.prerelease }}
+          prerelease: ${{ steps.version.outputs.prerelease }}
           bodyFile: dist/RELEASE-CHANGELOG.md
-          artifacts: dist/CentralizedClimateControl-${{ needs.build.outputs.version }}.zip
+          artifacts: dist/CentralizedClimateControl-${{ steps.version.outputs.version }}.zip
           artifactContentType: application/zip
           token: ${{ github.token }}
           allowUpdates: true
@@ -107,10 +94,10 @@ jobs:
           path: dist
 
       - name: Prepare publishing
-        run: make prepare-publish BUILD_DIR=dist VERSION="${{ needs.build.outputs.version }}" HERE=${{ github.workspace }} STEAM_USERNAME=${{ secrets.STEAM_USERNAME }} STEAM_PASSWORD=${{ secrets.STEAM_PASSWORD }}
+        run: make prepare-publish VERSION="${{ needs.build.outputs.version }}" STEAM_USERNAME=${{ secrets.STEAM_USERNAME }} STEAM_PASSWORD=${{ secrets.STEAM_PASSWORD }}
 
       - name: Publish using SteamCMD
         uses: docker://steamcmd/steamcmd:ubuntu
         with:
-          args: +runscript ${{ github.workspace }}/dist/publish
+          args: +runscript ${{ github.workspace }}/dist/publish.cmd
         timeout-minutes: 10
