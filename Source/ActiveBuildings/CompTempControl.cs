@@ -29,7 +29,8 @@ namespace CentralizedClimateControl
             IsActive = !Mathf.Approximately(Input.Throughput, 0.0f) && tempAmount >= 0.25f;
             tempControl.operatingAtHighPower = IsActive;
 
-            if (!IsActive) {
+            if (!IsActive)
+            {
                 Output = Input;
                 base.NetworkPostTick();
                 return;
@@ -46,7 +47,7 @@ namespace CentralizedClimateControl
 
             if (tempChange < 0.0f)
             {
-                var heatExhaust = - heatExhaustFactor * tempChange / ClearArea.Count;
+                var heatExhaust = -heatExhaustFactor * tempChange / ClearArea.Count;
                 foreach (var cell in ClearArea)
                 {
                     GenTemperature.PushHeat(cell, parent.Map, heatExhaust);
