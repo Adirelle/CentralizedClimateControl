@@ -3,11 +3,22 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Changelog](http://keepachangelog.com/).
 
-## Unreleased
 
+## Unreleased
 ---
 
 ### New
+
+### Changes
+
+### Fixes
+
+### Breaks
+
+
+## 2.0.3 - (2021-09-03)
+
+---
 
 ### Changes
 
@@ -20,7 +31,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 - TCUs now properly exhaut heat (instead of cold) when cooling air.
 
-### Breaks
 
 ## 2.0.2 - (2021-09-01)
 
