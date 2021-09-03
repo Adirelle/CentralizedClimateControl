@@ -1,6 +1,7 @@
 STEAM_APP_ID ?= 294100
 STEAM_FILE_ID ?= 2589526141
 
+HERE ?= $(shell pwd -L)
 BUILD_DIR ?= .
 
 PUBLISH_SCRIPT = $(BUILD_DIR)/publish.cmd
@@ -15,9 +16,9 @@ clean:
 	rm -f "$(PUBLISH_METADATA)" "$(PUBLISH_METADATA)"
 
 publish: prepare-publish
-	steamcmd '+runscript "$(abspath $(PUBLISH_SCRIPT))"'
+	steamcmd '+runscript $(HERE)/$(PUBLISH_SCRIPT)'
 	cat "$(HOME)/.steam/logs/stderr.txt"
-	rm "$(PUBLISH_SCRIPT)"
+	rm -f "$(PUBLISH_SCRIPT)"
 
 prepare-publish: content $(PUBLISH_METADATA) $(PUBLISH_SCRIPT)
 
@@ -29,10 +30,10 @@ $(PUBLISH_SCRIPT): | $(PUBLISH_METADATA)
 	echo '@ShutdownOnFailedCommand 1' > "$@"
 	echo '@NoPromptForPassword 1' >> "$@"
 	echo 'login $(STEAM_USERNAME) $(STEAM_PASSWORD)' >> "$@"
-	echo 'workshop_build_item "$(abspath $(PUBLISH_METADATA))"' >> "$@"
+	echo 'workshop_build_item "$(HERE)/$(PUBLISH_METADATA)"' >> "$@"
 	echo 'quit' >> "$@"
 	chmod 0400 "$@"
 
 $(PUBLISH_METADATA):
 	@mkdir -p "$(@D)"
-	.build/scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(abspath $(CONTENT_DIR))" "$(VERSION)" >"$@"
+	.build/scripts/workshop-meta "$(STEAM_APP_ID)" "$(STEAM_FILE_ID)" "$(HERE)/$(CONTENT_DIR)" "$(VERSION)" >"$@"
