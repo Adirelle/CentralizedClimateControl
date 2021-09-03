@@ -11,7 +11,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Changes
 
+- Intake fans and TCUs enter a stand-by mode when possible to save power.
+- Industrial fans and TCUs consume more power at low load.
+- TCUs are now less thermally efficient.
+- TCU maximum throughput has been reduced.
+
 ### Fixes
+
+- TCUs now properly exhaut heat (instead of cold) when cooling air.
 
 ### Breaks
 
