@@ -33,20 +33,12 @@ jobs:
       - name: Install pandoc
         run: choco install -r pandoc
 
-      - name: Extract the version string
+      - name: Extract the version from the tag
+        if: ${{ startsWith(github.ref, 'refs/tags/2.') }}
         id: version
         shell: bash
         run: |
-          VERSION="$(git describe --always)"
-          echo "::set-output name=version::${VERSION%-g*}"
-          case "$VERSION" in
-            *-*-g*|*alpha*|*beta*)
-              echo "::set-output name=prerelease::true"
-            ;;
-            *)
-              echo "::set-output name=prerelease::false"
-            ;;
-          esac
+          echo "::set-output name=version::${{ github.ref[10:] }}"
 
       - name: Build the package
         shell: bash
@@ -60,13 +52,12 @@ jobs:
           path: "dist/**"
 
       - name: Create a Github release
-        if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/') }}
+        if: ${{ steps.version.outputs.version }}
         uses: ncipollo/release-action@v1
         with:
           name: ${{ steps.version.outputs.version }}
           tag: ${{ steps.version.outputs.version }}
           commit: ${{ github.sha }}
-          prerelease: ${{ steps.version.outputs.prerelease }}
           bodyFile: dist/RELEASE_CHANGELOG.md
           artifacts: dist/CentralizedClimateControl-${{ steps.version.outputs.version }}.zip
           artifactContentType: application/zip
