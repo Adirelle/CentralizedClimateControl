@@ -26,7 +26,14 @@ namespace CentralizedClimateControl
         {
             var tempDelta = tempControl.targetTemperature - Input.Temperature;
             var tempAmount = Mathf.Abs(tempDelta);
-            IsActive = !Mathf.Approximately(Input.Throughput, 0.0f) && tempAmount >= 0.25f;
+            if (Mathf.Approximately(Input.Throughput, 0.0f) || tempAmount < 0.25f)
+            {
+                IsActive = false;
+            }
+            else if (tempAmount > 0.5f)
+            {
+                IsActive = true;
+            }
             tempControl.operatingAtHighPower = IsActive;
 
             if (!IsActive)
