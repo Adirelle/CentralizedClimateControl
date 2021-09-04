@@ -11,6 +11,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Changes
 
+- Blueprints and pending constructions are faded out on pipe overlays.
+
 ### Fixes
 
 - Modifying a network should not cause the game to stutter anymore.
