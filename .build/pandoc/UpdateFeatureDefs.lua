@@ -1,46 +1,78 @@
 -- Preload UnityRichTextFormat
 dofile ".build/pandoc/UnityRichTextFormat.lua"
 
-local MOD_ID = "CentralizedClimateControl"
-local MOD_NAME = "Centralized climate control 2.0"
+local MOD_ID = "Adirelle.CentralizedClimateControl"
+local MOD_NAME = "Centralized climate control"
 local MOD_REPO = "https://github.com/Adirelle/CentralizedClimateControl"
 local MOD_PREFIX = "CCC"
 
-local open = false
-
-local function close()
-  if open then
-    open = false
-    return "]]></content>\n  </HugsLib.UpdateFeatureDef>\n"
+local function findVersions(body)
+  local a, b, match = string.find(body, '%s*<<([^>]+)>>%s*')
+  if a then
+    return string.sub(body, 1, a), match, findVersions(string.sub(body, b))
   end
-  return ""
+  return body
 end
 
-function Doc(body, metadata, variables)
-  local buffer = {}
-  local function add(s)
-    table.insert(buffer, s)
+local function formatVersion(current, version, text)
+  if version == "Unreleased" then
+    if not current then
+      return ""
+    end
+    version = current
   end
-  add(
-[[<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
-  <HugsLib.UpdateFeatureDef Abstract="true" Name="]] .. MOD_PREFIX .. [[_UpdateFeatureBase">
-    <modNameReadable>]] .. MOD_NAME .. [[</modNameReadable>
-    <modIdentifier>]] .. MOD_ID .. [[</modIdentifier>
-    <linkUrl>]] .. MOD_REPO .. [[</linkUrl>
-    <trimWhitespace>true</trimWhitespace>
-  </HugsLib.UpdateFeatureDef>]]
+  return string.format([=[
+  <HugsLib.UpdateFeatureDef ParentName="%s_News">
+    <defName>%s_%s</defName>
+    <assemblyVersion>%s</assemblyVersion>
+    <linkUrl>%s/releases/tag/%s</linkUrl>
+    <content><![CDATA[%s]]></content>
+  </HugsLib.UpdateFeatureDef>
+]=],
+    MOD_PREFIX,
+    MOD_PREFIX, version:gsub('%W', '_'),
+    version,
+    MOD_REPO, version,
+    text:gsub("^[ \n\r\t]*(.-)[ \n\r\t]*$", "%1")
   )
+end
 
-  body = body .. close()
-  local defs = body
-    :match('(%s+%<HugsLib%.UpdateFeatureDef .+)$')
-    :gsub('(<!%[CDATA%[%)%s+', '%1')
-    :gsub('%s+(%]%]>)', '%1')
-  add(defs)
+local function formatVersions(current, version, text, ...)
+  if not version then
+    return ""
+  end
+  return formatVersion(current, version, text) .. formatVersions(current, ...)
+end
 
-  add('</Defs>')
-  return table.concat(buffer,'')
+local function dropFirst(_, ...)
+  return ...
+end
+
+function Doc(body, _, variables)
+  local versions = formatVersions(variables.VERSION, dropFirst(findVersions(body, 1)))
+
+  return string.format([[
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Defs>
+  <HugsLib.UpdateFeatureDef Abstract="true" Name="%s_News">
+    <modNameReadable>%s</modNameReadable>
+    <modIdentifier>%s</modIdentifier>
+  </HugsLib.UpdateFeatureDef>
+%s</Defs>
+]],
+    MOD_PREFIX,
+    MOD_NAME,
+    MOD_ID,
+    versions
+  )
+end
+
+function Header(lev, s, attr)
+  if lev ~= 2 then
+    return string.format('\n|<b><size=%d>%s</size></b>', 24 - 2 * lev, s)
+  end
+
+  return '<<' ..  s:match("^(%S+)") .. '>>'
 end
 
 function Image(_, src)
@@ -49,32 +81,6 @@ end
 
 function Para(s)
   return "|" .. s
-end
-
--- lev is an integer, the header level.
-function Header(lev, s, attr)
-  if lev == 2 then
-    local buffer = {}
-    local function add(s)
-      table.insert(buffer, s)
-    end
-      add(close())
-    local version = s:match("^(%S+)")
-    add('  <HugsLib.UpdateFeatureDef ParentName="' .. MOD_PREFIX .. '_UpdateFeatureBase">')
-    add('    <defName>' .. MOD_PREFIX .. '_' .. version:gsub('%W', '_') .. '</defName>')
-    if version == "Unreleased" then
-      add('    <assemblyVersion>9.9.9</assemblyVersion>')
-      add('    <linkUrl>' .. MOD_REPO .. '/releases/latest</linkUrl>')
-    else
-      add('    <assemblyVersion>' .. version .. '</assemblyVersion>')
-      add('    <linkUrl>' .. MOD_REPO .. '/releases/tag/' .. version .. '</linkUrl>')
-    end
-    add('    <content><![CDATA[')
-    open = true
-    return table.concat(buffer, '\n')
-  end
-
-  return '\n|<b><size=' .. (24 - 2 * lev) .. '>' .. s .. '</size></b>'
 end
 
 function BulletList(items)

@@ -14,6 +14,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Fixes
 
 - Modifying a network should not cause the game to stutter anymore.
+- Change notes not showing.
+- HugsLib complaining about invalid change notes.
 
 ### Breaks
 

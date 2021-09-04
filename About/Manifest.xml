@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Manifest>
-  <identifier>CentralizedClimateControl</identifier>
+  <identifier>Adirelle.CentralizedClimateControl</identifier>
   <version>2.0.3</version>
   <dependencies />
   <incompatibleWith />

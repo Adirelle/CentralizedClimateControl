@@ -28,7 +28,7 @@ content: $(CONTENT_DIR) build metadata
 build metadata: | $(CONTENT_DIR)
 	make -f .build/Makefile.$@ "BUILD_DIR=$(CONTENT_DIR)"
 
-$(CONTENT_DIR): $(shell find 1.3/Defs 1.3/Languages Textures -type f) *.md About/preview.png
+$(CONTENT_DIR): $(shell find 1.3/Defs 1.3/Languages 1.3/News Textures -type f) *.md About/preview.png
 	mkdir -p "$@"
 	cp -pv --parent $? "$@"
 	@touch "$@"
