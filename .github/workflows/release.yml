@@ -1,0 +1,46 @@
+name: Release a new version of the mod
+
+on:
+  push:
+    tags:
+      - 2.*
+
+jobs:
+  build:
+    name: Bild and release
+    runs-on: windows-latest
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.x"
+
+      - name: Install dependencies
+        run: |
+          dotnet restore --locked-mode
+          choco install -r pandoc
+
+      - name: Extract the version from the tag
+        id: version
+        shell: bash
+        run: echo "::set-output name=version::${GITHUB_REF:10}"
+
+      - name: Build the package
+        shell: bash
+        run: make package VERSION="${{ steps.version.outputs.version }}" RELEASE_TYPE="Release"
+
+      - name: Create a Github release
+        uses: ncipollo/release-action@v1
+        with:
+          name: ${{ steps.version.outputs.version }}
+          tag: ${{ steps.version.outputs.version }}
+          commit: ${{ github.sha }}
+          bodyFile: dist/RELEASE_CHANGELOG.md
+          artifacts: dist/CentralizedClimateControl-${{ steps.version.outputs.version }}.zip
+          artifactContentType: application/zip
+          token: ${{ github.token }}
+          allowUpdates: true
+          replacesArtifacts: true

@@ -1,11 +1,9 @@
-name: Build the mod
+name: Build a debug version of the mod
 
 on:
   push:
     branches:
       - main
-    tags:
-      - 2.*
   pull_request: ~
 
 concurrency:
@@ -28,39 +26,16 @@ jobs:
           dotnet-version: "5.0.x"
 
       - name: Install dependencies
-        run: dotnet restore --locked-mode
-
-      - name: Install pandoc
-        run: choco install -r pandoc
-
-      - name: Extract the version from the tag
-        if: ${{ startsWith(github.ref, 'refs/tags/2.') }}
-        id: version
-        shell: bash
         run: |
-          echo "::set-output name=version::${GITHUB_REF:10}"
+          dotnet restore --locked-mode
+          choco install -r pandoc
 
-      - name: Build the package
+      - name: Build the mod content
         shell: bash
-        run: |
-          make package VERSION="${{ steps.version.outputs.version }}" RELEASE_TYPE="Release"
+        run: make content
 
-      - name: Upload the distribution
+      - name: Upload it
         uses: actions/upload-artifact@v2
         with:
           name: distribution
           path: "dist/**"
-
-      - name: Create a Github release
-        if: ${{ steps.version.outputs.version }}
-        uses: ncipollo/release-action@v1
-        with:
-          name: ${{ steps.version.outputs.version }}
-          tag: ${{ steps.version.outputs.version }}
-          commit: ${{ github.sha }}
-          bodyFile: dist/RELEASE_CHANGELOG.md
-          artifacts: dist/CentralizedClimateControl-${{ steps.version.outputs.version }}.zip
-          artifactContentType: application/zip
-          token: ${{ github.token }}
-          allowUpdates: true
-          replacesArtifacts: true
