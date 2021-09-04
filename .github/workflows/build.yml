@@ -76,28 +76,3 @@ jobs:
           token: ${{ github.token }}
           allowUpdates: true
           replacesArtifacts: true
-
-  publish:
-    name: Publish to Steam workshop
-    if: ${{ ! github.base_ref }}
-    needs:
-      - build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out sources
-        uses: actions/checkout@v2
-
-      - name: Download the distribution
-        uses: actions/download-artifact@v2
-        with:
-          name: distribution
-          path: dist
-
-      - name: Prepare publishing
-        run: make prepare-publish VERSION="${{ needs.build.outputs.version }}" STEAM_USERNAME=${{ secrets.STEAM_USERNAME }} STEAM_PASSWORD=${{ secrets.STEAM_PASSWORD }}
-
-      - name: Publish using SteamCMD
-        uses: docker://steamcmd/steamcmd:ubuntu
-        with:
-          args: +runscript ${{ github.workspace }}/dist/publish.cmd
-        timeout-minutes: 10
