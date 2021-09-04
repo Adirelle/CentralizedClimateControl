@@ -38,7 +38,7 @@ jobs:
         id: version
         shell: bash
         run: |
-          echo "::set-output name=version::${{ github.ref[10:] }}"
+          echo "::set-output name=version::${GITHUB_REF:10}"
 
       - name: Build the package
         shell: bash
