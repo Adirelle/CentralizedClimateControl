@@ -3,11 +3,22 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Changelog](http://keepachangelog.com/).
 
-## Unreleased
 
+## Unreleased
 ---
 
 ### New
+
+### Changes
+
+### Fixes
+
+### Breaks
+
+
+## 2.0.4 - (2021-09-04)
+
+---
 
 ### Changes
 
@@ -19,7 +30,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Change notes not showing.
 - HugsLib complaining about invalid change notes.
 
-### Breaks
 
 ## 2.0.3 - (2021-09-03)
 
