@@ -3,8 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Changelog](http://keepachangelog.com/).
 
-
 ## Unreleased
+
 ---
 
 ### New
@@ -13,8 +13,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixes
 
-### Breaks
+- Modifying a network should not cause the game to stutter anymore.
 
+### Breaks
 
 ## 2.0.3 - (2021-09-03)
 
@@ -30,7 +31,6 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Fixes
 
 - TCUs now properly exhaut heat (instead of cold) when cooling air.
-
 
 ## 2.0.2 - (2021-09-01)
 

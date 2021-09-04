@@ -164,15 +164,17 @@ namespace CentralizedClimateControl
                 var network = NetworkPool.Acquire(flowType);
                 networks.Add(network);
 
-                queue.Enqueue(part);
+                void attach(CompBase part)
+                {
+                    queue.Enqueue(part);
+                    partList.Remove(part);
+                    network.RegisterPart(part);
+                }
+
+                attach(part);
+
                 while (queue.TryDequeue(out var current))
                 {
-                    partList.Remove(current);
-                    network.RegisterPart(current);
-                    foreach (var loc in current.parent.OccupiedRect().Cells)
-                    {
-                        map.mapDrawer.MapMeshDirty(loc, MapMeshFlag.Buildings | MapMeshFlag.Things);
-                    }
                     foreach (var loc in current.parent.OccupiedRect().AdjacentCellsCardinal)
                     {
                         if (HasPartAt(loc, flowType))
@@ -181,7 +183,7 @@ namespace CentralizedClimateControl
                             {
                                 if (!candidate.IsConnected)
                                 {
-                                    queue.Enqueue(candidate);
+                                    attach(candidate);
                                 }
                             }
                         }
