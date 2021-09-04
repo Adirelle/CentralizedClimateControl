@@ -4,7 +4,7 @@ MAKEFLAGS += --no-builtin-rules --no-builtin-variables --no-print-directory
 -include Makefile.local
 
 BUILD_DIR ?= .
-VERSION ?= $(shell git describe --always | sed -e 's/-g.*//')
+VERSION ?= $(shell git describe --always | sed -e 's/-g.*//;s/[^0-9][^0-9]*/./g')
 
 export SHELL BUILD_DIR VERSION
 
