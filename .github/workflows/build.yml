@@ -16,9 +16,6 @@ jobs:
   build:
     name: Build the mod
     runs-on: windows-latest
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-      prerelease: ${{ steps.version.outputs.prerelease }}
     steps:
       - name: Check out sources
         uses: actions/checkout@v2
