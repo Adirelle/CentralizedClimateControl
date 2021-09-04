@@ -33,7 +33,7 @@ local function formatVersion(current, version, text)
     MOD_PREFIX, version:gsub('%W', '_'),
     version,
     MOD_REPO, version,
-    text:gsub("^[ \n\r\t]*(.-)[ \n\r\t]*$", "%1")
+    text:gsub("^[ \n\r\t]*(.-)[ \n\r\t]*$", "%1"):gsub("\n[\r\n]+", "\n")
   )
 end
 
@@ -67,11 +67,22 @@ function Doc(body, _, variables)
   )
 end
 
+local inPara = false
+function Para(s)
+  if inPara then
+    return "\n|" .. s
+  else
+    inPara = true
+    return s
+  end
+end
+
 function Header(lev, s, attr)
   if lev ~= 2 then
-    return string.format('\n|<b><size=%d>%s</size></b>', 24 - 2 * lev, s)
+    return Para(string.format('<b><size=%d>%s</size></b>', 22 - 2 * lev, s))
   end
 
+  inPara = false
   return '<<' ..  s:match("^(%S+)") .. '>>'
 end
 
@@ -79,14 +90,10 @@ function Image(_, src)
   return "\n|img:" .. src
 end
 
-function Para(s)
-  return "|" .. s
-end
-
 function BulletList(items)
   local buffer = {}
   for _, item in pairs(items) do
-    table.insert(buffer, "\n|* " .. item)
+    table.insert(buffer, "\n• " .. item)
   end
   return table.concat(buffer, "")
 end
@@ -94,7 +101,7 @@ end
 function OrderedList(items)
   local buffer = {}
   for i, item in ipairs(items) do
-    table.insert(buffer, "\n|" .. (i+1) .. ". " .. item)
+    table.insert(buffer, "\n" .. (i+1) .. ". " .. item)
   end
   return table.concat(buffer, "")
 end
@@ -103,7 +110,7 @@ function DefinitionList(items)
   local buffer = {}
   for _,item in pairs(items) do
     local k, v = next(item)
-    table.insert(buffer, "\n|" .. k .. ": " .. v)
+    table.insert(buffer, "\n" .. k .. ": " .. v)
   end
   return table.concat(buffer, "")
 end

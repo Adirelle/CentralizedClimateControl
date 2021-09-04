@@ -18,7 +18,7 @@ local function id(s)
   return s
 end
 
-Blocksep = const("\n\n")
+Blocksep = const("\n")
 Space = const(" ")
 SoftBreak = empty
 LineBreak = const("\n")
@@ -44,13 +44,13 @@ function Link(s, src)
 end
 
 function Header(lev, s)
-    return '<b><size=' .. (24 - 2 * lev) .. '>' .. s .. '</size></b>'
+    return '<b><size=' .. (22 - 2 * lev) .. '>' .. s .. '</size></b>'
 end
 
 function BulletList(items)
   local buffer = {}
   for _, item in pairs(items) do
-    table.insert(buffer, "* " .. item)
+    table.insert(buffer, "• " .. item)
   end
   return table.concat(buffer, "\n")
 end
