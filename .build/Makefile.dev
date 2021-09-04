@@ -32,7 +32,7 @@ release:
 	rm -rf .release
 	git add CHANGELOG.md About
 	git commit -m "Release $(VERSION)"
-	.build/scripts/changelog "$(VERSION)" | git tag "$(VERSION)" -a -F -
+	.build/scripts/changelog "$(VERSION)" CHANGELOG.md | git tag "$(VERSION)" -a -F -
 
 quicktest:
 	cd "$(RIMWORLD_PATH)"; exec ./RimWorldWin64.exe -savedatafolder=QuickTestSaveData
