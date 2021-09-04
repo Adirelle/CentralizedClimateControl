@@ -6,6 +6,8 @@ DOTNET_FORMAT_ARGS = --no-restore -wsa info $(SLN_FILE)
 PRETTIER = npx -q prettier
 NPM = npm
 
+PRETTIER_TARGETS = .github 1.3 About docs *.json *.md
+
 .PHONY: all cleaner format lint quicktest release
 
 all: format
@@ -15,11 +17,11 @@ cleaner:
 
 format: | node_modules
 	"$(DOTNET)" tool run dotnet-format $(DOTNET_FORMAT_ARGS)
-	$(PRETTIER) --write .
+	$(PRETTIER) --write $(PRETTIER_TARGETS)
 
 lint: | node_modules
 	"$(DOTNET)" tool run dotnet-format --check $(DOTNET_FORMAT_ARGS)
-	$(PRETTIER) --check .
+	$(PRETTIER) --check $(PRETTIER_TARGETS)
 
 release: VERSION=$(shell changelog suggest)
 release:
